@@ -14,9 +14,7 @@ on:
     paths-ignore:
       - '**/*.md'
   pull_request:
-    paths:
-      - 'ecosystem-ci/**'
-      - '.github/workflows/e2e-test.yml'
+    types: [opened, synchronize, labeled]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.sha }}
@@ -29,6 +27,10 @@ defaults:
 jobs:
   download-previous-rolldown-binaries:
     runs-on: ubuntu-latest
+    # Run if: not a PR, OR PR has 'test: e2e' label
+    if: >-
+      github.event_name != 'pull_request' ||
+      contains(github.event.pull_request.labels.*.name, 'test: e2e')
     permissions:
       contents: read
       packages: read
