@@ -573,14 +573,19 @@ Use \`vite new --list\` to list all available templates, or run \`vite new --hel
   console.log(`  ${gray('•')} Created: ${green(projectDir)}`);
 
   // Show next steps
-  showNextSteps(projectDir);
+  showNextSteps(projectDir, isMonorepo);
   // #endregion
 }
 
-function showNextSteps(projectDir: string) {
+function showNextSteps(projectDir: string, isMonorepo: boolean) {
   console.log(`\n${gray('Next steps:')}`);
-  console.log(`  ${cyan(`cd ${projectDir}`)}`);
-  console.log(`  ${cyan('vite run dev')}`);
+  if (isMonorepo) {
+    console.log(`  ${gray('Installed in')} ${green(projectDir)}`);
+    console.log(`  ${cyan(`vite dev ${projectDir}`)}`);
+  } else {
+    console.log(`  ${cyan(`cd ${projectDir}`)}`);
+    console.log(`  ${cyan('vite dev')}`);
+  }
   console.log('');
 }
 
