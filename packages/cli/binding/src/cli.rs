@@ -8,7 +8,6 @@ use std::{
 };
 
 use clap::Subcommand;
-use monostate::MustBe;
 use serde::{Deserialize, Serialize};
 use tokio::fs::write;
 use vite_error::Error;
@@ -18,7 +17,7 @@ use vite_task::{
     CLIArgs, LabeledReporter, Session, SessionCallbacks, TaskSynthesizer,
     config::{
         UserConfigFile,
-        user::{EnabledCacheConfig, UserCacheConfig, UserTaskConfig, UserTaskOptions},
+        user::{EnabledCacheConfig, UserCacheConfig, UserConfigTasks, UserTaskOptions},
     },
     loader::UserConfigLoader,
     plan_request::SyntheticPlanRequest,
@@ -32,7 +31,7 @@ pub struct ResolvedUniversalViteConfig {
     pub config_file: Option<String>,
     pub lint: Option<serde_json::Value>,
     pub fmt: Option<serde_json::Value>,
-    pub tasks: Option<HashMap<String, serde_json::Value>>,
+    pub tasks: Option<serde_json::Value>,
 }
 
 /// Result type for resolved commands from JavaScript
@@ -318,11 +317,11 @@ impl TaskSynthesizer<CustomTaskSubcommand> for VitePlusTaskSynthesizer {
                         .collect(),
                     task_options: UserTaskOptions {
                         cache_config: UserCacheConfig::Enabled {
-                            cache: MustBe!(true),
+                            cache: None,
                             enabled_cache_config: EnabledCacheConfig {
                                 // Fingerprint OXLINT_TSGOLINT_PATH for type-aware linting cache invalidation
-                                envs: Box::new([Str::from("OXLINT_TSGOLINT_PATH")]),
-                                pass_through_envs: vec![],
+                                envs: Some(Box::new([Str::from("OXLINT_TSGOLINT_PATH")])),
+                                pass_through_envs: None,
                             },
                         },
                         ..Default::default()
@@ -604,17 +603,11 @@ impl UserConfigLoader for VitePlusConfigLoader {
                 tracing::error!("Failed to parse vite config: {config_json}");
             })?;
 
-        // Convert Option<HashMap<String, serde_json::Value>> to HashMap<Str, UserTaskConfig>
-        let tasks = resolved
-            .tasks
-            .unwrap_or_default()
-            .into_iter()
-            .map(|(name, v)| {
-                let task_config: UserTaskConfig = serde_json::from_value(v)?;
-                Ok::<_, serde_json::Error>((Str::from(name), task_config))
-            })
-            .collect::<Result<HashMap<Str, UserTaskConfig>, _>>()?;
-
+        let tasks = if let Some(tasks) = resolved.tasks {
+            serde_json::from_value(tasks)?
+        } else {
+            UserConfigTasks::default()
+        };
         Ok(UserConfigFile { tasks })
     }
 }
@@ -870,4 +863,32 @@ pub fn init_tracing() {
             .with(tracing_subscriber::fmt::layer())
             .init();
     });
+}
+
+#[cfg(test)]
+mod tests {
+    use std::path::PathBuf;
+
+    use vite_task::config::user::UserConfigTasks;
+
+    #[test]
+    fn task_config_types_in_sync() {
+        // Remove \r for cross-platform consistency
+        let ts_type = UserConfigTasks::TS_TYPE.replace('\r', "");
+        let manifest_dir = std::env::var("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR not set");
+        let task_config_path = PathBuf::from(manifest_dir).join("../src/task-config.ts");
+
+        if std::env::var("VITE_UPDATE_TASK_TYPES").as_deref() == Ok("1") {
+            std::fs::write(&task_config_path, &ts_type).expect("Failed to write task-config.ts");
+        } else {
+            let current = std::fs::read_to_string(&task_config_path)
+                .expect("Failed to read task-config.ts")
+                .replace('\r', "");
+            pretty_assertions::assert_eq!(
+                current,
+                ts_type,
+                "task-config.ts is out of sync. Run `VITE_UPDATE_TASK_TYPES=1 cargo test -p vite-plus-cli task_config_types_in_sync` to update."
+            );
+        }
+    }
 }

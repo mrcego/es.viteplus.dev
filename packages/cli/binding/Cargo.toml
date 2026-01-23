@@ -14,7 +14,6 @@ rolldown = ["dep:rolldown_binding"]
 anyhow = { workspace = true }
 async-trait = { workspace = true }
 clap = { workspace = true, features = ["derive"] }
-monostate = { workspace = true }
 napi = { workspace = true }
 napi-derive = { workspace = true }
 serde = { workspace = true, features = ["derive"] }
@@ -33,6 +32,9 @@ rolldown_binding = { workspace = true, optional = true }
 
 [build-dependencies]
 napi-build = { workspace = true }
+
+[dev-dependencies]
+pretty_assertions = { workspace = true }
 
 [lib]
 crate-type = ["cdylib"]
