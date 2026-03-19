@@ -98,7 +98,7 @@ Consulta [Configuración de Ejecución](/config/run) para ver la referencia comp
 
 ## Dependencias de Tareas
 
-Usa [`dependsOn`](#depends-on) para ejecutar tareas en el orden correcto. Ejecutar `vp run deploy` con la configuración anterior ejecuta primero `build` y `test`. Las dependencias también pueden dirigirse a otros paquetes en el mismo proyecto con la notación `paquete#tarea`:
+Usa [Dependencias de Tareas](#dependencias-de-tareas) para ejecutar tareas en el orden correcto. Ejecutar `vp run deploy` con la configuración anterior ejecuta primero `build` y `test`. Las dependencias también pueden dirigirse a otros paquetes en el mismo proyecto con la notación `paquete#tarea`:
 
 ```ts
 dependsOn: ['@my/core#build', '@my/utils#lint'];
