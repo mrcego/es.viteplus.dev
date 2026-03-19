@@ -54,13 +54,13 @@ onBeforeUnmount(() => {
     class="wrapper border-t grid lg:grid-cols-[0.9fr_1.1fr] divide-y lg:divide-y-0 lg:divide-x"
   >
     <div class="px-5 py-6 sm:p-10 flex flex-col gap-4 justify-center">
-      <span class="text-grey text-xs font-mono uppercase tracking-wide">Getting started</span>
-      <h4>Install vp globally</h4>
+      <span class="text-grey text-xs font-mono uppercase tracking-wide">Primeros pasos</span>
+      <h4>Instala vp globalmente</h4>
       <p class="max-w-[28rem] text-pretty">
-        Install Vite+ once, open a new terminal session, then run <code>vp help</code>.
+        Instala Vite+ una vez, abre una nueva sesión de terminal y ejecuta <code>vp help</code>.
       </p>
       <p class="text-sm text-grey">
-        For CI, use
+        Para CI, usa
         <a
           class="text-primary underline decoration-stroke underline-offset-4"
           href="https://github.com/voidzero-dev/setup-vp"
@@ -98,7 +98,7 @@ onBeforeUnmount(() => {
               class="size-4"
               aria-hidden="true"
             />
-            <span>{{ copiedId === card.id ? 'Copied' : 'Copy' }}</span>
+            <span>{{ copiedId === card.id ? 'Copiado' : 'Copiar' }}</span>
           </button>
         </div>
       </div>

@@ -1,49 +1,49 @@
-# Running Binaries
+# Ejecutar Binarios
 
-Use `vpx`, `vp exec`, and `vp dlx` to run binaries without switching between local installs, downloaded packages, and project-specific tools.
+Usa `vpx`, `vp exec` y `vp dlx` para ejecutar binarios sin cambiar entre instalaciones locales, paquetes descargados y herramientas específicas del proyecto.
 
-## Overview
+## Vista General
 
-`vpx` executes a command from a local or remote npm package. It can run a package that is already available locally, download a package on demand, or target an explicit package version.
+`vpx` ejecuta un comando desde un paquete npm local o remoto. Puede ejecutar un paquete que ya esté disponible localmente, descargar un paquete bajo demanda o dirigirse a una versión explícita del paquete.
 
-Use the other binary commands when you need stricter control:
+Usa los otros comandos de binarios cuando necesites un control más estricto:
 
-- `vpx` resolves a package binary locally first and can download it when needed
-- `vp exec` runs a binary from the current project's `node_modules/.bin`
-- `vp dlx` runs a package binary without adding it as a dependency
+- `vpx` resuelve primero un binario de paquete localmente y puede descargarlo cuando sea necesario.
+- `vp exec` ejecuta un binario desde el directorio `node_modules/.bin` del proyecto actual.
+- `vp dlx` ejecuta un binario de paquete sin añadirlo como dependencia.
 
 ## `vpx`
 
-Use `vpx` for running any local or remote binary:
+Usa `vpx` para ejecutar cualquier binario local o remoto:
 
 ```bash
 vpx <pkg[@version]> [args...]
 ```
 
-### Options
+### Opciones
 
-- `-p, --package <name>` installs one or more packages before running the command
-- `-c, --shell-mode` executes the command inside a shell
-- `-s, --silent` suppresses Vite+ output and only shows the command output
+- `-p, --package <nombre>` instala uno o más paquetes antes de ejecutar el comando.
+- `-c, --shell-mode` ejecuta el comando dentro de una terminal (shell).
+- `-s, --silent` suprime la salida de Vite+ y solo muestra la salida del comando.
 
-### Examples
+### Ejemplos
 
 ```bash
 vpx eslint .
 vpx create-vue my-app
 vpx typescript@5.5.4 tsc --version
-vpx -p cowsay -c 'echo "hi" | cowsay'
+vpx -p cowsay -c 'echo "hola" | cowsay'
 ```
 
 ## `vp exec`
 
-Use `vp exec` when the binary must come from the current project, for example a binary from a dependency installed in `node_modules/.bin`.
+Usa `vp exec` cuando el binario deba provenir del proyecto actual, por ejemplo, un binario de una dependencia instalada en `node_modules/.bin`.
 
 ```bash
-vp exec <command> [args...]
+vp exec <comando> [args...]
 ```
 
-Examples:
+Ejemplos:
 
 ```bash
 vp exec eslint .
@@ -52,15 +52,16 @@ vp exec tsc --noEmit
 
 ## `vp dlx`
 
-Use `vp dlx` for one-off package execution without adding the package to your project dependencies.
+Usa `vp dlx` para la ejecución única de un paquete sin añadirlo a las dependencias de tu proyecto.
 
 ```bash
-vp dlx <package> [args...]
+vp dlx <paquete> [args...]
 ```
 
-Examples:
+Ejemplos:
 
 ```bash
 vp dlx create-vite
 vp dlx typescript tsc --version
 ```
+

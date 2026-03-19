@@ -1,24 +1,24 @@
 # Dev
 
-`vp dev` starts the Vite development server.
+`vp dev` inicia el servidor de desarrollo de Vite.
 
-## Overview
+## Vista General
 
-`vp dev` runs the standard Vite development server through Vite+, so you keep the normal Vite dev experience while using the same CLI entry point as the rest of the toolchain. For more information about using and configuring the dev server, see the [Vite guide](https://vite.dev/guide/).
+`vp dev` ejecuta el servidor de desarrollo estándar de Vite a través de Vite+, por lo que mantienes la experiencia normal de desarrollo de Vite mientras usas el mismo punto de entrada CLI que el resto del toolchain. Para más información sobre cómo usar y configurar el servidor de desarrollo, consulta la [guía de Vite](https://vite.dev/guide/).
 
-## Usage
+## Uso
 
 ```bash
 vp dev
 ```
 
-## Configuration
+## Configuración
 
-Use standard Vite config in `vite.config.ts`. For the full configuration reference, see the [Vite config docs](https://vite.dev/config/).
+Usa la configuración estándar de Vite en `vite.config.ts`. Para ver la referencia de configuración completa, consulta la [documentación de configuración de Vite](https://vite.dev/config/).
 
-Use it for:
+Úsalo para:
 
 - [plugins](https://vite.dev/guide/using-plugins)
 - [aliases](https://vite.dev/config/shared-options#resolve-alias)
 - [`server`](https://vite.dev/config/server-options)
-- [environment modes](https://vite.dev/guide/env-and-mode)
+- [modos de entorno](https://vite.dev/guide/env-and-mode)

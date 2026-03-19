@@ -1,14 +1,14 @@
-# Format
+# Formatear
 
-`vp fmt` formats code with Oxfmt.
+`vp fmt` formatea el código con Oxfmt.
 
-## Overview
+## Vista General
 
-`vp fmt` is built on [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html), the Oxc formatter. Oxfmt has full Prettier compatibility and is designed as a fast drop-in replacement for Prettier.
+`vp fmt` está basado en [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html), el formateador de Oxc. Oxfmt tiene compatibilidad total con Prettier y está diseñado como un reemplazo rápido y directo para Prettier.
 
-Use `vp fmt` to format your project, and `vp check` to format, lint and type-check all at once.
+Usa `vp fmt` para formatear tu proyecto, y `vp check` para formatear, hacer lint y verificar tipos, todo a la vez.
 
-## Usage
+## Uso
 
 ```bash
 vp fmt
@@ -16,11 +16,11 @@ vp fmt --check
 vp fmt . --write
 ```
 
-## Configuration
+## Configuración
 
-Put formatting configuration directly in the `fmt` block in `vite.config.ts` so all your configuration stays in one place. We do not recommend using `.oxfmtrc.json` with Vite+.
+Coloca la configuración de formateo directamente en el bloque `fmt` en `vite.config.ts` para que toda tu configuración permanezca en un solo lugar. No recomendamos usar `.oxfmtrc.json` con Vite+.
 
-For editors, point the formatter config path at `./vite.config.ts` so format-on-save uses the same `fmt` block:
+Para los editores, apunta la ruta de configuración del formateador a `./vite.config.ts` para que la función de "formatear al guardar" use el mismo bloque `fmt`:
 
 ```json
 {
@@ -28,7 +28,7 @@ For editors, point the formatter config path at `./vite.config.ts` so format-on-
 }
 ```
 
-For the upstream formatter behavior and configuration reference, see the [Oxfmt docs](https://oxc.rs/docs/guide/usage/formatter.html).
+Para ver el comportamiento del formateador original y la referencia de configuración, consulta la [documentación de Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html).
 
 ```ts
 import { defineConfig } from 'vite-plus';
@@ -39,3 +39,4 @@ export default defineConfig({
   },
 });
 ```
+

@@ -1,30 +1,30 @@
-# Installing Dependencies
+# Instalar Dependencias
 
-`vp install` installs dependencies using the current workspace's package manager.
+`vp install` instala las dependencias usando el gestor de paquetes del espacio de trabajo (workspace) actual.
 
-## Overview
+## Vista General
 
-Use Vite+ to manage dependencies across pnpm, npm, and Yarn. Instead of switching between `pnpm install`, `npm install`, and `yarn install`, you can keep using `vp install`, `vp add`, `vp remove`, and the rest of the Vite+ package-management commands.
+Usa Vite+ para gestionar las dependencias a través de pnpm, npm y Yarn. En lugar de cambiar entre `pnpm install`, `npm install` y `yarn install`, puedes seguir usando `vp install`, `vp add`, `vp remove` y el resto de los comandos de gestión de paquetes de Vite+.
 
-Vite+ detects the package manager from the workspace root in this order:
+Vite+ detecta el gestor de paquetes desde la raíz del workspace en este orden:
 
-1. `packageManager` in `package.json`
+1. `packageManager` en el `package.json`
 2. `pnpm-workspace.yaml`
 3. `pnpm-lock.yaml`
-4. `yarn.lock` or `.yarnrc.yml`
+4. `yarn.lock` o `.yarnrc.yml`
 5. `package-lock.json`
-6. `.pnpmfile.cjs` or `pnpmfile.cjs`
+6. `.pnpmfile.cjs` o `pnpmfile.cjs`
 7. `yarn.config.cjs`
 
-If none of those files are present, `vp` falls back to `pnpm` by default. Vite+ automatically downloads the matching package manager and uses it for the command you ran.
+Si ninguno de esos archivos está presente, `vp` recurre a `pnpm` por defecto. Vite+ descarga automáticamente el gestor de paquetes correspondiente y lo utiliza para el comando que ejecutaste.
 
-## Usage
+## Uso
 
 ```bash
 vp install
 ```
 
-Common install flows:
+Flujos de instalación comunes:
 
 ```bash
 vp install
@@ -34,61 +34,61 @@ vp install --filter web
 vp install -w
 ```
 
-`vp install` maps to the correct underlying install behavior for the detected package manager, including the right lockfile flags for pnpm, npm, and Yarn.
+`vp install` se mapea al comportamiento de instalación subyacente correcto para el gestor de paquetes detectado, incluyendo los parámetros de archivo de bloqueo (lockfile) adecuados para pnpm, npm y Yarn.
 
-## Global Packages
+## Paquetes Globales
 
-Use the `-g` flag for installing, updating or removing globally installed packages:
+Usa el parámetro `-g` para instalar, actualizar o eliminar paquetes instalados globalmente:
 
-- `vp install -g <pkg>` installs a package globally
-- `vp uninstall -g <pkg>` removes a global package
-- `vp update -g [pkg]` updates one global package or all of them
-- `vp list -g [pkg]` lists global packages
+- `vp install -g <pkg>` instala un paquete globalmente.
+- `vp uninstall -g <pkg>` elimina un paquete global.
+- `vp update -g [pkg]` acredita un paquete global o todos ellos.
+- `vp list -g [pkg]` enumera los paquetes globales.
 
-## Managing Dependencies
+## Gestionar Dependencias
 
-Vite+ provides all the familiar package management commands:
+Vite+ proporciona todos los comandos familiares de gestión de paquetes:
 
-- `vp install` installs the current dependency graph for the project
-- `vp add <pkg>` adds packages to `dependencies`, use `-D` for `devDependencies`
-- `vp remove <pkg>` removes packages
-- `vp update` updates dependencies
-- `vp dedupe` reduces duplicate dependency entries where the package manager supports it
-- `vp outdated` shows available updates
-- `vp list` shows installed packages
-- `vp why <pkg>` explains why a package is present
-- `vp info <pkg>` shows registry metadata for a package
-- `vp link` and `vp unlink` manage local package links
-- `vp dlx <pkg>` runs a package binary without adding it to the project
-- `vp pm <command>` forwards a raw package-manager-specific command when you need behavior outside the normalized `vp` command set
+- `vp install` instala el grafo de dependencias actual del proyecto.
+- `vp add <pkg>` añade paquetes a `dependencies`; usa `-D` para `devDependencies`.
+- `vp remove <pkg>` elimina paquetes.
+- `vp update` actualiza las dependencias.
+- `vp dedupe` reduce las entradas de dependencias duplicadas donde el gestor de paquetes lo admita.
+- `vp outdated` muestra las actualizaciones disponibles.
+- `vp list` muestra los paquetes instalados.
+- `vp why <pkg>` explica por qué un paquete está presente.
+- `vp info <pkg>` muestra los metadatos del registro de un paquete.
+- `vp link` y `vp unlink` gestionan enlaces de paquetes locales.
+- `vp dlx <pkg>` ejecuta el binario de un paquete sin añadirlo al proyecto.
+- `vp pm <comando>` reenvía un comando bruto específico del gestor de paquetes cuando necesites un comportamiento fuera del conjunto de comandos normalizados de `vp`.
 
-### Command Guide
+### Guía de Comandos
 
 #### Install
 
-Use `vp install` when you want to install exactly what the current `package.json` and lockfile describe.
+Usa `vp install` cuando quieras instalar exactamente lo que describen el `package.json` y el lockfile actuales.
 
-- `vp install` is the standard install command
-- `vp install --frozen-lockfile` fails if the lockfile would need changes
-- `vp install --no-frozen-lockfile` allows lockfile updates explicitly
-- `vp install --lockfile-only` updates the lockfile without performing a full install
-- `vp install --prefer-offline` and `vp install --offline` prefer or require cached packages
-- `vp install --ignore-scripts` skips lifecycle scripts
-- `vp install --filter <pattern>` scopes install work in monorepos
-- `vp install -w` installs in the workspace root
+- `vp install` es el comando de instalación estándar.
+- `vp install --frozen-lockfile` falla si el lockfile necesitara cambios.
+- `vp install --no-frozen-lockfile` permite actualizaciones del lockfile de forma explícita.
+- `vp install --lockfile-only` actualiza el lockfile sin realizar una instalación completa.
+- `vp install --prefer-offline` y `vp install --offline` prefieren o requieren paquetes en caché.
+- `vp install --ignore-scripts` omite los scripts del ciclo de vida.
+- `vp install --filter <patrón>` limita el trabajo de instalación en monorepos.
+- `vp install -w` instala en la raíz del workspace.
 
-#### Global Install
+#### Instalación Global
 
-Use these commands when you want package-manager-managed tools available outside a single project.
+Usa estos comandos cuando quieras que las herramientas gestionadas por el gestor de paquetes estén disponibles fuera de un único proyecto.
 
 - `vp install -g typescript`
 - `vp uninstall -g typescript`
 - `vp update -g`
 - `vp list -g`
 
-#### Add and Remove
+#### Add y Remove
 
-Use `vp add` and `vp remove` for day-to-day dependency edits instead of editing `package.json` by hand.
+Usa `vp add` y `vp remove` para las ediciones diarias de dependencias en lugar de editar el `package.json` a mano.
 
 - `vp add react`
 - `vp add -D typescript vitest`
@@ -97,34 +97,35 @@ Use `vp add` and `vp remove` for day-to-day dependency edits instead of editing 
 - `vp remove react`
 - `vp remove --filter web react`
 
-#### Update, Dedupe, and Outdated
+#### Update, Dedupe y Outdated
 
-Use these commands to maintain the dependency graph over time.
+Usa estos comandos para mantener el grafo de dependencias a lo largo del tiempo.
 
-- `vp update` refreshes packages to newer versions
-- `vp outdated` shows which packages have newer versions available
-- `vp dedupe` asks the package manager to collapse duplicates where possible
+- `vp update` actualiza los paquetes a versiones más recientes.
+- `vp outdated` muestra qué paquetes tienen versiones más recientes disponibles.
+- `vp dedupe` pide al gestor de paquetes que colapse los duplicados donde sea posible.
 
-#### Inspect
+#### Inspeccionar
 
-Use these when you need to understand the current state of dependencies.
+Usa estos comandos cuando necesites entender el estado actual de las dependencias.
 
-- `vp list` shows installed packages
-- `vp why react` explains why `react` is installed
-- `vp info react` shows registry metadata such as versions and dist-tags
+- `vp list` muestra los paquetes instalados.
+- `vp why react` explica por qué `react` está instalado.
+- `vp info react` muestra los metadatos del registro, como versiones y dist-tags.
 
-#### Advanced
+#### Avanzado
 
-Use these when you need lower-level package-manager behavior.
+Usa estos comandos cuando necesites un comportamiento de nivel más bajo del gestor de paquetes.
 
-- `vp link` and `vp unlink` manage local development links
-- `vp dlx create-vite` runs a package binary without saving it as a dependency
-- `vp pm <command>` forwards directly to the resolved package manager
+- `vp link` y `vp unlink` gestionan enlaces de desarrollo locales.
+- `vp dlx create-vite` ejecuta el binario de un paquete sin guardarlo como dependencia.
+- `vp pm <comando>` reenvía directamente al gestor de paquetes resuelto.
 
-Examples:
+Ejemplos:
 
 ```bash
 vp pm config get registry
 vp pm cache clean --force
 vp pm exec tsc --version
 ```
+

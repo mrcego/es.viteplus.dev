@@ -7,22 +7,21 @@ import rolldownIcon from '@assets/icons/rolldown-light.svg';
     <div class="px-5 py-6 md:p-10 flex flex-col justify-between gap-15">
       <div class="flex flex-col gap-5">
         <span class="text-grey text-xs font-mono uppercase tracking-wide">Vite+ pack</span>
-        <h4 class="text-white">Library packaging with best practices baked in</h4>
+        <h4 class="text-white">Empaquetado de librerías con mejores prácticas integradas</h4>
         <p class="text-white/70 text-base max-w-[25rem] text-pretty">
-          Package TS and JS libraries for npm or build standalone app binaries with a single
-          <code class="mx-1 outline-none bg-nickel/50 text-aqua">vp pack</code> command.
+          Empaqueta librerías TS y JS para npm o construye binarios de aplicaciones independientes con un solo
+          comando <code class="mx-1 outline-none bg-nickel/50 text-aqua">vp pack</code>.
         </p>
         <ul class="checkmark-list">
           <li>
-            <code class="mx-1 outline-none bg-nickel/50 text-[#6CA1DB]">DTS</code> generation &
-            bundling
+            Generación y empaquetado de <code class="mx-1 outline-none bg-nickel/50 text-[#6CA1DB]">DTS</code>
           </li>
-          <li>Automatic package exports generation</li>
-          <li>Standalone app binaries and transform-only unbundled mode</li>
+          <li>Generación automática de exportaciones de paquetes</li>
+          <li>Binarios de aplicaciones independientes y modo sin bundle solo para transformación</li>
         </ul>
       </div>
       <div class="px-3 py-1.5 bg-slate rounded w-fit flex gap-2 items-center">
-        <span class="text-grey text-sm font-mono hidden md:inline">Powered by</span>
+        <span class="text-grey text-sm font-mono hidden md:inline">Impulsado por</span>
         <a href="https://rolldown.rs/" target="_blank">
           <figure class="project-icon">
             <img loading="lazy" :src="rolldownIcon" alt="Rolldown" class="w-[20px] h-[12px]" />
@@ -63,7 +62,7 @@ import rolldownIcon from '@assets/icons/rolldown-light.svg';
             <span class="terminal-blue">1.2 kB</span>
           </div>
           <div class="text-grey">
-            <span class="text-zest">✓</span> Pack completed in <span class="text-white">128ms</span>
+            <span class="text-zest">✓</span> Empaquetado completado en <span class="text-white">128ms</span>
           </div>
         </div>
       </div>

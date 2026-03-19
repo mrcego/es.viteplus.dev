@@ -1,8 +1,8 @@
-# Pack Config
+# Configuración de Empaquetado (Pack)
 
-`vp pack` reads tsdown settings from the `pack` block in `vite.config.ts`. See [tsdown's configuration](https://tsdown.dev/options/config-file) for details.
+`vp pack` lee la configuración de tsdown desde el bloque `pack` en `vite.config.ts`. Consulta la [configuración de tsdown](https://tsdown.dev/options/config-file) para más detalles.
 
-## Example
+## Ejemplo
 
 ```ts
 import { defineConfig } from 'vite-plus';
@@ -15,3 +15,4 @@ export default defineConfig({
   },
 });
 ```
+

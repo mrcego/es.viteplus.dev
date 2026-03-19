@@ -1,14 +1,14 @@
-# Pack
+# Empaquetado (Pack)
 
-`vp pack` builds libraries for production with [tsdown](https://tsdown.dev/guide/).
+`vp pack` construye librerías para producción con [tsdown](https://tsdown.dev/guide/).
 
-## Overview
+## Vista General
 
-`vp pack` builds libraries and standalone executables with tsdown. Use it for publishable packages and binary outputs. If you want to build a web application, use `vp build`. `vp pack` covers everything you need for building libraries out of the box, including declaration file generation, multiple output formats, source maps, and minification.
+`vp pack` construye librerías y ejecutables independientes con tsdown. Úsalo para paquetes publicables y salidas binarias. Si quieres construir una aplicación web, usa `vp build`. `vp pack` cubre todo lo que necesitas para construir librerías de forma nativa, incluyendo la generación de archivos de declaración, múltiples formatos de salida, mapas de fuente (source maps) y minificación.
 
-For more information about how tsdown works, see the official [tsdown guide](https://tsdown.dev/guide/).
+Para más información sobre cómo funciona tsdown, consulta la [guía oficial de tsdown](https://tsdown.dev/guide/).
 
-## Usage
+## Uso
 
 ```bash
 vp pack
@@ -16,18 +16,18 @@ vp pack src/index.ts --dts
 vp pack --watch
 ```
 
-## Configuration
+## Configuración
 
-Put packaging configuration directly in the `pack` block in `vite.config.ts` so all your configuration stays in one place. We do not recommend using `tsdown.config.ts` with Vite+.
+Coloca la configuración de empaquetado directamente en el bloque `pack` en `vite.config.ts` para que toda tu configuración permanezca en un solo lugar. No recomendamos usar `tsdown.config.ts` con Vite+.
 
-See the [tsdown guide](https://tsdown.dev/guide/) and the [tsdown config file docs](https://tsdown.dev/options/config-file) to learn more about how to use and configure `vp pack`.
+Consulta la [guía de tsdown](https://tsdown.dev/guide/) y la [documentación del archivo de configuración de tsdown](https://tsdown.dev/options/config-file) para aprender más sobre cómo usar y configurar `vp pack`.
 
-Use it for:
+Úsalo para:
 
-- [declaration files (`dts`)](https://tsdown.dev/options/dts)
-- [output formats](https://tsdown.dev/options/format)
-- [watch mode](https://tsdown.dev/options/watch)
-- [standalone executables](https://tsdown.dev/options/exe#executable)
+- [archivos de declaración (`dts`)](https://tsdown.dev/options/dts)
+- [formatos de salida](https://tsdown.dev/options/format)
+- [modo escucha (watch)](https://tsdown.dev/options/watch)
+- [ejecutables independientes](https://tsdown.dev/options/exe#executable)
 
 ```ts
 import { defineConfig } from 'vite-plus';
@@ -41,11 +41,11 @@ export default defineConfig({
 });
 ```
 
-## Standalone Executables
+## Ejecutables Independientes
 
-`vp pack` can also build standalone executables through tsdown's experimental [`exe` option](https://tsdown.dev/options/exe#executable).
+`vp pack` también puede construir ejecutables independientes a través de la [opción experimental `exe`](https://tsdown.dev/options/exe#executable) de tsdown.
 
-Use this when you want to ship a CLI or other Node-based tool as a native executable that runs without requiring Node.js to be installed separately.
+Usa esto cuando quieras distribuir un CLI u otra herramienta basada en Node como un ejecutable nativo que funcione sin necesidad de tener Node.js instalado por separado.
 
 ```ts
 import { defineConfig } from 'vite-plus';
@@ -58,4 +58,5 @@ export default defineConfig({
 });
 ```
 
-See the official [tsdown executable docs](https://tsdown.dev/options/exe#executable) for details about configuring custom file names, embedded assets, and cross-platform targets.
+Consulta la [documentación oficial de ejecutables de tsdown](https://tsdown.dev/options/exe#executable) para obtener detalles sobre la configuración de nombres de archivo personalizados, activos embebidos y objetivos multiplataforma.
+

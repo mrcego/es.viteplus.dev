@@ -1,8 +1,8 @@
-# Test Config
+# Configuración de Pruebas (Test)
 
-`vp test` reads Vitest settings from the `test` block in `vite.config.ts`. See [Vitest's configuration](https://vitest.dev/config/) for details.
+`vp test` lee la configuración de Vitest desde el bloque `test` en `vite.config.ts`. Consulta la [configuración de Vitest](https://vitest.dev/config/) para más detalles.
 
-## Example
+## Ejemplo
 
 ```ts
 import { defineConfig } from 'vite-plus';
@@ -16,3 +16,4 @@ export default defineConfig({
   },
 });
 ```
+

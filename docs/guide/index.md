@@ -1,10 +1,10 @@
-# Getting Started
+# Guía de Inicio
 
-Vite+ is the unified toolchain and entry point for web development. It manages your runtime, package manager, and frontend toolchain in one place by combining [Vite](https://vite.dev/), [Vitest](https://vitest.dev/), [Oxlint](https://oxc.rs/docs/guide/usage/linter.html), [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html), [Rolldown](https://rolldown.rs/), [tsdown](https://tsdown.dev/), and [Vite Task](https://github.com/voidzero-dev/vite-task).
+Vite+ es el toolchain unificado y el punto de entrada para el desarrollo web. Gestiona tu entorno de ejecución, gestor de paquetes y toolchain frontend en un solo lugar al combinar [Vite](https://vite.dev/), [Vitest](https://vitest.dev/), [Oxlint](https://oxc.rs/docs/guide/usage/linter.html), [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html), [Rolldown](https://rolldown.rs/), [tsdown](https://tsdown.dev/) y [Vite Task](https://github.com/voidzero-dev/vite-task).
 
-Vite+ ships in two parts: `vp`, the global command-line tool, and `vite-plus`, the local package installed in each project. If you already have a Vite project, use [`vp migrate`](/guide/migrate) to migrate it to Vite+, or paste our [migration prompt](/guide/migrate#migration-prompt) into your coding agent.
+Vite+ se distribuye en dos partes: `vp`, la herramienta global de línea de comandos, y `vite-plus`, el paquete local instalado en cada proyecto. Si ya tienes un proyecto Vite, usa [`vp migrate`](/guide/migrate) para migrarlo a Vite+, o pega nuestro [prompt de migración](/guide/migrate#prompt-de-migración) en tu agente de IA.
 
-## Install `vp`
+## Instalar `vp`
 
 ### macOS / Linux
 
@@ -18,76 +18,77 @@ curl -fsSL https://vite.plus | bash
 irm https://vite.plus/ps1 | iex
 ```
 
-After installation, open a new shell and run:
+Después de la instalación, abre una nueva terminal y ejecuta:
 
 ```bash
 vp help
 ```
 
 ::: info
-Vite+ will manage your global Node.js runtime and package manager. If you'd like to opt out of this behavior, run `vp env off`. If you realize Vite+ is not for you, type `vp implode`, but please [share your feedback with us](https://discord.gg/cAnsqHh5PX).
+Vite+ gestionará tu entorno de ejecución global de Node.js y el gestor de paquetes. Si deseas desactivar este comportamiento, ejecuta `vp env off`. Si te das cuenta de que Vite+ no es para ti, escribe `vp implode`, pero por favor [comparte tus comentarios con nosotros](https://discord.gg/cAnsqHh5PX).
 :::
 
-## Quick Start
+## Inicio Rápido
 
-Create a project, install dependencies, and use the default commands:
+Crea un proyecto, instala las dependencias y usa los comandos predeterminados:
 
 ```bash
-vp create # Create a new project
-vp install # Install dependencies
-vp dev # Start the dev server
-vp check # Format, lint, type-check
-vp test # Run JavaScript tests
-vp build # Build for production
+vp create # Crea un nuevo proyecto
+vp install # Instala las dependencias
+vp dev # Inicia el servidor de desarrollo
+vp check # Formateo, lint y verificación de tipos
+vp test # Ejecuta pruebas de JavaScript
+vp build # Construye para producción
 ```
 
-You can also just run `vp` on its own and use the interactive command line.
+También puedes ejecutar simplemente `vp` por sí solo y usar la línea de comandos interactiva.
 
-## Core Commands
+## Comandos Principales
 
-Vite+ can handle the entire local frontend development cycle from starting a project, developing it, checking & testing, and building it for production.
+Vite+ puede manejar todo el ciclo de desarrollo frontend local, desde iniciar un proyecto, desarrollarlo, verificarlo y probarlo, hasta construirlo para producción.
 
-### Start
+### Iniciar
 
-- [`vp create`](/guide/create) creates new apps, packages, and monorepos.
-- [`vp migrate`](/guide/migrate) moves existing projects onto Vite+.
-- [`vp config`](/guide/commit-hooks) configures commit hooks and agent integration.
-- [`vp staged`](/guide/commit-hooks) runs checks on staged files.
-- [`vp install`](/guide/install) installs dependencies with the right package manager.
-- [`vp env`](/guide/env) manages Node.js versions.
+- [`vp create`](/guide/create) crea nuevas aplicaciones, paquetes y monorepos.
+- [`vp migrate`](/guide/migrate) mueve proyectos existentes a Vite+.
+- [`vp config`](/guide/commit-hooks) configura los hooks de commit y la integración con agentes.
+- [`vp staged`](/guide/commit-hooks) ejecuta verificaciones en archivos preparados (staged).
+- [`vp install`](/guide/install) instala dependencias con el gestor de paquetes correcto.
+- [`vp env`](/guide/env) gestiona versiones de Node.js.
 
-### Develop
+### Desarrollar
 
-- [`vp dev`](/guide/dev) starts the dev server powered by Vite.
-- [`vp check`](/guide/check) runs format, lint, and type checks together.
-- [`vp lint`](/guide/lint), [`vp fmt`](/guide/fmt), and [`vp test`](/guide/test) let you run those tools directly.
+- [`vp dev`](/guide/dev) inicia el servidor de desarrollo impulsado por Vite.
+- [`vp check`](/guide/check) ejecuta el formateo, lint y verificación de tipos en conjunto.
+- [`vp lint`](/guide/lint), [`vp fmt`](/guide/fmt) y [`vp test`](/guide/test) te permiten ejecutar esas herramientas directamente.
 
-### Execute
+### Ejecutar
 
-- [`vp run`](/guide/run) runs tasks across workspaces with caching.
-- [`vp cache`](/guide/cache) clears task cache entries.
-- [`vpx`](/guide/vpx) runs binaries globally.
-- [`vp exec`](/guide/vpx) runs local project binaries.
-- [`vp dlx`](/guide/vpx) runs package binaries without adding them as dependencies.
+- [`vp run`](/guide/run) ejecuta tareas a través de los workspaces con caché.
+- [`vp cache`](/guide/cache) limpia las entradas de caché de tareas.
+- [`vpx`](/guide/vpx) ejecuta binarios globalmente.
+- [`vp exec`](/guide/vpx) ejecuta binarios locales del proyecto.
+- [`vp dlx`](/guide/vpx) ejecuta binarios de paquetes sin añadirlos como dependencias.
 
-### Build
+### Construir
 
-- [`vp build`](/guide/build) builds apps.
-- [`vp pack`](/guide/pack) builds libraries or standalone artifacts.
-- [`vp preview`](/guide/build) previews the production build locally.
+- [`vp build`](/guide/build) construye aplicaciones.
+- [`vp pack`](/guide/pack) construye librerías o artefactos independientes.
+- [`vp preview`](/guide/build) previsualiza la construcción de producción localmente.
 
-### Manage Dependencies
+### Gestionar Dependencias
 
-- [`vp add`](/guide/install), [`vp remove`](/guide/install), [`vp update`](/guide/install), [`vp dedupe`](/guide/install), [`vp outdated`](/guide/install), [`vp why`](/guide/install), and [`vp info`](/guide/install) wrap package-manager workflows.
-- [`vp pm <command>`](/guide/install) calls other package manager commands directly.
+- [`vp add`](/guide/install), [`vp remove`](/guide/install), [`vp update`](/guide/install), [`vp dedupe`](/guide/install), [`vp outdated`](/guide/install), [`vp why`](/guide/install) y [`vp info`](/guide/install) envuelven los flujos de trabajo del gestor de paquetes.
+- [`vp pm <comando>`](/guide/install) llama directamente a otros comandos del gestor de paquetes.
 
-### Maintain
+### Mantener
 
-- [`vp upgrade`](/guide/upgrade) updates the `vp` installation itself.
-- [`vp implode`](/guide/implode) removes `vp` and related Vite+ data from your machine.
+- [`vp upgrade`](/guide/upgrade) actualiza la propia instalación de `vp`.
+- [`vp implode`](/guide/implode) elimina `vp` y los datos relacionados con Vite+ de tu máquina.
 
 ::: info
-Vite+ ships with many predefined commands such as `vp build`, `vp test`, and `vp dev`. These commands are built in and cannot be changed. If you want to run a command from your `package.json` scripts, use `vp run <command>`.
+Vite+ viene con muchos comandos predefinidos como `vp build`, `vp test` y `vp dev`. Estos comandos están integrados y no se pueden cambiar. Si deseas ejecutar un comando de los scripts de tu `package.json`, usa `vp run <comando>`.
 
-[Learn more about `vp run`.](/guide/run)
+[Más información sobre `vp run`.](/guide/run)
 :::
+

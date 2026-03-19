@@ -1,84 +1,85 @@
-# Environment
+# Entorno
 
-`vp env` manages Node.js versions globally and per project.
+`vp env` gestiona las versiones de Node.js de forma global y por proyecto.
 
-## Overview
+## Vista General
 
-Managed mode is on by default, so `node`, `npm`, and related shims resolve through Vite+ and pick the right Node.js version for the current project.
+El modo gestionado está activado por defecto, por lo que `node`, `npm` y los shims relacionados se resuelven a través de Vite+ y seleccionan la versión correcta de Node.js para el proyecto actual.
 
-By default, Vite+ stores its managed runtime and related files in `~/.vite-plus`. If needed, you can override that location with `VITE_PLUS_HOME`.
+Por defecto, Vite+ almacena su entorno de ejecución gestionado y los archivos relacionados en `~/.vite-plus`. Si es necesario, puedes anular esa ubicación con `VITE_PLUS_HOME`.
 
-If you want to keep that behavior, run:
+Si quieres mantener ese comportamiento, ejecuta:
 
 ```bash
 vp env on
 ```
 
-This enables managed mode, where the shims always use the Vite+-managed Node.js installation.
+Esto habilita el modo gestionado, donde los shims siempre utilizan la instalación de Node.js gestionada por Vite+.
 
-If you do not want Vite+ to manage Node.js first, run:
+Si no quieres que Vite+ gestione Node.js primero, ejecuta:
 
 ```bash
 vp env off
 ```
 
-This switches to system-first mode, where the shims prefer your system Node.js and only fall back to the Vite+-managed runtime when needed.
+Esto cambia al modo de "sistema primero", donde los shims prefieren el Node.js de tu sistema y solo recurren al entorno de ejecución gestionado por Vite+ cuando sea necesario.
 
-## Commands
+## Comandos
 
-### Setup
+### Configuración
 
-- `vp env setup` creates or updates shims in `VITE_PLUS_HOME/bin`
-- `vp env on` enables managed mode so shims always use Vite+-managed Node.js
-- `vp env off` enables system-first mode so shims prefer system Node.js first
-- `vp env print` prints the shell snippet for the current session
+- `vp env setup` crea o acredita shims en `VITE_PLUS_HOME/bin`.
+- `vp env on` habilita el modo gestionado para que los shims siempre usen Node.js de Vite+.
+- `vp env off` habilita el modo sistema primero para que los shims prefieran Node.js del sistema.
+- `vp env print` imprime el fragmento de código de la terminal para la sesión actual.
 
-### Manage
+### Gestionar
 
-- `vp env default` sets or shows the global default Node.js version
-- `vp env pin` pins a Node.js version in the current directory
-- `vp env unpin` removes `.node-version` from the current directory
-- `vp env use` sets a Node.js version for the current shell session
-- `vp env install` installs a Node.js version
-- `vp env uninstall` removes an installed Node.js version
-- `vp env exec` runs a command with a specific Node.js version
+- `vp env default` establece o muestra la versión global predeterminada de Node.js.
+- `vp env pin` fija una versión de Node.js en el directorio actual.
+- `vp env unpin` elimina `.node-version` del directorio actual.
+- `vp env use` establece una versión de Node.js para la sesión actual de la terminal.
+- `vp env install` instala una versión de Node.js.
+- `vp env uninstall` elimina una versión instalada de Node.js.
+- `vp env exec` ejecuta un comando con una versión específica de Node.js.
 
-### Inspect
+### Inspeccionar
 
-- `vp env current` shows the current resolved environment
-- `vp env doctor` runs environment diagnostics
-- `vp env which` shows which tool path will be used
-- `vp env list` shows locally installed Node.js versions
-- `vp env list-remote` shows available Node.js versions from the registry
+- `vp env current` muestra el entorno resuelto actual.
+- `vp env doctor` ejecuta diagnósticos del entorno.
+- `vp env which` muestra qué ruta de herramienta se utilizará.
+- `vp env list` muestra las versiones de Node.js instaladas localmente.
+- `vp env list-remote` muestra las versiones de Node.js disponibles en el registro.
 
-## Project Setup
+## Configuración del Proyecto
 
-- Pin a project version with `.node-version`
-- Use `vp install`, `vp dev`, and `vp build` normally
-- Let Vite+ pick the right runtime for the project
+- Fija la versión de un proyecto con `.node-version`.
+- Usa `vp install`, `vp dev` y `vp build` normalmente.
+- Deja que Vite+ elija el entorno de ejecución adecuado para el proyecto.
 
-## Examples
+## Ejemplos
 
 ```bash
-# Setup
-vp env setup                  # Create shims for node, npm, npx
-vp env on                     # Use Vite+ managed Node.js
-vp env print                  # Print shell snippet for this session
+# Configuración
+vp env setup                  # Crear shims para node, npm, npx
+vp env on                     # Usar Node.js gestionado por Vite+
+vp env print                  # Imprimir fragmento de la terminal para esta sesión
 
-# Manage
-vp env pin lts                # Pin the project to the latest LTS release
-vp env install                # Install the version from .node-version or package.json
-vp env default lts            # Set the global default version
-vp env use 20                 # Use Node.js 20 for the current shell session
-vp env use --unset            # Remove the session override
+# Gestionar
+vp env pin lts                # Fijar el proyecto a la última versión LTS
+vp env install                # Instalar la versión de .node-version o package.json
+vp env default lts            # Establecer la versión global predeterminada
+vp env use 20                 # Usar Node.js 20 para la sesión actual de la terminal
+vp env use --unset            # Eliminar la anulación de la sesión
 
-# Inspect
-vp env current                # Show current resolved environment
-vp env current --json         # JSON output for automation
-vp env which node             # Show which node binary will be used
-vp env list-remote --lts      # List only LTS versions
+# Inspeccionar
+vp env current                # Mostrar el entorno resuelto actual
+vp env current --json         # Salida JSON para automatización
+vp env which node             # Mostrar qué binario de node se utilizará
+vp env list-remote --lts      # Enumerar solo las versiones LTS
 
-# Execute
-vp env exec --node lts npm i  # Execute npm with latest LTS
-vp env exec node -v           # Use shim mode with automatic version resolution
+# Ejecutar
+vp env exec --node lts npm i  # Ejecutar npm con la última LTS
+vp env exec node -v           # Usar el modo shim con resolución automática de versión
 ```
+

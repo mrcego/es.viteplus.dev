@@ -124,7 +124,7 @@
     "picocolors": "^1.1.1",
     "picomatch": "^4.0.3",
     "pkg-types": "^2.3.0",
-    "rolldown": "workspace:*",
+    "rolldown": "1.0.0-rc.10",
     "rolldown-plugin-dts": "catalog:",
     "rollup": "^4.18.0",
     "rollup-plugin-license": "^3.6.0",
@@ -132,7 +132,7 @@
     "tinyglobby": "^0.2.15",
     "tree-kill": "^1.2.2",
     "tsdown": "catalog:",
-    "vite": "workspace:*"
+    "vite": "8.0.1"
   },
   "peerDependencies": {
     "@arethetypeswrong/core": "^0.18.1",

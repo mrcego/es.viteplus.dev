@@ -1,50 +1,50 @@
-# Troubleshooting
+# Solución de Problemas
 
-Use this page when something in Vite+ is not behaving the way you expect.
+Usa esta página cuando algo en Vite+ no se esté comportando de la manera que esperas.
 
-::: warning
-Vite+ is still in alpha. We are making frequent changes, adding features quickly, and we want feedback to help make it great.
+::: warning ADVERTENCIA
+Vite+ aún está en versión alfa. Estamos realizando cambios frecuentes, añadiendo funciones rápidamente y queremos recibir comentarios para ayudar a que sea excelente.
 :::
 
-## Supported Tool Versions
+## Versiones de Herramientas Compatibles
 
-Vite+ expects modern upstream tool versions.
+Vite+ espera versiones modernas de las herramientas originales (upstream).
 
-- Vite 8 or newer
-- Vitest 4.1 or newer
+- Vite 8 o más reciente.
+- Vitest 4.1 o más reciente.
 
-If you are migrating an existing project and it still depends on older Vite or Vitest versions, upgrade those first before adopting Vite+.
+Si estás migrando un proyecto existente que aún depende de versiones anteriores de Vite o Vitest, actualízalas primero antes de adoptar Vite+.
 
-## `vp check` does not run type-aware lint rules or type checks
+## `vp check` no ejecuta las reglas de lint con conocimiento de tipos ni las comprobaciones de tipos
 
-- Confirm that `lint.options.typeAware` and `lint.options.typeCheck` are enabled in `vite.config.ts`
-- Check whether your `tsconfig.json` uses `compilerOptions.baseUrl`
+- Confirma que `lint.options.typeAware` y `lint.options.typeCheck` están habilitados en `vite.config.ts`.
+- Comprueba si tu `tsconfig.json` utiliza `compilerOptions.baseUrl`.
 
-The Oxlint type checker path powered by `tsgolint` does not support `baseUrl`, so Vite+ skips `typeAware` and `typeCheck` when that setting is present.
+El motor de comprobación de tipos de Oxlint, impulsado por `tsgolint`, no soporta `baseUrl`, por lo que Vite+ omite `typeAware` y `typeCheck` cuando ese ajuste está presente.
 
-## `vp build` does not run my build script
+## `vp build` no ejecuta mi script de construcción
 
-Unlike package managers, built-in commands cannot be overwritten. If you are trying to run a `package.json` script use `vp run build` instead.
+A diferencia de los gestores de paquetes, los comandos integrados no pueden ser sobrescritos. Si intentas ejecutar un script de `package.json`, utiliza `vp run build` en su lugar.
 
-For example:
+Por ejemplo:
 
-- `vp build` always runs the built-in Vite build
-- `vp test` always runs the built-in Vitest command
-- `vp run build` and `vp run test` run `package.json` scripts instead
+- `vp build` siempre ejecuta la construcción integrada de Vite.
+- `vp test` siempre ejecuta el comando integrado de Vitest.
+- `vp run build` y `vp run test` ejecutan los scripts del `package.json` en su lugar.
 
-::: info
-You can also run custom tasks defined in `vite.config.ts` and migrate away from `package.json` scripts entirely.
+::: info INFORMACIÓN
+También puedes ejecutar tareas personalizadas definidas en `vite.config.ts` y migrar por completo fuera de los scripts de `package.json`.
 :::
 
-## Staged Checks and Commit Hooks
+## Comprobaciones Staged y Hooks de Commit
 
-If `vp staged` fails or your pre-commit hook does not run:
+Si `vp staged` falla o tu hook de pre-commit no se ejecuta:
 
-- make sure `vite.config.ts` contains a `staged` block
-- run `vp config` to install hooks
-- check whether hook installation was skipped intentionally through `VITE_GIT_HOOKS=0`
+- Asegúrate de que `vite.config.ts` contenga un bloque `staged`.
+- Ejecuta `vp config` para instalar los hooks.
+- Comprueba si la instalación de hooks se omitió intencionadamente mediante `VITE_GIT_HOOKS=0`.
 
-A minimal staged config looks like this:
+Una configuración mínima de `staged` se ve así:
 
 ```ts
 import { defineConfig } from 'vite-plus';
@@ -56,16 +56,17 @@ export default defineConfig({
 });
 ```
 
-## Asking for Help
+## Pedir Ayuda
 
-If you are stuck, please reach out:
+Si te has quedado bloqueado, por favor contáctanos:
 
-- [Discord](https://discord.gg/cAnsqHh5PX) for real-time discussion and troubleshooting help
-- [GitHub](https://github.com/voidzero-dev/vite-plus) for issues, discussions, and bug reports
+- [Discord](https://discord.gg/cAnsqHh5PX) para discusiones en tiempo real y ayuda con problemas.
+- [GitHub](https://github.com/voidzero-dev/vite-plus) para incidencias, discusiones y reportes de errores.
 
-When reporting a problem, please include:
+Al informar de un problema, por favor incluye:
 
-- The full output of `vp env current` and `vp --version`
-- The package manager used by the project
-- The exact steps needed to reproduce the problem and your `vite.config.ts`
-- A minimal reproduction repository or runnable sandbox
+- La salida completa de `vp env current` y `vp --version`.
+- El gestor de paquetes utilizado por el proyecto.
+- Los pasos exactos necesarios para reproducir el problema y tu `vite.config.ts`.
+- Un repositorio con una reproducción mínima o un entorno de ejecución (sandbox).
+

@@ -1,12 +1,12 @@
-# Test
+# Pruebas (Test)
 
-`vp test` runs tests with [Vitest](https://vitest.dev).
+`vp test` ejecuta pruebas con [Vitest](https://vitest.dev).
 
-## Overview
+## Vista General
 
-`vp test` is built on [Vitest](https://vitest.dev/), so you get a Vite-native test runner that reuses your Vite config and plugins, supports Jest-style expectations, snapshots, and coverage, and handles modern ESM, TypeScript, and JSX projects cleanly.
+`vp test` está basado en [Vitest](https://vitest.dev/), por lo que obtienes un ejecutor de pruebas nativo de Vite que reutiliza tu configuración y plugins de Vite, admite expectativas de estilo Jest, instantáneas (snapshots) y cobertura, y maneja proyectos modernos de ESM, TypeScript y JSX de forma limpia.
 
-## Usage
+## Uso
 
 ```bash
 vp test
@@ -15,12 +15,12 @@ vp test run --coverage
 ```
 
 ::: info
-Unlike Vitest on its own, `vp test` does not stay in watch mode by default. Use `vp test` when you want a normal test run, and use `vp test watch` when you want to jump into watch mode.
+A diferencia de Vitest por sí solo, `vp test` no permanece en modo de observación (watch) por defecto. Usa `vp test` cuando quieras una ejecución de prueba normal y usa `vp test watch` cuando quieras entrar en modo de observación.
 :::
 
-## Configuration
+## Configuración
 
-Put test configuration directly in the `test` block in `vite.config.ts` so all your configuration stays in one place. We do not recommend using `vitest.config.ts` with Vite+.
+Coloca la configuración de prueba directamente en el bloque `test` en `vite.config.ts` para que toda tu configuración permanezca en un solo lugar. No recomendamos usar `vitest.config.ts` con Vite+.
 
 ```ts
 import { defineConfig } from 'vite-plus';
@@ -32,4 +32,4 @@ export default defineConfig({
 });
 ```
 
-For the full Vitest configuration reference, see the [Vitest config docs](https://vitest.dev/config/).
+Para ver la referencia de configuración completa de Vitest, consulta la [documentación de configuración de Vitest](https://vitest.dev/config/).

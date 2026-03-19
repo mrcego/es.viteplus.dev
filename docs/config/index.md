@@ -1,6 +1,6 @@
-# Configuring Vite+
+# Configuración de Vite+
 
-Vite+ keeps project configuration in one place: `vite.config.ts`, allowing you to consolidate many top-level configuration files in a single file. You can keep using your Vite configuration such as `server` or `build`, and add Vite+ blocks for the rest of your workflow:
+Vite+ mantiene la configuración del proyecto en un solo lugar: `vite.config.ts`, lo que te permite consolidar muchos archivos de configuración de nivel superior en un único archivo. Puedes seguir utilizando tu configuración habitual de Vite, como `server` o `build`, y añadir bloques de Vite+ para el resto de tu flujo de trabajo:
 
 ```ts
 import { defineConfig } from 'vite-plus';
@@ -19,13 +19,13 @@ export default defineConfig({
 });
 ```
 
-## Vite+ Specific Configuration
+## Configuración Específica de Vite+
 
-Vite+ extends the basic Vite configuration with these additions:
+Vite+ amplía la configuración básica de Vite con estas adiciones:
 
-- [`lint`](/config/lint) for Oxlint
-- [`fmt`](/config/fmt) for Oxfmt
-- [`test`](/config/test) for Vitest
-- [`run`](/config/run) for Vite Task
-- [`pack`](/config/pack) for tsdown
-- [`staged`](/config/staged) for staged-file checks
+- [`lint`](/config/lint) para Oxlint
+- [`fmt`](/config/fmt) para Oxfmt
+- [`test`](/config/test) para Vitest
+- [`run`](/config/run) para Vite Task
+- [`pack`](/config/pack) para tsdown
+- [`staged`](/config/staged) para comprobaciones de archivos en estado "staged"

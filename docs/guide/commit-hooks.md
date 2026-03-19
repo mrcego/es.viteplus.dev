@@ -1,23 +1,23 @@
-# Commit Hooks
+# Hooks de Commit
 
-Use `vp config` to install commit hooks, and `vp staged` to run checks on staged files.
+Usa `vp config` para instalar hooks de commit, y `vp staged` para ejecutar comprobaciones en los archivos en estado "staged".
 
-## Overview
+## Vista General
 
-Vite+ supports commit hooks and staged-file checks without additional tooling.
+Vite+ soporta hooks de commit y comprobaciones de archivos staged sin necesidad de herramientas adicionales.
 
-Use:
+Usa:
 
-- `vp config` to set up project hooks and related integrations
-- `vp staged` to run checks against the files currently staged in Git
+- `vp config` para configurar los hooks del proyecto e integraciones relacionadas.
+- `vp staged` para ejecutar comprobaciones contra los archivos actualmente marcados para commit en Git (staged).
 
-If you use [`vp create`](/guide/create) or [`vp migrate`](/guide/migrate), Vite+ prompts you to set this up for your project automatically.
+Si usas [`vp create`](/guide/create) o [`vp migrate`](/guide/migrate), Vite+ te sugerirá configurar esto automáticamente para tu proyecto.
 
-## Commands
+## Comandos
 
 ### `vp config`
 
-`vp config` configures Vite+ for the current project. It installs Git hooks, sets up the hook directory, and can also handle related project integration such as agent setup. By default, hooks are written to `.vite-hooks`:
+`vp config` configura Vite+ para el proyecto actual. Instala los hooks de Git, establece el directorio de hooks y también puede manejar integraciones de proyecto relacionadas, como la configuración de agentes. Por defecto, los hooks se escriben en `.vite-hooks`:
 
 ```bash
 vp config
@@ -26,7 +26,7 @@ vp config --hooks-dir .vite-hooks
 
 ### `vp staged`
 
-`vp staged` runs staged-file checks using the `staged` config from `vite.config.ts`. If you set up Vite+ to handle your commit hooks, it will automatically run when you commit your local changes.
+`vp staged` ejecuta comprobaciones de archivos staged utilizando la configuración `staged` de `vite.config.ts`. Si configuraste Vite+ para gestionar tus hooks de commit, se ejecutará automáticamente cuando hagas commit de tus cambios locales.
 
 ```bash
 vp staged
@@ -34,9 +34,9 @@ vp staged --verbose
 vp staged --fail-on-changes
 ```
 
-## Configuration
+## Configuración
 
-Define staged-file checks in the `staged` block in `vite.config.ts`:
+Define las comprobaciones de archivos staged en el bloque `staged` de `vite.config.ts`:
 
 ```ts
 import { defineConfig } from 'vite-plus';
@@ -48,4 +48,5 @@ export default defineConfig({
 });
 ```
 
-This is the default Vite+ approach and should replace separate `lint-staged` configuration in most projects. Because `vp staged` reads from `vite.config.ts`, your staged-file checks stay in the same place as your lint, format, test, build, and task-runner config.
+Este es el enfoque predeterminado de Vite+ y debería reemplazar la configuración separada de `lint-staged` en la mayoría de los proyectos. Debido a que `vp staged` lee de `vite.config.ts`, tus comprobaciones de archivos staged permanecen en el mismo lugar que tu configuración de lint, formato, pruebas, construcción y ejecución de tareas.
+

@@ -4,23 +4,23 @@
       <div class="flex flex-col justify-start items-center gap-4">
         <img src="/icon.svg" alt="Vite+ Logo" class="w-9" />
         <h1 class="text-center text-primary text-balance shine-text">
-          <span class="inline-block">The Unified</span>
-          <span class="inline-block">Toolchain for the Web</span>
+          <span class="inline-block">El Toolchain</span>
+          <span class="inline-block">Unificado para la Web</span>
         </h1>
         <p class="self-stretch text-center text-balance text-nickel">
-          Manage your runtime, package manager, and frontend stack with one tool.
+          Gestiona tu entorno de ejecución, gestor de paquetes y stack frontend con una sola herramienta.
         </p>
-        <p class="text-sm text-grey">Free and open source under the MIT license.</p>
+        <p class="text-sm text-grey">Gratuito y de código abierto bajo la licencia MIT.</p>
       </div>
       <div class="flex items-center gap-5">
-        <a href="/guide" target="_self" class="button button--primary"> Get started </a>
+        <a href="/guide" target="_self" class="button button--primary"> Primeros pasos </a>
         <a
           href="https://voidzero.dev/posts/announcing-vite-plus-alpha"
           target="_blank"
           rel="noopener noreferrer"
           class="button"
         >
-          Read the Announcement
+          Leer el anuncio
         </a>
       </div>
     </div>

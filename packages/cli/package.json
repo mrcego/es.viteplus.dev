@@ -343,12 +343,12 @@
     "lint-staged": "catalog:",
     "minimatch": "catalog:",
     "mri": "catalog:",
-    "rolldown": "workspace:*",
+    "rolldown": "1.0.0-rc.10",
     "rolldown-plugin-dts": "catalog:",
     "semver": "catalog:",
     "tsdown": "catalog:",
     "validate-npm-package-name": "catalog:",
-    "vite": "workspace:*",
+    "vite": "8.0.1",
     "yaml": "catalog:"
   },
   "napi": {

@@ -1,28 +1,29 @@
-# Upgrading Vite+
+# Actualizar Vite+
 
-Use `vp upgrade` to update the global `vp` binary, and use Vite+'s package management commands to update the local `vite-plus` package in a project.
+Usa `vp upgrade` para actualizar el binario global `vp`, y utiliza los comandos de gestión de paquetes de Vite+ para actualizar el paquete local `vite-plus` en un proyecto.
 
-## Overview
+## Vista General
 
-There are two parts to upgrading Vite+:
+Hay dos partes al actualizar Vite+:
 
-- The global `vp` command installed on your machine
-- The local `vite-plus` package used by an individual project
+- El comando global `vp` instalado en tu máquina.
+- El paquete local `vite-plus` utilizado por un proyecto individual.
 
-You can upgrade both of them independently.
+Puedes actualizar ambos de forma independiente.
 
-## Global `vp`
+## `vp` Global
 
 ```bash
 vp upgrade
 ```
 
-## Local `vite-plus`
+## `vite-plus` Local
 
-Update the project dependency with the package manager commands in Vite+:
+Actualiza la dependencia del proyecto con los comandos del gestor de paquetes en Vite+:
 
 ```bash
 vp update vite-plus
 ```
 
-You can also use `vp add vite-plus@latest` if you want to move the dependency explicitly to the latest version.
+También puedes usar `vp add vite-plus@latest` si quieres mover la dependencia explícitamente a la última versión.
+

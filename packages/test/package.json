@@ -310,7 +310,7 @@
     "oxfmt": "catalog:",
     "pathe": "^2.0.3",
     "picomatch": "^4.0.3",
-    "rolldown": "workspace:*",
+    "rolldown": "1.0.0-rc.10",
     "rolldown-plugin-dts": "catalog:",
     "tinyrainbow": "^3.0.3",
     "vitest-dev": "^4.1.0",

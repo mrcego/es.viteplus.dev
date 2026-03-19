@@ -11,27 +11,26 @@ import viteIcon from '@assets/icons/vite-light.svg';
     <div class="px-5 py-6 md:p-10 flex flex-col justify-between gap-15">
       <div class="flex flex-col gap-5">
         <span class="text-grey text-xs font-mono uppercase tracking-wide"
-          >Vite+ dev &amp; build</span
+          >Vite+ dev y build</span
         >
-        <h4 class="text-white">Blazingly fast builds</h4>
+        <h4 class="text-white">Construcciones increíblemente rápidas</h4>
         <p class="text-white/70 text-base max-w-[25rem] text-pretty">
-          Spin up dev servers and create production builds with extreme speed. Stay in the flow and
-          keep CI fast.
+          Inicia servidores de desarrollo y crea builds de producción con una velocidad extrema. Mantente enfocado y acelera tu CI.
         </p>
         <ul class="checkmark-list">
           <li>
-            Always instant
+            Siempre instantáneo
             <code class="mr-1 outline-none bg-nickel/50 text-vite"
               >Hot Module Replacement (HMR)</code
             >
           </li>
-          <li>40× faster production build than webpack</li>
-          <li>Opt-in full-bundle dev mode for large apps</li>
-          <li>Huge ecosystem of plugins</li>
+          <li>Build de producción 40 veces más rápido que webpack</li>
+          <li>Modo dev de bundle completo opcional para aplicaciones grandes</li>
+          <li>Enorme ecosistema de plugins</li>
         </ul>
       </div>
       <div class="px-3 py-1.5 bg-slate rounded w-fit flex gap-2 items-center">
-        <span class="text-grey text-sm font-mono hidden md:inline">Powered by</span>
+        <span class="text-grey text-sm font-mono hidden md:inline">Impulsado por</span>
         <a href="https://vite.dev/" target="_blank">
           <figure class="project-icon">
             <img loading="lazy" :src="viteIcon" alt="Vite" class="w-[20px] h-[12px]" />
@@ -55,10 +54,10 @@ import viteIcon from '@assets/icons/vite-light.svg';
           <div class="text-white">$ vp build</div>
           <div class="h-4" />
           <div class="text-grey">
-            VITE+ <span class="terminal-blue">building for production</span>
+            VITE+ <span class="terminal-blue">construyendo para producción</span>
           </div>
           <div class="text-grey">
-            <span class="text-zest">✓</span> Transformed <span class="text-white">128 modules</span>
+            <span class="text-zest">✓</span> Transformados <span class="text-white">128 módulos</span>
           </div>
           <div class="h-4" />
           <div class="text-grey">
@@ -77,7 +76,7 @@ import viteIcon from '@assets/icons/vite-light.svg';
             <span class="terminal-blue">46.2 kB</span>
           </div>
           <div class="text-grey">
-            <span class="text-zest">✓</span> Built in <span class="text-white">421ms</span>
+            <span class="text-zest">✓</span> Construido en <span class="text-white">421ms</span>
           </div>
         </div>
       </div>

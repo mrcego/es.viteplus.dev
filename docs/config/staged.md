@@ -1,8 +1,8 @@
-# Staged Config
+# Configuración de Archivos Staged
 
-`vp staged` and `vp config` read staged-file rules from the `staged` block in `vite.config.ts`. See the [Commit hooks guide](/guide/commit-hooks).
+`vp staged` y `vp config` leen las reglas de archivos en estado "staged" desde el bloque `staged` en `vite.config.ts`. Consulta la [guía de hooks de commit](/guide/commit-hooks).
 
-## Example
+## Ejemplo
 
 ```ts
 import { defineConfig } from 'vite-plus';
@@ -13,3 +13,4 @@ export default defineConfig({
   },
 });
 ```
+

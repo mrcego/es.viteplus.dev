@@ -1,10 +1,10 @@
-# Run
+# Ejecutar (Run)
 
-`vp run` runs `package.json` scripts and tasks defined in `vite.config.ts`. It works like `pnpm run`, with caching, dependency ordering, and workspace-aware execution built in.
+`vp run` ejecuta tareas y scripts de `package.json` definidos en `vite.config.ts`. Funciona como `pnpm run`, con caché, orden de dependencias y ejecución consciente del workspace de forma integrada.
 
-## Overview
+## Vista General
 
-Use `vp run` with existing `package.json` scripts:
+Usa `vp run` con scripts de `package.json` existentes:
 
 ```json [package.json]
 {
@@ -15,7 +15,7 @@ Use `vp run` with existing `package.json` scripts:
 }
 ```
 
-`vp run build` executes the associated build script:
+`vp run build` ejecuta el script de construcción asociado:
 
 ```
 $ node compile-legacy-app.js
@@ -25,7 +25,7 @@ building legacy app for production...
 ✓ built in 69s
 ```
 
-Use `vp run` without a task name to use the interactive task runner:
+Usa `vp run` sin un nombre de tarea para usar el ejecutor interactivo de tareas:
 
 ```
 Select a task (↑/↓, Enter to run, Esc to clear):
@@ -34,9 +34,9 @@ Select a task (↑/↓, Enter to run, Esc to clear):
     test: jest
 ```
 
-## Caching
+## Caché
 
-`package.json` scripts are not cached by default. Use `--cache` to enable caching:
+Los scripts de `package.json` no se almacenan en caché por defecto. Usa `--cache` para habilitar el almacenamiento en caché:
 
 ```bash
 vp run --cache build
@@ -47,7 +47,7 @@ $ node compile-legacy-app.js
 ✓ built in 69s
 ```
 
-If nothing changes, the output is replayed from the cache on the next run:
+Si nada cambia, la salida se reproduce desde el caché en la siguiente ejecución:
 
 ```
 $ node compile-legacy-app.js ✓ cache hit, replaying
@@ -57,15 +57,15 @@ $ node compile-legacy-app.js ✓ cache hit, replaying
 vp run: cache hit, 69s saved.
 ```
 
-If an input changes, the task runs again:
+Si un archivo de entrada cambia, la tarea se ejecuta de nuevo:
 
 ```
 $ node compile-legacy-app.js ✗ cache miss: 'legacy/index.js' modified, executing
 ```
 
-## Task Definitions
+## Definiciones de Tareas
 
-Vite Task automatically tracks which files your command uses. You can define tasks directly in `vite.config.ts` to enable caching by default or control which files and environment variables affect cache behavior.
+Vite Task rastrea automáticamente qué archivos utiliza tu comando. Puedes definir tareas directamente en `vite.config.ts` para habilitar el caché por defecto o controlar qué archivos y variables de entorno afectan al comportamiento del caché.
 
 ```ts
 import { defineConfig } from 'vite-plus';
@@ -88,96 +88,96 @@ export default defineConfig({
 });
 ```
 
-If you want to run an existing `package.json` script as-is, use `vp run <script>`. If you want task-level caching, dependencies, or environment/input controls, define a task with an explicit `command`. A task name can come from `vite.config.ts` or `package.json`, but not both.
+Si deseas ejecutar un script de `package.json` existente tal cual, usa `vp run <script>`. Si deseas caché a nivel de tarea, dependencias o controles de entorno/entrada, define una tarea con un `command` explícito. El nombre de una tarea puede provenir de `vite.config.ts` o `package.json`, pero no de ambos.
 
 ::: info
-Tasks defined in `vite.config.ts` are cached by default. `package.json` scripts are not. See [When Is Caching Enabled?](/guide/cache#when-is-caching-enabled) for the full resolution order.
+Las tareas definidas en `vite.config.ts` se almacenan en caché por defecto. Los scripts de `package.json` no. Consulta [¿Cuándo se habilita el caché?](/guide/cache#¿cuándo-se-habilita-el-caché?) para ver el orden de resolución completo.
 :::
 
-See [Run Config](/config/run) for the full `run` block reference.
+Consulta [Configuración de Ejecución](/config/run) para ver la referencia completa del bloque `run`.
 
-## Task Dependencies
+## Dependencias de Tareas
 
-Use [`dependsOn`](#depends-on) to run tasks in the right order. Running `vp run deploy` with the config above runs `build` and `test` first. Dependencies can also target other packages in the same project with the `package#task` notation:
+Usa [`dependsOn`](#depends-on) para ejecutar tareas en el orden correcto. Ejecutar `vp run deploy` con la configuración anterior ejecuta primero `build` y `test`. Las dependencias también pueden dirigirse a otros paquetes en el mismo proyecto con la notación `paquete#tarea`:
 
 ```ts
 dependsOn: ['@my/core#build', '@my/utils#lint'];
 ```
 
-## Running in a Workspace
+## Ejecutar en un Workspace
 
-With no package-selection flags, `vp run` runs the task in the package in your current working directory:
+Sin parámetros de selección de paquetes, `vp run` ejecuta la tarea en el paquete de tu directorio de trabajo actual:
 
 ```bash
 cd packages/app
 vp run build
 ```
 
-You can also target a package explicitly from anywhere:
+También puedes dirigirte a un paquete explícitamente desde cualquier lugar:
 
 ```bash
 vp run @my/app#build
 ```
 
-Workspace package ordering is based on the normal monorepo dependency graph declared in each package's `package.json`. In other words, when Vite+ talks about package dependencies, it means the regular `dependencies` relationships between workspace packages, not a separate task-runner-specific graph.
+El orden de los paquetes del workspace se basa en el grafo de dependencias normal del monorepo declarado en el `package.json` de cada paquete. En otras palabras, cuando Vite+ habla de dependencias de paquetes, se refiere a las relaciones de `dependencies` regulares entre los paquetes del workspace, no a un grafo separado específico del ejecutor de tareas.
 
-### Recursive (`-r`)
+### Recursivo (`-r`)
 
-Run the task in every workspace package, in dependency order:
+Ejecuta la tarea en cada paquete del workspace, en su orden de dependencia:
 
 ```bash
 vp run -r build
 ```
 
-That dependency order comes from the workspace packages referenced through `package.json` dependencies.
+Ese orden de dependencia proviene de los paquetes del workspace referenciados a través de las dependencias del `package.json`.
 
-### Transitive (`-t`)
+### Transitivo (`-t`)
 
-Run the task in one package and all of its dependencies:
+Ejecuta la tarea en un paquete y en todas sus dependencias:
 
 ```bash
 vp run -t @my/app#build
 ```
 
-If `@my/app` depends on `@my/utils`, which depends on `@my/core`, this runs all three in order. Vite+ resolves that chain from the normal workspace package dependencies declared in `package.json`.
+Si `@my/app` depende de `@my/utils`, que a su vez depende de `@my/core`, esto ejecuta los tres en orden. Vite+ resuelve esa cadena desde las dependencias normales de los paquetes del workspace declaradas en `package.json`.
 
-### Filter (`--filter`)
+### Filtro (`--filter`)
 
-Select packages by name, directory, or glob pattern. The syntax matches pnpm's `--filter`:
+Selecciona paquetes por nombre, directorio o patrón glob. La sintaxis coincide con la de `--filter` de pnpm:
 
 ```bash
-# By name
+# Por nombre
 vp run --filter @my/app build
 
-# By glob
+# Por glob
 vp run --filter "@my/*" build
 
-# By directory
+# Por directorio
 vp run --filter ./packages/app build
 
-# Include dependencies
+# Incluir dependencias
 vp run --filter "@my/app..." build
 
-# Include dependents
+# Incluir dependientes
 vp run --filter "...@my/core" build
 
-# Exclude packages
+# Excluir paquetes
 vp run --filter "@my/*" --filter "!@my/utils" build
 ```
 
-Multiple `--filter` flags are combined as a union. Exclusion filters are applied after all inclusions.
+Múltiples parámetros `--filter` se combinan como una unión. Los filtros de exclusión se aplican después de todas las inclusiones.
 
-### Workspace Root (`-w`)
+### Raíz del Workspace (`-w`)
 
-Explicitly run the task in the workspace root package:
+Ejecuta explícitamente la tarea en el paquete de la raíz del workspace:
 
 ```bash
 vp run -w build
 ```
 
-## Compound Commands
+## Comandos Compuestos
 
-Commands joined with `&&` are split into independent sub-tasks. Each sub-task is cached separately when [caching is enabled](/guide/cache#when-is-caching-enabled). This works for both `vite.config.ts` tasks and `package.json` scripts:
+Los comandos unidos con `&&` se dividen en subtareas independientes. Cada subtarea se almacena en caché por separado cuando el [caché está habilitado](/guide/cache#¿cuándo-se-habilita-el-caché?). Esto funciona tanto para tareas de `vite.config.ts` como para scripts de `package.json`:
 
 ```json [package.json]
 {
@@ -187,7 +187,7 @@ Commands joined with `&&` are split into independent sub-tasks. Each sub-task is
 }
 ```
 
-Now, run `vp run --cache check`:
+Ahora, ejecuta `vp run --cache check`:
 
 ```
 $ vp lint
@@ -200,7 +200,7 @@ $ vp build
 vp run: 0/2 cache hit (0%).
 ```
 
-Each sub-task has its own cache entry. If only `.ts` files changed but lint still passes, only `vp build` runs again the next time `vp run --cache check` is called:
+Cada subtarea tiene su propia entrada de caché. Si solo cambiaron los archivos `.ts` pero lint aún pasa, solo `vp build` se ejecutará de nuevo la próxima vez que se llame a `vp run --cache check`:
 
 ```
 $ vp lint ✓ cache hit, replaying
@@ -211,9 +211,9 @@ $ vp build ✗ cache miss: 'src/index.ts' modified, executing
 vp run: 1/2 cache hit (50%), 120ms saved.
 ```
 
-### Nested `vp run`
+### `vp run` Anidado
 
-When a command contains `vp run`, Vite Task inlines it as separate tasks instead of spawning a nested process. Each sub-task is cached independently and output stays flat:
+Cuando un comando contiene `vp run`, Vite Task lo integra como tareas separadas en lugar de generar un proceso anidado. Cada subtarea se almacena en caché de forma independiente y la salida se mantiene plana:
 
 ```json [package.json]
 {
@@ -223,19 +223,19 @@ When a command contains `vp run`, Vite Task inlines it as separate tasks instead
 }
 ```
 
-Running `vp run ci` expands into three tasks:
+Ejecutar `vp run ci` se expande en tres tareas:
 
 ```mermaid
 graph LR
   lint --> test --> build
 ```
 
-Flags also work inside nested scripts. For example, `vp run -r build` inside a script expands into individual build tasks for every package.
+Los parámetros también funcionan dentro de los scripts anidados. Por ejemplo, `vp run -r build` dentro de un script se expande en tareas de construcción individuales para cada paquete.
 
 ::: info
-A common monorepo pattern is a root script that runs a task recursively:
+Un patrón común en monorepos es un script en la raíz que ejecuta una tarea de forma recursiva:
 
-```json [package.json (root)]
+```json [package.json (raíz)]
 {
   "scripts": {
     "build": "vp run -r build"
@@ -243,14 +243,14 @@ A common monorepo pattern is a root script that runs a task recursively:
 }
 ```
 
-This creates a potential recursion: root's `build` -> `vp run -r build` -> includes root's `build` -> ...
+Esto crea una potencial recursión: `build` de la raíz -> `vp run -r build` -> incluye `build` de la raíz -> ...
 
-Vite Task detects this and prunes the self-reference automatically, so other packages build normally.
+Vite Task detecta esto y poda la autorreferencia automáticamente, para que los demás paquetes se construyan normalmente.
 :::
 
-## Execution Summary
+## Resumen de Ejecución
 
-Use `-v` to show a detailed execution summary:
+Usa `-v` para mostrar un resumen de ejecución detallado:
 
 ```bash
 vp run -r -v build
@@ -258,35 +258,36 @@ vp run -r -v build
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    Vite+ Task Runner • Execution Summary
+    Vite+ Task Runner • Resumen de Ejecución
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Statistics:   3 tasks • 3 cache hits • 0 cache misses
-Performance:  100% cache hit rate, 468ms saved in total
+Estadísticas:  3 tareas • 3 aciertos de caché • 0 fallos de caché
+Rendimiento:   100% de tasa de aciertos, 468ms ahorrados en total
 
-Task Details:
+Detalles de Tarea:
 ────────────────────────────────────────────────
   [1] @my/core#build: ~/packages/core$ vp build ✓
-      → Cache hit - output replayed - 200ms saved
+      → Acierto de caché - salida reproducida - 200ms ahorrados
   ·······················································
   [2] @my/utils#build: ~/packages/utils$ vp build ✓
-      → Cache hit - output replayed - 150ms saved
+      → Acierto de caché - salida reproducida - 1500ms ahorrados
   ·······················································
   [3] @my/app#build: ~/packages/app$ vp build ✓
-      → Cache hit - output replayed - 118ms saved
+      → Acierto de caché - salida reproducida - 118ms ahorrados
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-Use `--last-details` to show the summary from the last run without running tasks again:
+Usa `--last-details` para mostrar el resumen de la última ejecución sin volver a ejecutar las tareas:
 
 ```bash
 vp run --last-details
 ```
 
-## Additional Arguments
+## Argumentos Adicionales
 
-Arguments after the task name are passed through to the task command:
+Los argumentos después del nombre de la tarea se pasan al comando de la tarea:
 
 ```bash
 vp run test --reporter verbose
 ```
+

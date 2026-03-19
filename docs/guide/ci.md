@@ -1,12 +1,12 @@
-# Continuous Integration
+# Integración Continua (CI)
 
-You can use `voidzero-dev/setup-vp` to use Vite+ in CI environments.
+Puedes utilizar `voidzero-dev/setup-vp` para usar Vite+ en entornos de CI.
 
-## Overview
+## Vista General
 
-For GitHub Actions, the recommended setup is [`voidzero-dev/setup-vp`](https://github.com/voidzero-dev/setup-vp). It installs Vite+, sets up the required Node.js version and package manager, and can cache package installs automatically.
+Para GitHub Actions, la configuración recomendada es [`voidzero-dev/setup-vp`](https://github.com/voidzero-dev/setup-vp). Instala Vite+, configura la versión de Node.js requerida y el gestor de paquetes, y puede cachear las instalaciones de paquetes automáticamente.
 
-That means you usually do not need separate `setup-node`, package-manager setup, and manual dependency-cache steps in your workflow.
+Esto significa que normalmente no necesitas pasos separados de `setup-node`, configuración del gestor de paquetes y pasos manuales de caché de dependencias en tu flujo de trabajo.
 
 ## GitHub Actions
 
@@ -21,13 +21,13 @@ That means you usually do not need separate `setup-node`, package-manager setup,
 - run: vp build
 ```
 
-With `cache: true`, `setup-vp` handles dependency caching for you automatically.
+Con `cache: true`, `setup-vp` gestiona el almacenamiento en caché de dependencias por ti de forma automática.
 
-## Simplifying Existing Workflows
+## Simplificando Flujos de Trabajo Existentes
 
-If you are migrating an existing GitHub Actions workflow, you can often replace large blocks of Node, package-manager, and cache setup with a single `setup-vp` step.
+Si estás migrando un flujo de trabajo de GitHub Actions existente, a menudo puedes reemplazar grandes bloques de configuración de Node, gestor de paquetes y caché con un único paso `setup-vp`.
 
-#### Before:
+#### Antes:
 
 ```yaml
 - uses: actions/setup-node@v4
@@ -38,7 +38,7 @@ If you are migrating an existing GitHub Actions workflow, you can often replace 
   with:
     version: 10
 
-- name: Get pnpm store path
+- name: Obtener ruta del almacén de pnpm
   run: pnpm store path
 
 - uses: actions/cache@v4
@@ -50,7 +50,7 @@ If you are migrating an existing GitHub Actions workflow, you can often replace 
 - run: pnpm test
 ```
 
-#### After:
+#### Después:
 
 ```yaml
 - uses: voidzero-dev/setup-vp@v1
@@ -62,3 +62,4 @@ If you are migrating an existing GitHub Actions workflow, you can often replace 
 - run: vp check
 - run: vp test
 ```
+

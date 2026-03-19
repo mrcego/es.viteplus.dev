@@ -1,88 +1,89 @@
-# Creating a Project
+# Crear un Proyecto
 
-`vp create` interactively scaffolds new Vite+ projects, monorepos, and apps inside existing workspaces.
+`vp create` estructura de forma interactiva nuevos proyectos, monorepos y aplicaciones de Vite+ dentro de workspaces existentes.
 
-## Overview
+## Vista General
 
-The `create` command is the fastest way to start with Vite+. It can be used in a few different ways:
+El comando `create` es la forma más rápida de empezar con Vite+. Se puede utilizar de varias formas distintas:
 
-- Start a new Vite+ monorepo
-- Create a new standalone application or library
-- Add a new app or library inside an existing project
+- Iniciar un nuevo monorepo de Vite+.
+- Crear una nueva aplicación o librería independiente.
+- Añadir una nueva aplicación o librería dentro de un proyecto existente.
 
-This command can be used with built-in templates, community templates, or remote GitHub templates.
+Este comando se puede utilizar con plantillas integradas, plantillas de la comunidad o plantillas remotas de GitHub.
 
-## Usage
+## Uso
 
 ```bash
 vp create
-vp create <template>
-vp create <template> -- <template-options>
+vp create <plantilla>
+vp create <plantilla> -- <opciones-de-la-plantilla>
 ```
 
-## Built-in Templates
+## Plantillas Integradas
 
-Vite+ ships with these built-in templates:
+Vite+ incluye estas plantillas integradas:
 
-- `vite:monorepo` creates a new monorepo
-- `vite:application` creates a new application
-- `vite:library` creates a new library
-- `vite:generator` creates a new generator
+- `vite:monorepo` crea un nuevo monorepo.
+- `vite:application` crea una nueva aplicación.
+- `vite:library` crea una nueva librería.
+- `vite:generator` crea un nuevo generador.
 
-## Template Sources
+## Fuentes de Plantillas
 
-`vp create` is not limited to the built-in templates.
+`vp create` no se limita a las plantillas integradas.
 
-- Use shorthand templates like `vite`, `@tanstack/start`, `svelte`, `next-app`, `nuxt`, `react-router`, and `vue`
-- Use full package names like `create-vite` or `create-next-app`
-- Use local templates such as `./tools/create-ui-component` or `@acme/generator-*`
-- Use remote templates such as `github:user/repo` or `https://github.com/user/template-repo`
+- Usa atajos para plantillas como `vite`, `@tanstack/start`, `svelte`, `next-app`, `nuxt`, `react-router` y `vue`.
+- Usa nombres completos de paquetes como `create-vite` o `create-next-app`.
+- Usa plantillas locales como `./tools/create-ui-component` o `@acme/generator-*`.
+- Usa plantillas remotas como `github:usuario/repo` o `https://github.com/usuario/template-repo`.
 
-Run `vp create --list` to see the built-in templates and the common shorthand templates Vite+ recognizes.
+Ejecuta `vp create --list` para ver las plantillas integradas y los atajos comunes que reconoce Vite+.
 
-## Options
+## Opciones
 
-- `--directory <dir>` writes the generated project into a specific target directory
-- `--agent <name>` creates agent instructions files during scaffolding
-- `--editor <name>` writes editor config files
-- `--hooks` enables pre-commit hook setup
-- `--no-hooks` skips hook setup
-- `--no-interactive` runs without prompts
-- `--verbose` shows detailed scaffolding output
-- `--list` prints the available built-in and popular templates
+- `--directory <dir>` escribe el proyecto generado en un directorio de destino específico.
+- `--agent <nombre>` crea archivos de instrucciones para agentes durante la creación.
+- `--editor <nombre>` escribe archivos de configuración del editor.
+- `--hooks` habilita la configuración de hooks de pre-commit.
+- `--no-hooks` omite la configuración de hooks.
+- `--no-interactive` se ejecuta sin preguntas.
+- `--verbose` muestra una salida detallada de la creación.
+- `--list` imprime las plantillas integradas y populares disponibles.
 
-## Template Options
+## Opciones de Plantilla
 
-Arguments after `--` are passed directly to the selected template.
+Los argumentos después de `--` se pasan directamente a la plantilla seleccionada.
 
-This matters when the template itself accepts flags. For example, you can forward Vite template selection like this:
+Esto es importante cuando la propia plantilla acepta parámetros. Por ejemplo, puedes pasar la selección de plantilla de Vite así:
 
 ```bash
 vp create vite -- --template react-ts
 ```
 
-## Examples
+## Ejemplos
 
 ```bash
-# Interactive mode
+# Modo interactivo
 vp create
 
-# Create a Vite+ monorepo, application, library, or generator
+# Crear un monorepo, aplicación, librería o generador de Vite+
 vp create vite:monorepo
 vp create vite:application
 vp create vite:library
 vp create vite:generator
 
-# Use shorthand community templates
+# Usar atajos para plantillas de la comunidad
 vp create vite
 vp create @tanstack/start
 vp create svelte
 
-# Use full package names
+# Usar nombres completos de paquetes
 vp create create-vite
 vp create create-next-app
 
-# Use remote templates
-vp create github:user/repo
-vp create https://github.com/user/template-repo
+# Usar plantillas remotas
+vp create github:usuario/repo
+vp create https://github.com/usuario/template-repo
 ```
+

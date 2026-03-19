@@ -1,39 +1,40 @@
-# Why Vite+?
+# ¿Por qué Vite+?
 
-Working in the JavaScript ecosystem today, developers need a runtime such as Node.js, a package manager like pnpm, a dev server, a linter, a formatter, a test runner, a bundler, a task runner, and a growing number of config files.
+En el ecosistema de JavaScript actual, los desarrolladores necesitan un entorno de ejecución como Node.js, un gestor de paquetes como pnpm, un servidor de desarrollo, un linter, un formateador, un ejecutor de pruebas, un empaquetador, un ejecutor de tareas y un número creciente de archivos de configuración.
 
-Vite showed that frontend tooling could become dramatically faster by rethinking the architecture instead of accepting the status quo. Vite+ applies that same idea to the rest of the local development workflow, and unifies them all into a single package that speeds up and simplifies development.
+Vite demostró que las herramientas frontend podrían volverse drásticamente más rápidas repensando la arquitectura en lugar de aceptar el statu quo. Vite+ aplica esa misma idea al resto del flujo de trabajo de desarrollo local y los unifica todos en un único paquete que acelera y simplifica el desarrollo.
 
-## The Problem Vite+ is Solving
+## El problema que Vite+ está resolviendo
 
-The JavaScript tooling ecosystem has seen its fair share of fragmentation and churn. Web apps keep getting larger, and as a result tooling performance, complexity, and inconsistencies have become real bottlenecks as projects grow.
+El ecosistema de herramientas de JavaScript ha visto su buena dosis de fragmentación y cambios constantes. Las aplicaciones web siguen creciendo y, como resultado, el rendimiento, la complejidad y las inconsistencias de las herramientas se han convertido en verdaderos cuellos de botella a medida que los proyectos crecen.
 
-These bottlenecks are amplified in organizations with multiple teams, each using a different tooling stack. Dependency management, build infrastructure, and code quality become fragmented responsibilities, handled team by team and often not owned as a priority by anyone. As a result, dependencies drift out of sync, builds get slower, and code quality declines. Fixing those problems later requires significantly more effort, slows everyone down, and pulls teams away from shipping product.
+Estos cuellos de botella se amplifican en organizaciones con múltiples equipos, cada uno usando una pila de herramientas diferente. La gestión de dependencias, la infraestructura de construcción y la calidad del código se convierten en responsabilidades fragmentadas, manejadas equipo por equipo y a menudo no asumidas como una prioridad por nadie. Como resultado, las dependencias se desincronizan, las construcciones se vuelven más lentas y la calidad del código disminuye. Arreglar esos problemas más tarde requiere significativamente más esfuerzo, ralentiza a todos y aparta a los equipos del desarrollo de productos.
 
-## What's Included in Vite+
+## Qué se incluye en Vite+
 
-Vite+ brings the tools needed for modern web development together into a single, integrated toolchain. Instead of assembling and maintaining a custom toolchain, Vite+ provides a consistent entry point that manages the runtime, dependencies, development server, code quality checks, testing, and builds in one place.
+Vite+ reúne las herramientas necesarias para el desarrollo web moderno en un único toolchain integrado. En lugar de ensamblar y mantener un toolchain personalizado, Vite+ proporciona un punto de entrada consistente que gestiona el entorno de ejecución, las dependencias, el servidor de desarrollo, las verificaciones de calidad del código, las pruebas y las construcciones en un solo lugar.
 
-- **[Vite](https://vite.dev/)** and **[Rolldown](https://rolldown.rs/)** for development and application builds
-- **[Vitest](https://vitest.dev/)** for testing
-- **[Oxlint](https://oxc.rs/docs/guide/usage/linter.html)** and **[Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html)** for linting and formatting
-- **[tsdown](https://tsdown.dev/)** for library builds or standalone executables
-- **[Vite Task](https://github.com/voidzero-dev/vite-task)** for task orchestration
+- **[Vite](https://vite.dev/)** y **[Rolldown](https://rolldown.rs/)** para el desarrollo y la construcción de aplicaciones.
+- **[Vitest](https://vitest.dev/)** para las pruebas.
+- **[Oxlint](https://oxc.rs/docs/guide/usage/linter.html)** y **[Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html)** para el linting y formateo.
+- **[tsdown](https://tsdown.dev/)** para la construcción de librerías o ejecutables independientes.
+- **[Vite Task](https://github.com/voidzero-dev/vite-task)** para la orquestación de tareas.
 
-In practice, this means developers interact with one consistent workflow: `vp dev`, `vp check`, `vp test`, and `vp build`.
+En la práctica, esto significa que los desarrolladores interactúan con un flujo de trabajo consistente: `vp dev`, `vp check`, `vp test` y `vp build`.
 
-This unified toolchain reduces configuration overhead, improves performance, and makes it easier for teams to maintain consistent tooling across projects.
+Este toolchain unificado reduce la sobrecarga de configuración, mejora el rendimiento y facilita a los equipos el mantenimiento de herramientas consistentes en todos los proyectos.
 
-## Fast and Scalable by Default
+## Rápido y escalable por defecto
 
-Vite+ is built on top of modern tooling such as Vite, Rolldown, Oxc, Vitest, and Vite Task to keep your projects fast and scalable as your codebase grows. By using Rust, we can speed up common tasks by [10× or sometimes even by 100×](https://voidzero.dev/posts/announcing-vite-plus-alpha#performance-scale). However, many Rust-based toolchains are incompatible with existing tools, or aren't extensible using JavaScript.
+Vite+ está construido sobre herramientas modernas como Vite, Rolldown, Oxc, Vitest y Vite Task para mantener tus proyectos rápidos y escalables a medida que tu base de código crece. Al usar Rust, podemos acelerar las tareas comunes por [10 veces o a veces incluso por 100 veces](https://voidzero.dev/posts/announcing-vite-plus-alpha#performance-scale). Sin embargo, muchos toolchains basados en Rust son incompatibles con las herramientas existentes o no son extensibles usando JavaScript.
 
-Vite+ bridges Rust to JavaScript via [NAPI-RS](https://napi.rs/) which allows it to provide a familiar, easy-to-configure, and extensible interface in JavaScript with a great ecosystem-compatible developer experience.
+Vite+ conecta Rust con JavaScript a través de [NAPI-RS](https://napi.rs/), lo que le permite proporcionar una interfaz familiar, fácil de configurar y extensible en JavaScript con una excelente experiencia de desarrollador compatible con el ecosistema.
 
-Unifying the toolchain has performance benefits beyond just using faster tools on their own. For example, many developers set up their linter with "type aware" tools, requiring a full-typecheck to be run during the linting stage. With `vp check` you can format, lint, and type-check your code all in a single pass, speeding up static checks by 2× compared to running type-aware lint rules and type-checks separately.
+Unificar el toolchain tiene beneficios de rendimiento más allá de simplemente usar herramientas más rápidas por sí solas. Por ejemplo, muchos desarrolladores configuran su linter con herramientas "conscientes del tipo" (type aware), lo que requiere que se ejecute una verificación de tipos completa durante la etapa de linting. Con `vp check` puedes formatear, hacer lint y verificar los tipos de tu código, todo en una sola pasada, acelerando las verificaciones estáticas el doble en comparación con ejecutar las reglas de lint conscientes del tipo y las verificaciones de tipos por separado.
 
-## Fully Open Source
+## Totalmente Open Source
 
-Vite+ is fully open source and not a new framework or locked-down platform. Vite+ integrates with the existing Vite ecosystem and the frameworks built on top of it, including React, Vue, Svelte, and others. It can use pnpm, npm, or Yarn, and manages the Node.js runtime for you.
+Vite+ es totalmente de código abierto y no es un nuevo framework ni una plataforma cerrada. Vite+ se integra con el ecosistema de Vite existente y los frameworks construidos sobre él, incluyendo React, Vue, Svelte y otros. Puede usar pnpm, npm o Yarn, y gestiona el entorno de ejecución de Node.js por ti.
 
-We always welcome contributions from the community. See our [Contributing Guidelines](https://github.com/voidzero-dev/vite-plus/blob/main/CONTRIBUTING.md) to get involved.
+Siempre damos la bienvenida a las contribuciones de la comunidad. Consulta nuestras [Guías de Contribución](https://github.com/voidzero-dev/vite-plus/blob/main/CONTRIBUTING.md) para involucrarte.
+

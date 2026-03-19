@@ -1,22 +1,22 @@
-# Task Caching
+# Caché de Tareas
 
-Vite Task can automatically track dependencies and cache tasks run through `vp run`.
+Vite Task puede rastrear automáticamente las dependencias y almacenar en caché las tareas ejecutadas a través de `vp run`.
 
-## Overview
+## Vista General
 
-When a task runs successfully (exit code 0), its terminal output (stdout/stderr) is saved. On the next run, Vite Task checks if anything changed:
+Cuando una tarea se ejecuta con éxito (código de salida 0), se guarda su salida en la terminal (stdout/stderr). En la siguiente ejecución, Vite Task comprueba si algo ha cambiado:
 
-1. **Arguments:** did the [additional arguments](/guide/run#additional-arguments) passed to the task change?
-2. **Environment variables:** did any [fingerprinted env vars](/config/run#env) change?
-3. **Input files:** did any file that the command reads change?
+1. **Argumentos:** ¿Han cambiado los [argumentos adicionales](/guide/run#argumentos-adicionales) pasados a la tarea?
+2. **Variables de entorno:** ¿Ha cambiado alguna [variable de entorno registrada](/config/run#env)?
+3. **Archivos de entrada:** ¿Ha cambiado algún archivo que el comando lee?
 
-If everything matches, the cached output is replayed instantly, and the command does not run.
+Si todo coincide, la salida en caché se reproduce instantáneamente y el comando no se ejecuta.
 
 ::: info
-Currently, only terminal output is cached and replayed. Output files such as `dist/` are not cached. If you delete them, use `--no-cache` to force a re-run. Output file caching is planned for a future release.
+Actualmente, solo se almacena en caché y se reproduce la salida de la terminal. Los archivos de salida como `dist/` no se almacenan en caché. Si los eliminas, usa `--no-cache` para forzar una nueva ejecución. El almacenamiento en caché de archivos de salida está planeado para una versión futura.
 :::
 
-When a cache miss occurs, Vite Task tells you exactly why:
+Cuando ocurre un fallo de caché (cache miss), Vite Task te indica exactamente por qué:
 
 ```
 $ vp lint ✗ cache miss: 'src/utils.ts' modified, executing
@@ -24,46 +24,46 @@ $ vp build ✗ cache miss: env changed, executing
 $ vp test ✗ cache miss: args changed, executing
 ```
 
-## When Is Caching Enabled?
+## ¿Cuándo se habilita el caché?
 
-A command run by `vp run` is either a **task** defined in `vite.config.ts` or a **script** defined in `package.json`. Task names and script names cannot overlap. By default, **tasks are cached and scripts are not.**
+Un comando ejecutado por `vp run` es una **tarea** definida en `vite.config.ts` o un **script** definido en `package.json`. Los nombres de tareas y los nombres de scripts no pueden solaparse. Por defecto, **las tareas se almacenan en caché y los scripts no.**
 
-There are three types of controls for task caching, in order:
+Hay tres tipos de controles para el caché de tareas, en orden:
 
-### 1. Per-task `cache: false`
+### 1. `cache: false` por tarea
 
-A task can set [`cache: false`](/config/run#cache) to opt out. This cannot be overridden by any other cache control flag.
+Una tarea puede establecer [`cache: false`](/config/run#cache) para desactivarlo. Esto no puede ser anulado por ningún otro parámetro de control de caché.
 
-### 2. CLI flags
+### 2. Parámetros de CLI
 
-`--no-cache` disables caching for everything. `--cache` enables caching for both tasks and scripts, which is equivalent to setting [`run.cache: true`](/config/run#run-cache) for that invocation.
+`--no-cache` desactiva el caché para todo. `--cache` habilita el caché tanto para tareas como para scripts, lo cual es equivalente a establecer [`run.cache: true`](/run-config#cache) para esa invocación.
 
-### 3. Workspace config
+### 3. Configuración del workspace
 
-The [`run.cache`](/config/run#run-cache) option in your root `vite.config.ts` controls the default for each category:
+La opción [`run.cache`](/config/run#run-cache) en tu `vite.config.ts` de la raíz controla el valor predeterminado para cada categoría:
 
-| Setting         | Default | Effect                                  |
-| --------------- | ------- | --------------------------------------- |
-| `cache.tasks`   | `true`  | Cache tasks defined in `vite.config.ts` |
-| `cache.scripts` | `false` | Cache `package.json` scripts            |
+| Configuración    | Por defecto | Efecto                                          |
+| ---------------- | ----------- | ----------------------------------------------- |
+| `cache.tasks`    | `true`      | Cachear tareas definidas en `vite.config.ts`    |
+| `cache.scripts`  | `false`     | Cachear scripts de `package.json`               |
 
-## Automatic File Tracking
+## Rastreo Automático de Archivos
 
-Vite Task tracks which files each command reads during execution. When a task runs, it records which files the process opens, such as your `.ts` source files, `vite.config.ts`, and `package.json`, and records their content hashes. On the next run, it re-checks those hashes to determine if anything changed.
+Vite Task rastrea qué archivos lee cada comando durante la ejecución. Cuando una tarea se ejecuta, registra qué archivos abre el proceso, como tus archivos fuente `.ts`, `vite.config.ts` y `package.json`, y registra los hashes de su contenido. En la siguiente ejecución, vuelve a comprobar esos hashes para determinar si algo ha cambiado.
 
-This means caching works out of the box for most commands without any configuration. Vite Task also records:
+Esto significa que el caché funciona de inmediato para la mayoría de los comandos sin ninguna configuración. Vite Task también registra:
 
-- **Missing files:** if a command probes for a file that doesn't exist, such as `utils.ts` during module resolution, creating that file later correctly invalidates the cache.
-- **Directory listings:** if a command scans a directory, such as a test runner looking for `*.test.ts`, adding or removing files in that directory invalidates the cache.
+- **Archivos faltantes:** si un comando busca un archivo que no existe, como `utils.ts` durante la resolución de módulos, crear ese archivo más tarde invalida correctamente el caché.
+- **Listados de directorios:** si un comando escanea un directorio, como un ejecutor de pruebas buscando `*.test.ts`, añadir o quitar archivos en ese directorio invalida el caché.
 
-### Avoiding Overly Broad Input Tracking
+### Evitar un Rastreo de Entrada Demasiado Amplio
 
-Automatic tracking can sometimes include more files than necessary, causing unnecessary cache misses:
+El rastreo automático a veces puede incluir más archivos de los necesarios, causando fallos de caché innecesarios:
 
-- **Tool cache files:** some tools maintain their own cache, such as TypeScript's `.tsbuildinfo` or Cargo's `target/`. These files may change between runs even when your source code has not, causing unnecessary cache invalidation.
-- **Directory listings:** when a command scans a directory, such as when globbing for `**/*.js`, Vite Task sees the directory read but not the glob pattern. Any file added or removed in that directory, even unrelated ones, invalidates the cache.
+- **Archivos de caché de herramientas:** algunas herramientas mantienen su propio caché, como `.tsbuildinfo` de TypeScript o `target/` de Cargo. Estos archivos pueden cambiar entre ejecuciones incluso cuando tu código fuente no lo ha hecho, causando una invalidación innecesaria del caché.
+- **Listados de directorios:** cuando un comando escanea un directorio, como cuando busca patrones glob para `**/*.js`, Vite Task ve la lectura del directorio pero no el patrón glob. Cualquier archivo añadido o eliminado en ese directorio, incluso los no relacionados, invalida el caché.
 
-Use the [`input`](/config/run#input) option to exclude files or to replace automatic tracking with explicit file patterns:
+Usa la opción [`input`](/config/run#input) para excluir archivos o para reemplazar el rastreo automático por patrones de archivos explícitos:
 
 ```ts
 tasks: {
@@ -74,11 +74,11 @@ tasks: {
 }
 ```
 
-## Environment Variables
+## Variables de Entorno
 
-By default, tasks run in a clean environment. Only a small set of common variables, such as `PATH`, `HOME`, and `CI`, are passed through. Other environment variables are neither visible to the task nor included in the cache fingerprint.
+Por defecto, las tareas se ejecutan en un entorno limpio. Solo se pasan un pequeño conjunto de variables comunes, como `PATH`, `HOME` y `CI`. Otras variables de entorno no son visibles para la tarea ni se incluyen en la huella digital del caché.
 
-To add an environment variable to the cache key, add it to [`env`](/config/run#env). Changing its value then invalidates the cache:
+Para añadir una variable de entorno a la clave del caché, añádela a [`env`](/config/run#env). Cambiar su valor invalidará entonces el caché:
 
 ```ts
 tasks: {
@@ -89,13 +89,13 @@ tasks: {
 }
 ```
 
-To pass a variable to the task **without** affecting cache behavior, use [`untrackedEnv`](/config/run#untracked-env). This is useful for variables like `CI` or `GITHUB_ACTIONS` that should be available in the task, but do not generally affect caching behavior.
+Para pasar una variable a la tarea **sin** afectar al comportamiento del caché, usa [`untrackedEnv`](/config/run#untracked-env). Esto es útil para variables como `CI` o `GITHUB_ACTIONS` que deben estar disponibles en la tarea, pero que generalmente no afectan al comportamiento del caché.
 
-See [Run Config](/config/run#env) for details on wildcard patterns and the full list of automatically passed-through variables.
+Consulta [Configuración de Ejecución](/config/run#env) para obtener detalles sobre patrones de comodines y la lista completa de variables que se pasan automáticamente.
 
-## Cache Sharing
+## Compartir Caché
 
-Vite Task's cache is content-based. If two tasks run the same command with the same inputs, they share the cache entry. This happens naturally when multiple tasks include a common step, either as standalone tasks or as parts of [compound commands](/guide/run#compound-commands):
+El caché de Vite Task se basa en el contenido. Si dos tareas ejecutan el mismo comando con las mismas entradas, comparten la entrada del caché. Esto sucede de forma natural cuando múltiples tareas incluyen un paso común, ya sea como tareas independientes o como parte de [comandos compuestos](/guide/run#comandos-compuestos):
 
 ```json [package.json]
 {
@@ -106,14 +106,14 @@ Vite Task's cache is content-based. If two tasks run the same command with the s
 }
 ```
 
-With caching enabled, for example through `--cache` or [`run.cache.scripts: true`](/config/run#run-cache), running `check` first means the `vp lint` step in `release` is an instant cache hit, since both run the same command against the same files.
+Con el caché habilitado, por ejemplo a través de `--cache` o [`run.cache.scripts: true`](/config/run#run-cache), ejecutar `check` primero significa que el paso `vp lint` en `release` será un acierto de caché instantáneo, ya que ambos ejecutan el mismo comando contra los mismos archivos.
 
-## Cache Commands
+## Comandos de Caché
 
-Use `vp cache clean` when you need to clear cached task results:
+Usa `vp cache clean` cuando necesites borrar los resultados de las tareas almacenadas en caché:
 
 ```bash
 vp cache clean
 ```
 
-The task cache is stored in `node_modules/.vite/task-cache` at the project root. `vp cache clean` deletes that cache directory.
+El caché de tareas se almacena en `node_modules/.vite/task-cache` en la raíz del proyecto. `vp cache clean` elimina ese directorio de caché.

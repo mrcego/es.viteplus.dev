@@ -14,9 +14,9 @@ import nitroTerminal from '@local-assets/terminal-features/nitro.svg';
   >
     <div class="bg-beige/50 p-5 sm:p-10 flex flex-col gap-3 justify-between">
       <div class="flex flex-col gap-3">
-        <h6>Meta Frameworks</h6>
+        <h6>Meta-frameworks</h6>
         <p class="max-w-[18rem] text-balance">
-          You can use meta-frameworks that ship as Vite plugins with Vite+
+          Puedes usar meta-frameworks que se distribuyen como plugins de Vite con Vite+
         </p>
       </div>
       <img loading="lazy" :src="metaFrameworksImage" alt="Meta frameworks" class="w-full mt-11" />
@@ -24,9 +24,9 @@ import nitroTerminal from '@local-assets/terminal-features/nitro.svg';
     <div class="flex flex-col justify-between h-full">
       <div class="flex flex-col divide-y divide-stroke shrink-0">
         <div class="p-5 sm:p-10 flex flex-col gap-3">
-          <h6>Platform Agnostic</h6>
+          <h6>Agnóstico de plataforma</h6>
           <p class="max-w-[18rem] text-balance">
-            First-class support on Vercel, Netlify, Cloudflare & more
+            Soporte de primer nivel en Vercel, Netlify, Cloudflare y más
           </p>
         </div>
         <div
@@ -70,9 +70,9 @@ import nitroTerminal from '@local-assets/terminal-features/nitro.svg';
       <div class="bg-nitro bg-right-top px-10 pt-7 flex flex-col justify-end gap-5 shrink-0">
         <div class="flex flex-row items-center gap-5">
           <img loading="lazy" :src="nitroIcon" alt="Nitro icon" class="size-10 sm:size-12" />
-          <h6 class="text-white drop-shadow-sm/70">Deploy anywhere by pairing with Nitro</h6>
+          <h6 class="text-white drop-shadow-sm/70">Despliega en cualquier lugar combinándolo con Nitro</h6>
         </div>
-        <img loading="lazy" :src="nitroTerminal" alt="Deploy anywhere with Nitro" class="w-full" />
+        <img loading="lazy" :src="nitroTerminal" alt="Despliega en cualquier lugar con Nitro" class="w-full" />
       </div>
     </div>
   </section>

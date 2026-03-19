@@ -19,10 +19,10 @@ const carouselConfig = {
       <div
         class="p-5 md:p-10 grow-0 md:grow flex flex-col gap-5 h-72 justify-center md:justify-start"
       >
-        <h3 class="text-pretty">Hear from our customers</h3>
+        <h3 class="text-pretty">Lo que dicen nuestros usuarios</h3>
         <p class="block md:hidden">
-          LLMs already know Vite. Leading prompt-to-app platforms including Bolt, Lovable and Replit
-          all default to building user applications using Vite.
+          Los LLM ya conocen Vite. Las principales plataformas de prompt-to-app, como Bolt, Lovable y Replit, 
+          construyen por defecto las aplicaciones de los usuarios con Vite.
         </p>
       </div>
       <div class="px-5 py-6 md:px-10 md:pt-7 md:pb-8 flex flex-col gap-4">

@@ -14,10 +14,10 @@ import StackedBlock from './StackedBlock.vue';
   >
     <div class="p-5 lg:p-10 flex flex-col justify-between">
       <div class="flex flex-col gap-3 h-30 lg:h-auto">
-        <h5>Manages your runtime and package manager</h5>
+        <h5>Gestiona tu entorno de ejecución y gestor de paquetes</h5>
         <p>
-          <span class="pr-1">Use</span> <code>node</code> automatically, with the right package
-          manager selected for every project.
+          <span class="pr-1">Usa</span> <code>node</code> automáticamente, con el gestor de paquetes
+          correcto seleccionado para cada proyecto.
         </p>
       </div>
       <div class="flex items-center gap-4 flex-wrap">
@@ -31,8 +31,8 @@ import StackedBlock from './StackedBlock.vue';
     </div>
     <div class="p-5 lg:p-10 flex flex-col justify-between">
       <div class="flex flex-col gap-3 h-30 lg:h-auto">
-        <h5>Simplifies everyday development</h5>
-        <p>One configuration file and one consistent flow of commands across your whole stack.</p>
+        <h5>Simplifica el desarrollo diario</h5>
+        <p>Un archivo de configuración y un flujo consistente de comandos en todo tu stack.</p>
       </div>
       <div class="flex flex-wrap gap-2">
         <code>vp env</code>
@@ -45,8 +45,8 @@ import StackedBlock from './StackedBlock.vue';
     </div>
     <div class="p-5 lg:p-10 flex flex-col justify-between">
       <div class="flex flex-col gap-3 h-30 lg:h-auto">
-        <h5>Powering your favorite frameworks</h5>
-        <p>Supports every framework built on Vite.</p>
+        <h5>Potenciando tus frameworks favoritos</h5>
+        <p>Soporta todos los frameworks construidos sobre Vite.</p>
       </div>
       <div class="flex gap-3 items-center">
         <ul class="stacked-blocks">
@@ -55,7 +55,7 @@ import StackedBlock from './StackedBlock.vue';
           <StackedBlock :src="svelteIcon" alt="svelte" href="https://svelte.dev" />
           <StackedBlock :src="solidIcon" alt="solid" href="https://solidjs.com" />
         </ul>
-        <p class="text-base text-primary">+ 20 more</p>
+        <p class="text-base text-primary">+ 20 más</p>
       </div>
     </div>
   </section>

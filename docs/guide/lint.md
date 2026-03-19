@@ -1,14 +1,14 @@
 # Lint
 
-`vp lint` lints code with Oxlint.
+`vp lint` analiza el código con Oxlint.
 
-## Overview
+## Vista General
 
-`vp lint` is built on [Oxlint](https://oxc.rs/docs/guide/usage/linter.html), the Oxc linter. Oxlint is designed as a fast replacement for ESLint for most frontend projects and ships with built-in support for core ESLint rules and many popular community rules.
+`vp lint` está basado en [Oxlint](https://oxc.rs/docs/guide/usage/linter.html), el linter de Oxc. Oxlint está diseñado como un reemplazo rápido de ESLint para la mayoría de los proyectos frontend e incluye soporte integrado para las reglas principales de ESLint y muchas reglas populares de la comunidad.
 
-Use `vp lint` to lint your project, and `vp check` to format, lint and type-check all at once.
+Usa `vp lint` para analizar tu proyecto, y `vp check` para formatear, hacer lint y verificar tipos, todo a la vez.
 
-## Usage
+## Uso
 
 ```bash
 vp lint
@@ -16,11 +16,11 @@ vp lint --fix
 vp lint --type-aware
 ```
 
-## Configuration
+## Configuración
 
-Put lint configuration directly in the `lint` block in `vite.config.ts` so all your configuration stays in one place. We do not recommend using `oxlint.config.ts` or `.oxlintrc.json` with Vite+.
+Coloca la configuración de lint directamente en el bloque `lint` en `vite.config.ts` para que toda tu configuración permanezca en un solo lugar. No recomendamos usar `oxlint.config.ts` o `.oxlintrc.json` con Vite+.
 
-For the upstream rule set, options, and compatibility details, see the [Oxlint docs](https://oxc.rs/docs/guide/usage/linter.html).
+Para ver el conjunto de reglas original, las opciones y detalles de compatibilidad, consulta la [documentación de Oxlint](https://oxc.rs/docs/guide/usage/linter.html).
 
 ```ts
 import { defineConfig } from 'vite-plus';
@@ -36,15 +36,15 @@ export default defineConfig({
 });
 ```
 
-## Type-Aware Linting
+## Linting Consciente del Tipo (Type-Aware)
 
-We recommend enabling both `typeAware` and `typeCheck` in the `lint` block:
+Recomendamos habilitar tanto `typeAware` como `typeCheck` en el bloque `lint`:
 
-- `typeAware: true` enables rules that require TypeScript type information
-- `typeCheck: true` enables full type checking during linting
+- `typeAware: true` habilita reglas que requieren información de tipos de TypeScript.
+- `typeCheck: true` habilita la verificación de tipos completa durante el linting.
 
-This path is powered by [tsgolint](https://github.com/oxc-project/tsgolint) on top of the TypeScript Go toolchain. It gives Oxlint access to type information and allows type checking directly via `vp lint` and `vp check`.
+Esta ruta está impulsada por [tsgolint](https://github.com/oxc-project/tsgolint) sobre el toolchain de TypeScript en Go. Proporciona a Oxlint acceso a la información de tipos y permite la verificación de tipos directamente a través de `vp lint` y `vp check`.
 
-## JS Plugins
+## Plugins de JS
 
-If you are migrating from ESLint and still depend on a few critical JavaScript-based ESLint plugins, Oxlint has [JS plugin support](https://oxc.rs/docs/guide/usage/linter/js-plugins) that can help you keep those plugins running while you complete the migration.
+Si estás migrando desde ESLint y aún dependes de algunos plugins de ESLint críticos basados en JavaScript, Oxlint tiene [soporte para plugins de JS](https://oxc.rs/docs/guide/usage/linter/js-plugins) que puede ayudarte a mantener esos plugins funcionando mientras completas la migración.

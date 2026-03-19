@@ -1,16 +1,16 @@
-# Build
+# Construcción (Build)
 
-`vp build` builds Vite applications for production.
+`vp build` construye aplicaciones Vite para producción.
 
-## Overview
+## Vista General
 
-`vp build` runs the standard Vite production build through Vite+. Since it is directly based on Vite, the build pipeline and configuration model are the same as Vite. For more information about how Vite production builds work, see the [Vite guide](https://vite.dev/guide/build). Note that Vite+ uses Vite 8 and [Rolldown](https://rolldown.rs/) for builds.
+`vp build` ejecuta la construcción de producción estándar de Vite a través de Vite+. Dado que se basa directamente en Vite, el canal de construcción y el modelo de configuración son los mismos que en Vite. Para más información sobre cómo funcionan las construcciones de producción de Vite, consulta la [guía de Vite](https://vite.dev/guide/build). Ten en cuenta que Vite+ utiliza Vite 8 y [Rolldown](https://rolldown.rs/) para las construcciones.
 
-::: info
-`vp build` always runs the built-in Vite production build. If your project also has a `build` script in `package.json`, run `vp run build` when you want to run that script instead.
+::: info INFORMACIÓN
+`vp build` siempre ejecuta la construcción de producción integrada de Vite. Si tu proyecto también tiene un script `build` en el `package.json`, ejecuta `vp run build` cuando quieras ejecutar ese script en su lugar.
 :::
 
-## Usage
+## Uso
 
 ```bash
 vp build
@@ -18,23 +18,24 @@ vp build --watch
 vp build --sourcemap
 ```
 
-## Configuration
+## Configuración
 
-Use standard Vite configuration in `vite.config.ts`. For the full configuration reference, see the [Vite config docs](https://vite.dev/config/).
+Utiliza la configuración estándar de Vite en `vite.config.ts`. Para la referencia completa de configuración, consulta la [documentación de configuración de Vite](https://vite.dev/config/).
 
-Use it for:
+Úsalo para:
 
 - [plugins](https://vite.dev/guide/using-plugins)
-- [aliases](https://vite.dev/config/shared-options#resolve-alias)
+- [alias](https://vite.dev/config/shared-options#resolve-alias)
 - [`build`](https://vite.dev/config/build-options)
 - [`preview`](https://vite.dev/config/preview-options)
-- [environment modes](https://vite.dev/guide/env-and-mode)
+- [modos de entorno](https://vite.dev/guide/env-and-mode)
 
-## Preview
+## Vista Previa (Preview)
 
-Use `vp preview` to serve the production build locally after `vp build`.
+Usa `vp preview` para servir la construcción de producción localmente después de `vp build`.
 
 ```bash
 vp build
 vp preview
 ```
+

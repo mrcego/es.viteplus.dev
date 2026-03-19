@@ -26,7 +26,7 @@ export const terminalTranscripts: TerminalTranscript[] = [
   {
     id: 'create',
     label: 'create',
-    title: 'Scaffold a project',
+    title: 'Andamiaje de un proyecto',
     command: 'vp create',
     lineDelay: 220,
     completionDelay: 900,
@@ -34,14 +34,14 @@ export const terminalTranscripts: TerminalTranscript[] = [
       {
         segments: [
           { text: '◇ ', tone: 'accent' },
-          { text: 'Select a template ', tone: 'muted' },
+          { text: 'Selecciona una plantilla ', tone: 'muted' },
           { text: 'vite:application', tone: 'brand' },
         ],
       },
       {
         segments: [
           { text: '◇ ', tone: 'accent' },
-          { text: 'Project directory ', tone: 'muted' },
+          { text: 'Directorio del proyecto ', tone: 'muted' },
           { text: 'vite-app', tone: 'brand' },
         ],
       },
@@ -57,14 +57,14 @@ export const terminalTranscripts: TerminalTranscript[] = [
       {
         segments: [
           { text: '✓ ', tone: 'success' },
-          { text: 'Dependencies installed', tone: 'base' },
-          { text: ' in 1.1s', tone: 'muted' },
+          { text: 'Dependencias instaladas', tone: 'base' },
+          { text: ' en 1.1s', tone: 'muted' },
         ],
       },
       {
         segments: [
           { text: '→ ', tone: 'brand' },
-          { text: 'Next: ', tone: 'muted' },
+          { text: 'Siguiente: ', tone: 'muted' },
           { text: 'cd vite-app && vp dev', tone: 'accent' },
         ],
       },
@@ -73,7 +73,7 @@ export const terminalTranscripts: TerminalTranscript[] = [
   {
     id: 'dev',
     label: 'dev',
-    title: 'Start local development',
+    title: 'Inicia el desarrollo local',
     command: 'vp dev',
     lineDelay: 220,
     completionDelay: 1100,
@@ -81,7 +81,7 @@ export const terminalTranscripts: TerminalTranscript[] = [
       {
         segments: [
           { text: 'VITE+ ', tone: 'brand' },
-          { text: 'ready in ', tone: 'muted' },
+          { text: 'listo en ', tone: 'muted' },
           { text: '68ms', tone: 'base' },
         ],
       },
@@ -95,17 +95,17 @@ export const terminalTranscripts: TerminalTranscript[] = [
       {
         segments: [
           { text: '→ ', tone: 'muted' },
-          { text: 'Network ', tone: 'muted' },
+          { text: 'Red ', tone: 'muted' },
           { text: '--host', tone: 'base' },
-          { text: ' to expose', tone: 'muted' },
+          { text: ' para exponer', tone: 'muted' },
         ],
       },
       {
         segments: [
           { text: '[hmr] ', tone: 'accent' },
-          { text: 'updated ', tone: 'muted' },
+          { text: 'actualizado ', tone: 'muted' },
           { text: 'src/App.tsx', tone: 'brand' },
-          { text: ' in 14ms', tone: 'muted' },
+          { text: ' en 14ms', tone: 'muted' },
         ],
       },
     ],
@@ -113,7 +113,7 @@ export const terminalTranscripts: TerminalTranscript[] = [
   {
     id: 'check',
     label: 'check',
-    title: 'Check the whole project',
+    title: 'Verifica todo el proyecto',
     command: 'vp check',
     lineDelay: 220,
     completionDelay: 1100,
@@ -121,15 +121,15 @@ export const terminalTranscripts: TerminalTranscript[] = [
       {
         segments: [
           { text: 'pass: ', tone: 'accent' },
-          { text: 'All 42 files are correctly formatted', tone: 'base' },
+          { text: 'Los 42 archivos están correctamente formateados', tone: 'base' },
           { text: ' (88ms, 16 threads)', tone: 'muted' },
         ],
       },
       {
         segments: [
           { text: 'pass: ', tone: 'accent' },
-          { text: 'Found no warnings, lint errors, or type errors', tone: 'base' },
-          { text: ' in 42 files', tone: 'muted' },
+          { text: 'No se encontraron advertencias, errores de lint o de tipo', tone: 'base' },
+          { text: ' en 42 archivos', tone: 'muted' },
           { text: ' (184ms, 16 threads)', tone: 'muted' },
         ],
       },
@@ -138,7 +138,7 @@ export const terminalTranscripts: TerminalTranscript[] = [
   {
     id: 'test',
     label: 'test',
-    title: 'Run tests with fast feedback',
+    title: 'Ejecuta pruebas con feedback rápido',
     command: 'vp test',
     lineDelay: 220,
     completionDelay: 1100,
@@ -147,27 +147,27 @@ export const terminalTranscripts: TerminalTranscript[] = [
         segments: [
           { text: 'RUN ', tone: 'muted' },
           { text: 'test/button.spec.ts', tone: 'brand' },
-          { text: ' (3 tests)', tone: 'muted' },
+          { text: ' (3 pruebas)', tone: 'muted' },
         ],
       },
       {
         segments: [
           { text: '✓ ', tone: 'success' },
-          { text: 'button renders loading state', tone: 'base' },
+          { text: 'el botón renderiza el estado de carga', tone: 'base' },
         ],
       },
       {
         segments: [
           { text: '✓ ', tone: 'success' },
-          { text: '12 tests passed', tone: 'base' },
-          { text: ' across 4 files', tone: 'muted' },
+          { text: '12 pruebas pasadas', tone: 'base' },
+          { text: ' en 4 archivos', tone: 'muted' },
         ],
       },
       {
         segments: [
-          { text: 'Duration ', tone: 'muted' },
+          { text: 'Duración ', tone: 'muted' },
           { text: '312ms', tone: 'accent' },
-          { text: ' (transform 22ms, tests 31ms)', tone: 'muted' },
+          { text: ' (transformación 22ms, pruebas 31ms)', tone: 'muted' },
         ],
       },
     ],
@@ -175,7 +175,7 @@ export const terminalTranscripts: TerminalTranscript[] = [
   {
     id: 'build',
     label: 'build',
-    title: 'Ship a production build',
+    title: 'Genera un build de producción',
     command: 'vp build',
     lineDelay: 220,
     completionDelay: 1100,
@@ -183,13 +183,13 @@ export const terminalTranscripts: TerminalTranscript[] = [
       {
         segments: [
           { text: 'Rolldown ', tone: 'brand' },
-          { text: 'building for production', tone: 'muted' },
+          { text: 'construyendo para producción', tone: 'muted' },
         ],
       },
       {
         segments: [
           { text: '✓ ', tone: 'success' },
-          { text: '128 modules transformed', tone: 'base' },
+          { text: '128 módulos transformados', tone: 'base' },
         ],
       },
       {
@@ -207,7 +207,7 @@ export const terminalTranscripts: TerminalTranscript[] = [
       {
         segments: [
           { text: '✓ ', tone: 'success' },
-          { text: 'Built in ', tone: 'muted' },
+          { text: 'Construido en ', tone: 'muted' },
           { text: '421ms', tone: 'base' },
         ],
       },

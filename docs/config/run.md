@@ -1,6 +1,6 @@
-# Run Config
+# Configuración de Ejecución (Run)
 
-You can configure Vite Task under the `run` field in `vite.config.ts`. Check out [`vp run`](/guide/run) to learn more about running scripts and tasks with Vite+.
+Puedes configurar Vite Task bajo el campo `run` en `vite.config.ts`. Consulta [`vp run`](/guide/run) para aprender más sobre la ejecución de scripts y tareas con Vite+.
 
 ```ts
 import { defineConfig } from 'vite-plus';
@@ -20,56 +20,56 @@ export default defineConfig({
 
 ## `run.enablePrePostScripts`
 
-- **Type:** `boolean`
-- **Default:** `true`
+- **Tipo:** `boolean`
+- **Por defecto:** `true`
 
-Whether to automatically run `preX`/`postX` package.json scripts as lifecycle hooks when script `X` is executed.
+Indica si se deben ejecutar automáticamente los scripts `preX`/`postX` de `package.json` como hooks de ciclo de vida cuando se ejecuta el script `X`.
 
-When enabled (the default), running a script like `test` will automatically run `pretest` before it and `posttest` after it, if they exist in `package.json`.
+Cuando está habilitado (por defecto), ejecutar un script como `test` ejecutará automáticamente `pretest` antes y `posttest` después, si existen en el `package.json`.
 
 ```ts
 export default defineConfig({
   run: {
-    enablePrePostScripts: false, // Disable pre/post lifecycle hooks
+    enablePrePostScripts: false, // Desactivar hooks de ciclo de vida pre/post
   },
 });
 ```
 
-::: warning
-This option can only be set in the workspace root's `vite.config.ts`. Setting it in a package's config will result in an error.
+::: warning ADVERTENCIA
+Esta opción solo se puede establecer en el `vite.config.ts` de la raíz del workspace. Establecerla en la configuración de un paquete individual resultará en un error.
 :::
 
 ## `run.cache`
 
-- **Type:** `boolean | { scripts?: boolean, tasks?: boolean }`
-- **Default:** `{ scripts: false, tasks: true }`
+- **Tipo:** `boolean | { scripts?: boolean, tasks?: boolean }`
+- **Por defecto:** `{ scripts: false, tasks: true }`
 
-Controls whether task results are cached and replayed on subsequent runs.
+Controla si los resultados de las tareas se almacenan en caché y se reproducen en ejecuciones posteriores.
 
 ```ts
 export default defineConfig({
   run: {
     cache: {
-      scripts: true, // Cache package.json scripts (default: false)
-      tasks: true, // Cache task definitions (default: true)
+      scripts: true, // Cachear scripts de package.json (por defecto: false)
+      tasks: true, // Cachear definiciones de tareas (por defecto: true)
     },
   },
 });
 ```
 
-`cache: true` enables both task and script caching, `cache: false` disables both.
+`cache: true` habilita tanto el caché de tareas como el de scripts, `cache: false` desactiva ambos.
 
 ## `run.tasks`
 
-- **Type:** `Record<string, TaskConfig>`
+- **Tipo:** `Record<string, TaskConfig>`
 
-Defines tasks that can be run with `vp run <task>`.
+Define las tareas que se pueden ejecutar con `vp run <tarea>`.
 
 ### `command`
 
-- **Type:** `string`
+- **Tipo:** `string`
 
-Defines the shell command to run for the task.
+Define el comando de terminal que se ejecutará para la tarea.
 
 ```ts
 tasks: {
@@ -79,16 +79,16 @@ tasks: {
 }
 ```
 
-Each task defined in `vite.config.ts` must include its own `command`. You cannot define a task in both `vite.config.ts` and `package.json` with the same task name.
+Cada tarea definida en `vite.config.ts` debe incluir su propio `command`. No puedes definir una tarea con el mismo nombre tanto en `vite.config.ts` como en `package.json`.
 
-Commands joined with `&&` are automatically split into independently cached sub-tasks. See [Compound Commands](/guide/run#compound-commands).
+Los comandos unidos con `&&` se dividen automáticamente en subtareas almacenadas en caché de forma independiente. Consulta [Comandos Compuestos](/guide/run#comandos-compuestos).
 
 ### `dependsOn`
 
-- **Type:** `string[]`
-- **Default:** `[]`
+- **Tipo:** `string[]`
+- **Por defecto:** `[]`
 
-Tasks that must complete successfully before this one starts.
+Tareas que deben completarse con éxito antes de que comience esta.
 
 ```ts
 tasks: {
@@ -99,20 +99,20 @@ tasks: {
 }
 ```
 
-Dependencies can reference tasks in other packages using the `package#task` format:
+Las dependencias pueden hacer referencia a tareas en otros paquetes utilizando el formato `paquete#tarea`:
 
 ```ts
 dependsOn: ['@my/core#build', '@my/utils#lint'];
 ```
 
-See [Task Dependencies](/guide/run#task-dependencies) for details on how explicit and topological dependencies interact.
+Consulta [Dependencias de Tareas](/guide/run#dependencias-de-tareas) para obtener detalles sobre cómo interactúan las dependencias explícitas y topológicas.
 
 ### `cache`
 
-- **Type:** `boolean`
-- **Default:** `true`
+- **Tipo:** `boolean`
+- **Por defecto:** `true`
 
-Whether to cache this task's output. Set to `false` for tasks that should never be cached, like dev servers:
+Indica si se debe almacenar en caché la salida de esta tarea. Establécelo en `false` para tareas que nunca deberían almacenarse en caché, como los servidores de desarrollo:
 
 ```ts
 tasks: {
@@ -125,10 +125,10 @@ tasks: {
 
 ### `env`
 
-- **Type:** `string[]`
-- **Default:** `[]`
+- **Tipo:** `string[]`
+- **Por defecto:** `[]`
 
-Environment variables included in the cache fingerprint. When any listed variable's value changes, the cache is invalidated.
+Variables de entorno incluidas en la huella digital (fingerprint) del caché. Cuando el valor de cualquier variable listada cambia, el caché se invalida.
 
 ```ts
 tasks: {
@@ -139,19 +139,19 @@ tasks: {
 }
 ```
 
-Wildcard patterns are supported: `VITE_*` matches all variables starting with `VITE_`.
+Se admiten patrones de comodines: `VITE_*` coincide con todas las variables que comienzan con `VITE_`.
 
 ```bash
-$ NODE_ENV=development vp run build    # first run
-$ NODE_ENV=production vp run build     # cache miss: variable changed
+$ NODE_ENV=development vp run build    # primera ejecución
+$ NODE_ENV=production vp run build     # fallo de caché: la variable cambió
 ```
 
 ### `untrackedEnv`
 
-- **Type:** `string[]`
-- **Default:** see below
+- **Tipo:** `string[]`
+- **Por defecto:** ver abajo
 
-Environment variables passed to the task process but **not** included in the cache fingerprint. Changing these values won't invalidate the cache.
+Variables de entorno que se pasan al proceso de la tarea pero que **no** se incluyen en la huella digital del caché. Cambiar estos valores no invalidará el caché.
 
 ```ts
 tasks: {
@@ -162,33 +162,33 @@ tasks: {
 }
 ```
 
-A set of common environment variables are automatically passed through to all tasks:
+Un conjunto de variables de entorno comunes se pasan automáticamente a todas las tareas:
 
-- **System:** `HOME`, `USER`, `PATH`, `SHELL`, `LANG`, `TZ`
+- **Sistema:** `HOME`, `USER`, `PATH`, `SHELL`, `LANG`, `TZ`
 - **Node.js:** `NODE_OPTIONS`, `COREPACK_HOME`, `PNPM_HOME`
 - **CI/CD:** `CI`, `VERCEL_*`, `NEXT_*`
 - **Terminal:** `TERM`, `COLORTERM`, `FORCE_COLOR`, `NO_COLOR`
 
 ### `input`
 
-- **Type:** `Array<string | { auto: boolean }>`
-- **Default:** `[{ auto: true }]` (auto-inferred)
+- **Tipo:** `Array<string | { auto: boolean }>`
+- **Por defecto:** `[{ auto: true }]` (inferido automáticamente)
 
-Vite Task automatically detects which files are used by a command (see [Automatic File Tracking](/guide/cache#automatic-file-tracking)). The `input` option can be used to explicitly include or exclude certain files.
+Vite Task detecta automáticamente qué archivos utiliza un comando (consulta [Rastreo Automático de Archivos](/guide/cache#rastreo-automático-de-archivos)). La opción `input` se puede usar para incluir o excluir explícitamente ciertos archivos.
 
-**Exclude files** from automatic tracking:
+**Excluir archivos** del rastreo automático:
 
 ```ts
 tasks: {
   build: {
     command: 'vp build',
-    // Use `{ auto: true }` to use automatic fingerprinting (default).
+    // Usa `{ auto: true }` para usar la huella digital automática (por defecto).
     input: [{ auto: true }, '!**/*.tsbuildinfo', '!dist/**'],
   },
 }
 ```
 
-**Specify explicit files** only without automatic tracking:
+**Especificar archivos explícitos** únicamente, sin rastreo automático:
 
 ```ts
 tasks: {
@@ -199,7 +199,7 @@ tasks: {
 }
 ```
 
-**Disable file tracking** entirely and cache only on command/env changes:
+**Desactivar el rastreo de archivos** por completo y cachear solo por cambios en el comando o el entorno:
 
 ```ts
 tasks: {
@@ -210,16 +210,16 @@ tasks: {
 }
 ```
 
-::: tip
-Glob patterns are resolved relative to the package directory, not the task's `cwd`.
+::: tip CONSEJO
+Los patrones glob se resuelven de forma relativa al directorio del paquete, no al `cwd` de la tarea.
 :::
 
 ### `cwd`
 
-- **Type:** `string`
-- **Default:** package root
+- **Tipo:** `string`
+- **Por defecto:** raíz del paquete
 
-Working directory for the task, relative to the package root.
+Directorio de trabajo para la tarea, relativo a la raíz del paquete.
 
 ```ts
 tasks: {
@@ -229,3 +229,4 @@ tasks: {
   },
 }
 ```
+

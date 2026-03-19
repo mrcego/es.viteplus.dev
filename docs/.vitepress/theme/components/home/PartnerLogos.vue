@@ -26,7 +26,7 @@ const logos = [
     class="wrapper wrapper--ticks md:pl-10 flex flex-col md:flex-row items-center border-t md:border-t-0"
   >
     <div class="w-full md:flex-1 py-6 border-b md:border-b-0 md:border-r text-center md:text-start">
-      <p class="text-nickel">Trusted by the world's best software teams</p>
+      <p class="text-nickel">Confiado por los mejores equipos de software del mundo</p>
     </div>
     <div class="flex-1 py-6 overflow-hidden">
       <div class="scroll-container">

@@ -7,71 +7,71 @@ import { withMermaid } from 'vitepress-plugin-mermaid';
 
 const taskRunnerGuideItems = [
   {
-    text: 'Run',
+    text: 'Ejecución (Run)',
     link: '/guide/run',
   },
   {
-    text: 'Task Caching',
+    text: 'Caché de Tareas',
     link: '/guide/cache',
   },
   {
-    text: 'Running Binaries',
+    text: 'Ejecutar Binarios',
     link: '/guide/vpx',
   },
 ];
 
 const guideSidebar = [
   {
-    text: 'Introduction',
+    text: 'Introducción',
     items: [
-      { text: 'Getting Started', link: '/guide/' },
-      { text: 'Creating a Project', link: '/guide/create' },
-      { text: 'Migrate to Vite+', link: '/guide/migrate' },
-      { text: 'Installing Dependencies', link: '/guide/install' },
-      { text: 'Environment', link: '/guide/env' },
-      { text: 'Why Vite+', link: '/guide/why' },
+      { text: 'Primeros Pasos', link: '/guide/' },
+      { text: 'Crear un Proyecto', link: '/guide/create' },
+      { text: 'Migrar a Vite+', link: '/guide/migrate' },
+      { text: 'Instalar Dependencias', link: '/guide/install' },
+      { text: 'Entorno', link: '/guide/env' },
+      { text: '¿Por qué Vite+?', link: '/guide/why' },
     ],
   },
   {
-    text: 'Develop',
+    text: 'Desarrollo',
     items: [
-      { text: 'Dev', link: '/guide/dev' },
+      { text: 'Desarrollo (Dev)', link: '/guide/dev' },
       {
-        text: 'Check',
+        text: 'Comprobación (Check)',
         link: '/guide/check',
         items: [
           { text: 'Lint', link: '/guide/lint' },
-          { text: 'Format', link: '/guide/fmt' },
+          { text: 'Formato (Fmt)', link: '/guide/fmt' },
         ],
       },
-      { text: 'Test', link: '/guide/test' },
+      { text: 'Pruebas (Test)', link: '/guide/test' },
     ],
   },
   {
-    text: 'Execute',
+    text: 'Ejecución',
     items: taskRunnerGuideItems,
   },
   {
-    text: 'Build',
+    text: 'Construcción',
     items: [
-      { text: 'Build', link: '/guide/build' },
-      { text: 'Pack', link: '/guide/pack' },
+      { text: 'Construir (Build)', link: '/guide/build' },
+      { text: 'Empaquetar (Pack)', link: '/guide/pack' },
     ],
   },
   {
-    text: 'Maintain',
+    text: 'Mantenimiento',
     items: [
-      { text: 'Upgrading Vite+', link: '/guide/upgrade' },
-      { text: 'Removing Vite+', link: '/guide/implode' },
+      { text: 'Actualizar Vite+', link: '/guide/upgrade' },
+      { text: 'Eliminar Vite+', link: '/guide/implode' },
     ],
   },
   {
-    text: 'Workflow',
+    text: 'Flujo de Trabajo',
     items: [
-      { text: 'IDE Integration', link: '/guide/ide-integration' },
+      { text: 'Integración con IDE', link: '/guide/ide-integration' },
       { text: 'CI', link: '/guide/ci' },
-      { text: 'Commit Hooks', link: '/guide/commit-hooks' },
-      { text: 'Troubleshooting', link: '/guide/troubleshooting' },
+      { text: 'Hooks de Commit', link: '/guide/commit-hooks' },
+      { text: 'Solución de Problemas', link: '/guide/troubleshooting' },
     ],
   },
 ];
@@ -80,8 +80,8 @@ export default extendConfig(
   withMermaid(
     defineConfig({
       title: 'Vite+',
-      titleTemplate: ':title | The Unified Toolchain for the Web',
-      description: 'The Unified Toolchain for the Web',
+      titleTemplate: ':title | El conjunto de herramientas unificado para la Web',
+      description: 'El conjunto de herramientas unificado para la Web',
       cleanUrls: true,
       head: [
         ['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
@@ -109,6 +109,12 @@ export default extendConfig(
         ],
       ],
       vite: {
+        ssr: {
+          noExternal: ['@braintree/sanitize-url', 'mermaid', 'vitepress-plugin-mermaid'],
+        },
+        optimizeDeps: {
+          include: ['@braintree/sanitize-url', 'mermaid', 'vitepress-plugin-mermaid'],
+        },
         resolve: {
           tsconfigPaths: true,
           alias: [
@@ -119,31 +125,36 @@ export default extendConfig(
             { find: /^dayjs$/, replacement: 'dayjs/esm' },
           ],
         },
+        build: {
+          commonjsOptions: {
+            include: [/@braintree\/sanitize-url/, /node_modules/],
+          },
+        },
       },
       themeConfig: {
         variant: 'viteplus' as VoidZeroThemeConfig['variant'],
         nav: [
           {
-            text: 'Guide',
+            text: 'Guía',
             link: '/guide/',
             activeMatch: '^/guide/',
           },
           {
-            text: 'Config',
+            text: 'Configuración',
             link: '/config/',
             activeMatch: '^/config/',
           },
           {
-            text: 'Resources',
+            text: 'Recursos',
             items: [
               { text: 'GitHub', link: 'https://github.com/voidzero-dev/vite-plus' },
-              { text: 'Releases', link: 'https://github.com/voidzero-dev/vite-plus/releases' },
+              { text: 'Versiones', link: 'https://github.com/voidzero-dev/vite-plus/releases' },
               {
-                text: 'Announcement',
+                text: 'Anuncio',
                 link: 'https://voidzero.dev/posts/announcing-vite-plus-alpha',
               },
               {
-                text: 'Contributing',
+                text: 'Contribuir',
                 link: 'https://github.com/voidzero-dev/vite-plus/blob/main/CONTRIBUTING.md',
               },
             ],
@@ -153,15 +164,15 @@ export default extendConfig(
           '/guide/': guideSidebar,
           '/config/': [
             {
-              text: 'Configuration',
+              text: 'Configuración',
               items: [
-                { text: 'Configuring Vite+', link: '/config/' },
-                { text: 'Run', link: '/config/run' },
-                { text: 'Format', link: '/config/fmt' },
+                { text: 'Configurando Vite+', link: '/config/' },
+                { text: 'Ejecución (Run)', link: '/config/run' },
+                { text: 'Formato (Fmt)', link: '/config/fmt' },
                 { text: 'Lint', link: '/config/lint' },
-                { text: 'Test', link: '/config/test' },
-                { text: 'Build', link: '/config/build' },
-                { text: 'Pack', link: '/config/pack' },
+                { text: 'Pruebas (Test)', link: '/config/test' },
+                { text: 'Construcción (Build)', link: '/config/build' },
+                { text: 'Empaquetado (Pack)', link: '/config/pack' },
                 { text: 'Staged', link: '/config/staged' },
               ],
             },
@@ -175,9 +186,31 @@ export default extendConfig(
         ],
         outline: {
           level: [2, 3],
+          label: 'En esta página',
         },
         search: {
           provider: 'local',
+          options: {
+            locales: {
+              root: {
+                translations: {
+                  button: {
+                    buttonText: 'Buscar',
+                    buttonAriaLabel: 'Buscar'
+                  },
+                  modal: {
+                    noResultsText: 'No se han encontrado resultados',
+                    resetButtonTitle: 'Limpiar búsqueda',
+                    footer: {
+                      selectText: 'para seleccionar',
+                      navigateText: 'para navegar',
+                      closeText: 'para cerrar'
+                    }
+                  }
+                }
+              }
+            }
+          }
         },
       },
       transformHead({ page, pageData }) {
@@ -205,13 +238,14 @@ export default extendConfig(
             'meta',
             {
               property: 'og:description',
-              content: pageData.frontmatter.description ?? 'The Unified Toolchain for the Web',
+              content: pageData.frontmatter.description ?? 'El conjunto de herramientas unificado para la Web',
             },
           ],
         ];
 
         return [...ogInfo, canonicalUrlEntry];
       },
+
     }),
   ),
 );

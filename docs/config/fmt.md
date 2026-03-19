@@ -1,8 +1,8 @@
-# Format Config
+# Configuración de Formato (Format)
 
-`vp fmt` and `vp check` read Oxfmt settings from the `fmt` block in `vite.config.ts`. See [Oxfmt's configuration](https://oxc.rs/docs/guide/usage/formatter/config.html) for details.
+`vp fmt` y `vp check` leen la configuración de Oxfmt desde el bloque `fmt` en `vite.config.ts`. Consulta la [configuración de Oxfmt](https://oxc.rs/docs/guide/usage/formatter/config.html) para más detalles.
 
-## Example
+## Ejemplo
 
 ```ts
 import { defineConfig } from 'vite-plus';
@@ -16,3 +16,4 @@ export default defineConfig({
   },
 });
 ```
+

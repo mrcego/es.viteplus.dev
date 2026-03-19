@@ -3,14 +3,14 @@ import type { TerminalTranscript } from './terminal-transcripts';
 export const featureRunTranscripts: TerminalTranscript[] = [
   {
     id: 'cold',
-    label: 'Cold Cache',
-    title: 'First run builds the shared library and app',
+    label: 'Caché Vacía',
+    title: 'La primera ejecución construye la librería compartida y la aplicación',
     command: 'vp run --cache build',
     lineDelay: 180,
     completionDelay: 1200,
     lines: [
       {
-        segments: [{ text: '# First run builds the shared library and app', tone: 'muted' }],
+        segments: [{ text: '# La primera ejecución construye la librería compartida y la aplicación', tone: 'muted' }],
       },
       {
         segments: [{ text: '$ vp pack', tone: 'muted' }],
@@ -21,112 +21,112 @@ export const featureRunTranscripts: TerminalTranscript[] = [
       {
         segments: [
           { text: 'vp run:', tone: 'brand', bold: true },
-          { text: ' 0/2 cache hit (0%).', tone: 'muted' },
+          { text: ' 0/2 aciertos de caché (0%).', tone: 'muted' },
         ],
       },
     ],
   },
   {
     id: 'no-changes',
-    label: 'Full Replay',
-    title: 'No changes replay both tasks from cache',
+    label: 'Repetición Completa',
+    title: 'Sin cambios se repiten ambas tareas desde la caché',
     command: 'vp run --cache build',
     lineDelay: 180,
     completionDelay: 1200,
     lines: [
       {
-        segments: [{ text: '# No changes replay both tasks from cache', tone: 'muted' }],
+        segments: [{ text: '# Sin cambios se repiten ambas tareas desde la caché', tone: 'muted' }],
       },
       {
         segments: [
           { text: '$ vp pack ', tone: 'muted' },
           { text: '✓ ', tone: 'success' },
-          { text: 'cache hit, replaying', tone: 'base' },
+          { text: 'acierto de caché, repitiendo', tone: 'base' },
         ],
       },
       {
         segments: [
           { text: '$ vp build ', tone: 'muted' },
           { text: '✓ ', tone: 'success' },
-          { text: 'cache hit, replaying', tone: 'base' },
+          { text: 'acierto de caché, repitiendo', tone: 'base' },
         ],
       },
       {
         segments: [
           { text: 'vp run:', tone: 'brand', bold: true },
-          { text: ' 2/2 cache hit (100%), 1.24s saved.', tone: 'muted' },
+          { text: ' 2/2 aciertos de caché (100%), 1.24s ahorrados.', tone: 'muted' },
         ],
       },
     ],
   },
   {
     id: 'app-change',
-    label: 'Partial Replay',
-    title: 'App changes rerun only the app build',
+    label: 'Repetición Parcial',
+    title: 'Los cambios en la aplicación solo vuelven a ejecutar su construcción',
     command: 'vp run --cache build',
     lineDelay: 180,
     completionDelay: 1200,
     lines: [
       {
-        segments: [{ text: '# App changes rerun only the app build', tone: 'muted' }],
+        segments: [{ text: '# Los cambios en la aplicación solo vuelven a ejecutar su construcción', tone: 'muted' }],
       },
       {
         segments: [
           { text: '$ vp pack ', tone: 'muted' },
           { text: '✓ ', tone: 'success' },
-          { text: 'cache hit, replaying', tone: 'base' },
+          { text: 'acierto de caché, repitiendo', tone: 'base' },
         ],
       },
       {
         segments: [
           { text: '$ vp build ', tone: 'muted' },
           { text: '✗ ', tone: 'base' },
-          { text: 'cache miss: ', tone: 'muted' },
+          { text: 'fallo de caché: ', tone: 'muted' },
           { text: "'src/main.ts'", tone: 'base' },
-          { text: ' modified, executing', tone: 'muted' },
+          { text: ' modificado, ejecutando', tone: 'muted' },
         ],
       },
       {
         segments: [
           { text: 'vp run:', tone: 'brand', bold: true },
-          { text: ' 1/2 cache hit (50%), 528ms saved.', tone: 'muted' },
+          { text: ' 1/2 aciertos de caché (50%), 528ms ahorrados.', tone: 'muted' },
         ],
       },
     ],
   },
   {
     id: 'shared-change',
-    label: 'Full Rebuild',
-    title: 'Shared API changes rebuild the library and app',
+    label: 'Reconstrucción Completa',
+    title: 'Los cambios en la API compartida reconstruyen la librería y la aplicación',
     command: 'vp run --cache build',
     lineDelay: 180,
     completionDelay: 1200,
     lines: [
       {
-        segments: [{ text: '# Shared API changes rebuild the library and app', tone: 'muted' }],
+        segments: [{ text: '# Los cambios en la API compartida reconstruyen la librería y la aplicación', tone: 'muted' }],
       },
       {
         segments: [
           { text: '$ vp pack ', tone: 'muted' },
           { text: '✗ ', tone: 'base' },
-          { text: 'cache miss: ', tone: 'muted' },
+          { text: 'fallo de caché: ', tone: 'muted' },
           { text: "'src/index.ts'", tone: 'base' },
-          { text: ' modified, executing', tone: 'muted' },
+          { text: ' modificado, ejecutando', tone: 'muted' },
         ],
       },
       {
         segments: [
           { text: '$ vp build ', tone: 'muted' },
           { text: '✗ ', tone: 'base' },
-          { text: 'cache miss: ', tone: 'muted' },
+          { text: 'fallo de caché: ', tone: 'muted' },
           { text: "'src/routes.ts'", tone: 'base' },
-          { text: ' modified, executing', tone: 'muted' },
+          { text: ' modificado, ejecutando', tone: 'muted' },
         ],
       },
       {
         segments: [
           { text: 'vp run:', tone: 'brand', bold: true },
-          { text: ' 0/2 cache hit (0%).', tone: 'muted' },
+          { text: ' 0/2 aciertos de caché (0%).', tone: 'muted' },
         ],
       },
     ],

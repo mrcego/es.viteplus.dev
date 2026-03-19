@@ -2,7 +2,7 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 
 const features = [
-  { id: 'feature-dev-build', label: 'dev & build' },
+  { id: 'feature-dev-build', label: 'dev y build' },
   { id: 'feature-check', label: 'check' },
   { id: 'feature-test', label: 'test' },
   { id: 'feature-run', label: 'run' },

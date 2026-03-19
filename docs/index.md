@@ -2,7 +2,7 @@
 home: true
 layout: home
 theme: light
-titleTemplate: The Unified Toolchain for the Web
+titleTemplate: El Toolchain Unificado para la Web
 ---
 
 <script setup>

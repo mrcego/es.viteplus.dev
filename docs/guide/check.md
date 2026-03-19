@@ -1,31 +1,31 @@
 # Check
 
-`vp check` runs format, lint, and type checks together.
+`vp check` ejecuta el formateo, lint y verificaciones de tipos en conjunto.
 
-## Overview
+## Vista General
 
-`vp check` is the default command for fast static checks in Vite+. It brings together formatting through [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html), linting through [Oxlint](https://oxc.rs/docs/guide/usage/linter.html), and TypeScript type checks through [tsgolint](https://github.com/oxc-project/tsgolint). By merging all of these tasks into a single command, `vp check` is faster than running formatting, linting, and type checking as separate tools in separate commands.
+`vp check` es el comando predeterminado para verificaciones estáticas rápidas en Vite+. Reúne el formateo a través de [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html), el linting a través de [Oxlint](https://oxc.rs/docs/guide/usage/linter.html) y las verificaciones de tipos de TypeScript a través de [tsgolint](https://github.com/oxc-project/tsgolint). Al fusionar todas estas tareas en un único comando, `vp check` es más rápido que ejecutar el formateo, linting y verificación de tipos como herramientas separadas en comandos distintos.
 
-When `typeCheck` is enabled in the `lint.options` block in `vite.config.ts`, `vp check` also runs TypeScript type checks through the Oxlint type-aware path powered by the TypeScript Go toolchain and [tsgolint](https://github.com/oxc-project/tsgolint). `vp create` and `vp migrate` enable both `typeAware` and `typeCheck` by default.
+Cuando `typeCheck` está habilitado en el bloque `lint.options` en `vite.config.ts`, `vp check` también ejecuta verificaciones de tipos de TypeScript a través de la ruta consciente del tipo (type-aware) de Oxlint impulsada por el toolchain de TypeScript en Go y [tsgolint](https://github.com/oxc-project/tsgolint). `vp create` y `vp migrate` habilitan tanto `typeAware` como `typeCheck` por defecto.
 
-We recommend turning `typeCheck` on so `vp check` becomes the single command for static checks during development.
+Recomendamos activar `typeCheck` para que `vp check` se convierta en el comando único para las verificaciones estáticas durante el desarrollo.
 
-## Usage
+## Uso
 
 ```bash
 vp check
-vp check --fix # Format and run autofixers.
+vp check --fix # Formatear y ejecutar autocorrectores.
 ```
 
-## Configuration
+## Configuración
 
-`vp check` uses the same configuration you already define for linting and formatting:
+`vp check` utiliza la misma configuración que ya defines para el linting y formateo:
 
-- [`lint`](/guide/lint#configuration) block in `vite.config.ts`
-- [`fmt`](/guide/fmt#configuration) block in `vite.config.ts`
-- TypeScript project structure and tsconfig files for type-aware linting
+- Bloque [`lint`](/guide/lint#configuración) en `vite.config.ts`
+- Bloque [`fmt`](/guide/fmt#configuración) en `vite.config.ts`
+- Estructura del proyecto TypeScript y archivos tsconfig para linting consciente del tipo
 
-Recommended base `lint` config:
+Configuración base de `lint` recomendada:
 
 ```ts
 import { defineConfig } from 'vite-plus';
@@ -39,3 +39,4 @@ export default defineConfig({
   },
 });
 ```
+

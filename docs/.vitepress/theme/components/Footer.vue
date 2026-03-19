@@ -1,8 +1,8 @@
 <template>
   <footer class="bg-primary" data-theme="dark">
     <Sponsors
-      description="Vite+ is free and open source, made possible by a full-time team and passionate open-source contributors."
-      sponsorLinkText="Contribute"
+      description="Vite+ es gratuito y de código abierto, hecho posible gracias a un equipo a tiempo completo y apasionados contribuyentes de código abierto."
+      sponsorLinkText="Contribuir"
       sponsorLink="https://github.com/voidzero-dev/vite-plus/blob/main/CONTRIBUTING.md"
     />
     <section class="wrapper">
@@ -10,17 +10,17 @@
         class="bg-wine bg-[url(/cta-background.jpg)] bg-cover py-16 md:py-30 px-5 md:px-0 overflow-clip flex flex-col items-center justify-center gap-8 md:gap-12"
       >
         <h2 class="text-white w-full md:w-2xl text-center text-balance">
-          Take your team's productivity to the next level with Vite+
+          Lleva la productividad de tu equipo al siguiente nivel con Vite+
         </h2>
         <div class="flex items-center gap-5">
-          <a href="/guide" target="_self" class="button button--white">Get started</a>
+          <a href="/guide" target="_self" class="button button--white">Primeros pasos</a>
         </div>
       </div>
       <div
         class="px-5 md:px-24 pt-10 md:pt-16 pb-16 md:pb-30 flex flex-col md:flex-row gap-10 md:gap-0 md:justify-between"
       >
         <div>
-          <p class="text-grey text-xs font-mono uppercase tracking-wide mb-8">Company</p>
+          <p class="text-grey text-xs font-mono uppercase tracking-wide mb-8">Empresa</p>
           <ul class="flex flex-col gap-3">
             <li>
               <a
@@ -70,7 +70,7 @@
           </ul>
         </div>
         <div>
-          <p class="text-grey text-xs font-mono uppercase tracking-wide mb-8">Social</p>
+          <p class="text-grey text-xs font-mono uppercase tracking-wide mb-8">Redes sociales</p>
           <ul class="flex flex-col gap-3">
             <li>
               <a
@@ -121,7 +121,7 @@
     <section class="wrapper wrapper--ticks border-t py-5 px-5 md:px-24">
       <p class="text-sm">
         © {{ new Date().getFullYear() }} VoidZero Inc.
-        <span class="hidden sm:inline">All Rights Reserved.</span>
+        <span class="hidden sm:inline">Todos los derechos reservados.</span>
       </p>
     </section>
   </footer>

@@ -7,33 +7,30 @@ import oxcIcon from '@assets/icons/oxc-light.svg';
     <div class="px-5 py-6 md:p-10 flex flex-col justify-between gap-15">
       <div class="flex flex-col gap-5">
         <span class="text-grey text-xs font-mono uppercase tracking-wide">Vite+ check</span>
-        <h4 class="text-white">Format, lint, and type-check in one pass</h4>
+        <h4 class="text-white">Formatea, analiza (lint) y verifica tipos en una sola pasada</h4>
         <p class="text-white/70 text-base max-w-[25rem] text-pretty">
-          Keep every repo consistent with one command powered by Oxlint, Oxfmt, and
+          Mantén cada repositorio consistente con un solo comando impulsado por Oxlint, Oxfmt y
           <code class="mx-1 outline-none bg-nickel/50 text-aqua">tsgo</code>.
         </p>
         <ul class="checkmark-list">
           <li>
-            <code class="mx-1 outline-none bg-nickel/50 text-aqua">Prettier</code> compatible
-            formatting
+            Formateo compatible con <code class="mx-1 outline-none bg-nickel/50 text-aqua">Prettier</code>
           </li>
           <li>
-            600+ <code class="mx-1 outline-none bg-nickel/50 text-aqua">ESLint</code> compatible
-            rules
+            Más de 600 reglas compatibles con <code class="mx-1 outline-none bg-nickel/50 text-aqua">ESLint</code>
           </li>
           <li>
-            Type-aware linting and fast type checks with
+            Linting consciente de tipos y verificaciones rápidas con
             <code class="mx-1 outline-none bg-nickel/50 text-aqua">tsgo</code>
           </li>
           <li>
-            <code class="mx-1 outline-none bg-nickel/50 text-aqua">vp check --fix</code> auto-fixes
-            where possible
+            <code class="mx-1 outline-none bg-nickel/50 text-aqua">vp check --fix</code> corrige automáticamente donde sea posible
           </li>
         </ul>
       </div>
       <div class="flex flex-wrap gap-3">
         <div class="px-3 py-1.5 bg-slate rounded w-fit flex gap-2 items-center">
-          <span class="text-grey text-sm font-mono hidden md:inline">Powered by</span>
+          <span class="text-grey text-sm font-mono hidden md:inline">Impulsado por</span>
           <a href="https://oxc.rs/" target="_blank">
             <figure class="project-icon">
               <img loading="lazy" :src="oxcIcon" alt="Oxc" class="w-[20px] h-[12px]" />
@@ -42,7 +39,7 @@ import oxcIcon from '@assets/icons/oxc-light.svg';
           </a>
         </div>
         <div class="px-3 py-1.5 bg-slate rounded w-fit flex gap-2 items-center">
-          <span class="text-grey text-sm font-mono hidden md:inline">Powered by</span>
+          <span class="text-grey text-sm font-mono hidden md:inline">Impulsado por</span>
           <a href="https://oxc.rs/docs/guide/usage/formatter" target="_blank">
             <figure class="project-icon">
               <img loading="lazy" :src="oxcIcon" alt="Oxc" class="w-[20px] h-[12px]" />
@@ -61,15 +58,15 @@ import oxcIcon from '@assets/icons/oxc-light.svg';
           <div class="h-4" />
           <div>
             <span class="terminal-blue">pass:</span>
-            All <span class="text-white">42 files</span> are correctly formatted
-            <span class="text-grey">(88ms, 16 threads)</span>
+            Todos los <span class="text-white">42 archivos</span> están correctamente formateados
+            <span class="text-grey">(88ms, 16 hilos)</span>
           </div>
           <div class="h-4" />
           <div class="text-grey">
             <span class="terminal-blue">pass:</span>
-            Found no warnings, lint errors, or type errors in
-            <span class="text-white">42 files</span>
-            <span class="text-grey">(184ms, 16 threads)</span>
+            No se encontraron advertencias, errores de lint o errores de tipo en
+            <span class="text-white">42 archivos</span>
+            <span class="text-grey">(184ms, 16 hilos)</span>
           </div>
         </div>
       </div>

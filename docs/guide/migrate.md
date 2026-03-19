@@ -1,110 +1,110 @@
-# Migrate to Vite+
+# Migrar a Vite+
 
-`vp migrate` helps move existing projects onto Vite+.
+`vp migrate` ayuda a mover proyectos existentes a Vite+.
 
-## Overview
+## Vista General
 
-This command is the starting point for consolidating separate Vite, Vitest, Oxlint, Oxfmt, ESLint, and Prettier setups into Vite+.
+Este comando es el punto de partida para consolidar configuraciones separadas de Vite, Vitest, Oxlint, Oxfmt, ESLint y Prettier en Vite+.
 
-Use it when you want to take an existing project and move it onto the Vite+ defaults instead of wiring each tool by hand.
+Úsalo cuando desees tomar un proyecto existente y moverlo a los valores predeterminados de Vite+ en lugar de configurar cada herramienta a mano.
 
-## Usage
+## Uso
 
 ```bash
 vp migrate
-vp migrate <path>
+vp migrate <ruta>
 vp migrate --no-interactive
 ```
 
-## Target Path
+## Ruta de Destino
 
-The positional `PATH` argument is optional.
+El argumento posicional `RUTA` es opcional.
 
-- If omitted, `vp migrate` migrates the current directory
-- If provided, it migrates that target directory instead
+- Si se omite, `vp migrate` migra el directorio actual.
+- Si se proporciona, migra ese directorio de destino en su lugar.
 
 ```bash
 vp migrate
-vp migrate my-app
+vp migrate mi-app
 ```
 
-## Options
+## Opciones
 
-- `--agent <name>` writes agent instructions into the project
-- `--no-agent` skips agent instruction setup
-- `--editor <name>` writes editor config files into the project
-- `--no-editor` skips editor config setup
-- `--hooks` sets up pre-commit hooks
-- `--no-hooks` skips hook setup
-- `--no-interactive` runs the migration without prompts
+- `--agent <nombre>` escribe instrucciones para agentes en el proyecto.
+- `--no-agent` omite la configuración de instrucciones para agentes.
+- `--editor <nombre>` escribe archivos de configuración del editor en el proyecto.
+- `--no-editor` omite la configuración del editor.
+- `--hooks` configura los hooks de pre-commit.
+- `--no-hooks` omite la configuración de hooks.
+- `--no-interactive` ejecuta la migración sin preguntas.
 
-## Migration Flow
+## Flujo de Migración
 
-The `migrate` command is designed to move existing projects onto Vite+ quickly. Here is what the command does:
+El comando `migrate` está diseñado para mover proyectos existentes a Vite+ rápidamente. Esto es lo que hace el comando:
 
-- Updates project dependencies
-- Rewrites imports where needed
-- Merges tool-specific config into `vite.config.ts`
-- Updates scripts to the Vite+ command surface
-- Can set up commit hooks
-- Can write agent and editor configuration files
+- Actualiza las dependencias del proyecto.
+- Reeascribe las importaciones donde sea necesario.
+- Fusiona la configuración específica de la herramienta en `vite.config.ts`.
+- Actualiza los scripts a la superficie de comandos de Vite+.
+- Puede configurar hooks de commit.
+- Puede escribir archivos de configuración para agentes y editores.
 
-Most projects will require further manual adjustments after running `vp migrate`.
+La mayoría de los proyectos requerirán ajustes manuales adicionales después de ejecutar `vp migrate`.
 
-## Recommended Workflow
+## Flujo de Trabajo Recomendado
 
-Before running the migration:
+Antes de ejecutar la migración:
 
-- Upgrade to Vite 8+ and Vitest 4.1+ first
-- Make sure you understand any existing lint, format, or test setup that should be preserved
+- Actualiza primero a Vite 8+ y Vitest 4.1+.
+- Asegúrate de entender cualquier configuración existente de lint, formateo o pruebas que deba preservarse.
 
-After running the migration:
+Después de ejecutar la migración:
 
-- Run `vp install`
-- Run `vp check`
-- Run `vp test`
-- Run `vp build`
+- Ejecuta `vp install`.
+- Ejecuta `vp check`.
+- Ejecuta `vp test`.
+- Ejecuta `vp build`.
 
-## Migration Prompt
+## Prompt de Migración
 
-If you want to hand this work to a coding agent (or the reader is a coding agent!), use this migration prompt:
+Si deseas entregar este trabajo a un agente de IA (¡o si el lector es un agente!), usa este prompt de migración:
 
 ```md
-Migrate this project to Vite+. Vite+ replaces the current split tooling around runtime management, package management, dev/build/test commands, linting, formatting, and packaging. Run `vp help` to understand Vite+ capabilities and `vp help migrate` before making changes. Use `vp migrate --no-interactive` in the workspace root. Make sure the project is using Vite 8+ and Vitest 4.1+ before migrating.
+Migra este proyecto a Vite+. Vite+ reemplaza las herramientas actuales divididas en torno a la gestión del entorno de ejecución, gestión de paquetes, comandos dev/build/test, linting, formateo y empaquetado. Ejecuta `vp help` para entender las capacidades de Vite+ y `vp help migrate` antes de realizar cambios. Usa `vp migrate --no-interactive` en la raíz del espacio de trabajo. Asegúrate de que el proyecto esté usando Vite 8+ y Vitest 4.1+ antes de migrar.
 
-After the migration:
+Después de la migración:
 
-- Confirm `vite` imports were rewritten to `vite-plus` where needed
-- Confirm `vitest` imports were rewritten to `vite-plus/test` where needed
-- Remove old `vite` and `vitest` dependencies only after those rewrites are confirmed
-- Move remaining tool-specific config into the appropriate blocks in `vite.config.ts`
+- Confirma que las importaciones de `vite` se reescribieron a `vite-plus` donde fuera necesario.
+- Confirma que las importaciones de `vitest` se reescribieron a `vite-plus/test` donde fuera necesario.
+- Elimina las dependencias antiguas de `vite` y `vitest` solo después de confirmar esas reescrituras.
+- Mueve la configuración restante específica de la herramienta a los bloques apropiados en `vite.config.ts`.
 
-Command mapping to keep in mind:
+Mapeo de comandos a tener en cuenta:
 
-- `vp run <script>` is the equivalent of `pnpm run <script>`
-- `vp test` runs the built-in test command, while `vp run test` runs the `test` script from `package.json`
-- `vp install`, `vp add`, and `vp remove` delegate through the package manager declared by `packageManager`
-- `vp dev`, `vp build`, `vp preview`, `vp lint`, `vp fmt`, `vp check`, and `vp pack` replace the corresponding standalone tools
-- Prefer `vp check` for validation loops
+- `vp run <script>` es el equivalente a `pnpm run <script>`.
+- `vp test` ejecuta el comando de prueba integrado, mientras que `vp run test` ejecuta el script `test` del `package.json`.
+- `vp install`, `vp add` y `vp remove` delegan a través del gestor de paquetes declarado por `packageManager`.
+- `vp dev`, `vp build`, `vp preview`, `vp lint`, `vp fmt`, `vp check` y `vp pack` reemplazan las herramientas independientes correspondientes.
+- Prefiere `vp check` para los bucles de validación.
 
-Finally, verify the migration by running: `vp install`, `vp check`, `vp test`, and `vp build`
+Finalmente, verifica la migración ejecutando: `vp install`, `vp check`, `vp test` y `vp build`.
 
-Summarize the migration at the end and report any manual follow-up still required.
+Resume la migración al final e informa sobre cualquier seguimiento manual que aún se requiera.
 ```
 
-## Tool-Specific Migrations
+## Migraciones Específicas de Herramientas
 
 ### Vitest
 
-Vitest is automatically migrated through `vp migrate`. If you are migrating manually, you have to update all the imports to `vite-plus/test` instead:
+Vitest se migra automáticamente a través de `vp migrate`. Si estás migrando manualmente, tienes que actualizar todas las importaciones a `vite-plus/test` en su lugar:
 
 ```ts
-// before
+// antes
 import { describe, expect, it, vi } from 'vitest';
 
 const { page } = await import('@vitest/browser/context');
 
-// after
+// después
 import { describe, expect, it, vi } from 'vite-plus/test';
 
 const { page } = await import('vite-plus/test/browser/context');
@@ -112,10 +112,10 @@ const { page } = await import('vite-plus/test/browser/context');
 
 ### tsdown
 
-If your project uses a `tsdown.config.ts`, move its options into the `pack` block in `vite.config.ts`:
+Si tu proyecto usa un `tsdown.config.ts`, mueve sus opciones al bloque `pack` en `vite.config.ts`:
 
 ```ts
-// before — tsdown.config.ts
+// antes — tsdown.config.ts
 import { defineConfig } from 'tsdown';
 
 export default defineConfig({
@@ -124,7 +124,7 @@ export default defineConfig({
   format: ['esm', 'cjs'],
 });
 
-// after — vite.config.ts
+// después — vite.config.ts
 import { defineConfig } from 'vite-plus';
 
 export default defineConfig({
@@ -136,13 +136,13 @@ export default defineConfig({
 });
 ```
 
-After merging, delete `tsdown.config.ts`. See the [Pack guide](/guide/pack) for the full configuration reference.
+Después de fusionar, elimina `tsdown.config.ts`. Consulta la [guía de Pack](/guide/pack) para ver la referencia de configuración completa.
 
 ### lint-staged
 
-Vite+ replaces lint-staged with its own `staged` block in `vite.config.ts`. Only the `staged` config format is supported. Standalone `.lintstagedrc` in non-JSON format and `lint-staged.config.*` are not migrated automatically.
+Vite+ reemplaza lint-staged con su propio bloque `staged` en `vite.config.ts`. Solo se admite el formato de configuración `staged`. Los archivos `.lintstagedrc` independientes en formato no JSON y `lint-staged.config.*` no se migran automáticamente.
 
-Move your lint-staged rules into the `staged` block:
+Mueve tus reglas de lint-staged al bloque `staged`:
 
 ```ts
 // vite.config.ts
@@ -155,20 +155,21 @@ export default defineConfig({
 });
 ```
 
-After migrating, remove lint-staged from your dependencies and delete any lint-staged config files. See the [Commit hooks guide](/guide/commit-hooks) and [Staged config reference](/config/staged) for details.
+Después de migrar, elimina lint-staged de tus dependencias y elimina cualquier archivo de configuración de lint-staged. Consulta la [guía de Hooks de commit](/guide/commit-hooks) y la [referencia de configuración Staged](/config/staged) para más detalles.
 
-## Examples
+## Ejemplos
 
 ```bash
-# Migrate the current project
+# Migrar el proyecto actual
 vp migrate
 
-# Migrate a specific directory
-vp migrate my-app
+# Migrar un directorio específico
+vp migrate mi-app
 
-# Run without prompts
+# Ejecutar sin preguntas
 vp migrate --no-interactive
 
-# Write agent and editor setup during migration
+# Escribir configuración de agente y editor durante la migración
 vp migrate --agent claude --editor zed
 ```
+

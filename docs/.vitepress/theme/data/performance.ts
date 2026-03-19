@@ -89,7 +89,7 @@ export const testPerformance: PerformanceData[] = [
 
 export const lintSyntaticPerformance: PerformanceData[] = [
   {
-    name: 'Syntatic Mode',
+    name: 'Modo Sintáctico',
     percentage: 10,
     time: '102MS',
     isPrimary: true,
@@ -108,7 +108,7 @@ export const lintSyntaticPerformance: PerformanceData[] = [
 
 export const lintTypeAwarePerformance: PerformanceData[] = [
   {
-    name: 'Type-Aware Mode',
+    name: 'Modo con Tipos',
     percentage: 25,
     time: '380MS',
     isPrimary: true,
