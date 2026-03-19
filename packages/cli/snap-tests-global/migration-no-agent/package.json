@@ -1,6 +1,0 @@
-{
-  "name": "migration-no-agent",
-  "dependencies": {
-    "vitest": "^3.0.0"
-  }
-}

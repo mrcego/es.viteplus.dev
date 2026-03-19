@@ -1,7 +1,0 @@
-{
-  "name": "root-package",
-  "type": "module",
-  "scripts": {
-    "hello": "vp lint ./src && vp lint"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "workspace-root-vite-config-test",
-  "version": "0.0.0",
-  "workspaces": [
-    "packages/*"
-  ],
-  "type": "module",
-  "packageManager": "pnpm@10.16.1"
-}

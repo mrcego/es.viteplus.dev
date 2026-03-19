@@ -1,47 +1,15 @@
 {
-  "name": "vite-plus-monorepo",
+  "name": "vite-plus-docs-repo",
   "private": true,
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "pnpm -F @voidzero-dev/* -F vite-plus build",
-    "bootstrap-cli": "pnpm build && cargo build -p vite_global_cli -p vite_trampoline --release && pnpm install-global-cli",
-    "bootstrap-cli:ci": "pnpm install-global-cli",
-    "install-global-cli": "tool install-global-cli",
-    "tsgo": "tsgo -b tsconfig.json",
-    "lint": "vp lint --type-aware --type-check --threads 4",
-    "test": "vp test run && pnpm -r snap-test",
-    "fmt": "vp fmt",
-    "test:unit": "vp test run",
-    "docs:dev": "pnpm -C docs dev",
-    "docs:build": "pnpm -C docs build",
-    "prepare": "husky"
+    "dev": "pnpm -C docs dev",
+    "build": "pnpm -C docs build",
+    "preview": "pnpm -C docs preview"
   },
-  "devDependencies": {
-    "@napi-rs/cli": "catalog:",
-    "@oxc-node/cli": "catalog:",
-    "@oxc-node/core": "catalog:",
-    "@types/node": "catalog:",
-    "@typescript/native-preview": "catalog:",
-    "@voidzero-dev/vite-plus-tools": "workspace:*",
-    "bingo": "catalog:",
-    "husky": "catalog:",
-    "lint-staged": "catalog:",
-    "oxfmt": "catalog:",
-    "oxlint": "catalog:",
-    "playwright": "catalog:",
-    "typescript": "catalog:",
-    "vite": "catalog:",
-    "vite-plus": "workspace:*",
-    "vitest": "catalog:",
-    "zod": "catalog:"
-  },
-  "lint-staged": {
-    "*.@(js|ts|tsx|md|yaml|yml)": "vp check --fix",
-    "*.rs": "cargo fmt --"
-  },
+  "packageManager": "pnpm@10.28.0",
   "engines": {
     "node": ">=22.18.0"
-  },
-  "packageManager": "pnpm@10.28.0"
+  }
 }

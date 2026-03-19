@@ -1,7 +1,0 @@
-{
-  "name": "recursive-cli-pkg",
-  "version": "1.0.0",
-  "bin": {
-    "recursive-cli": "./cli.js"
-  }
-}

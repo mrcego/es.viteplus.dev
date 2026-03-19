@@ -1,7 +1,0 @@
-{
-  "name": "app-web",
-  "dependencies": {
-    "lib-ui": "workspace:*",
-    "lib-utils": "workspace:*"
-  }
-}

@@ -1,5 +1,0 @@
-{
-  "scripts": {
-    "foo": "vp exec node -e \"console.log(5173)\""
-  }
-}

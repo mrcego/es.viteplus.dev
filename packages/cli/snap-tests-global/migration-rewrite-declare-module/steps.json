@@ -1,7 +1,0 @@
-{
-  "commands": [
-    "vp migrate --no-interactive # migration should rewrite imports to vite-plus",
-    "cat src/index.ts # check src/index.ts",
-    "cat package.json # check package.json"
-  ]
-}

@@ -1,6 +1,0 @@
-{
-  "name": "migration-no-hooks",
-  "devDependencies": {
-    "vite": "^7.0.0"
-  }
-}

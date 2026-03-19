@@ -1,6 +1,0 @@
-{
-  "name": "migration-no-git-repo",
-  "devDependencies": {
-    "vite": "^7.0.0"
-  }
-}

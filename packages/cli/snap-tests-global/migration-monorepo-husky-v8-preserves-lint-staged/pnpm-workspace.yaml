@@ -1,5 +1,0 @@
-packages:
-  - packages/*
-
-catalog:
-  vite: ^7.0.0

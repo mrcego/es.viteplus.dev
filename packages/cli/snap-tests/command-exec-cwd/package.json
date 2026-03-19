@@ -1,5 +1,0 @@
-{
-  "scripts": {
-    "print-cwd": "vp exec -c pwd"
-  }
-}

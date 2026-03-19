@@ -1,6 +1,0 @@
-{
-  "name": "migration-skip-vite-peer-dependency",
-  "peerDependencies": {
-    "vite": "^6.0.0"
-  }
-}

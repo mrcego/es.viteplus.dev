@@ -1,6 +1,0 @@
-{
-  "name": "exec-monorepo-filter-v2",
-  "workspaces": [
-    "packages/*"
-  ]
-}
