@@ -1,35 +1,35 @@
-# Vite+ Code Generator Starter
+# Inicio de Generador de Código de Vite+
 
-A starter for creating a Vite+ code generator.
+Un punto de partida para crear un generador de código de Vite+.
 
-## Usage
+## Uso
 
-From monorepo root:
+Desde la raíz del monorepo:
 
 ```bash
-# run and select the generator
+# ejecuta y selecciona el generador
 vp create
 ```
 
-## Development
+## Desarrollo
 
 ```bash
-# Edit the template
+# Editar la plantilla
 code src/template.ts
 
-# Test the generator CLI
+# Probar la CLI del generador
 vp run dev
 
-# Run tests
+# Ejecutar pruebas
 vp run test
 ```
 
-## Customization
+## Personalización
 
-Edit `src/template.ts` to customize:
+Edita `src/template.ts` para personalizar:
 
-- Options schema (using Zod)
-- File generation logic
-- Scripts and suggestions
+- Esquema de opciones (usando Zod)
+- Lógica de generación de archivos
+- Scripts y sugerencias
 
-More information about the [Bingo Templates](https://create.bingo/) can be found [here](https://create.bingo/build/concepts/creations).
+Puedes encontrar más información sobre las [Plantillas de Bingo](https://create.bingo/) [aquí](https://create.bingo/build/concepts/creations).

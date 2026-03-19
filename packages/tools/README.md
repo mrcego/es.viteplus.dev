@@ -1,5 +1,5 @@
-# tools for internal development use
+# herramientas para uso interno de desarrollo
 
-- json-edit: A CLI tool to edit JSON files such as package.json in e2e tests
-- json-sort: A CLI tool to sort JSON keys in a file
-- snap-test: run snapshot tests for CLI
+- json-edit: Una herramienta CLI para editar archivos JSON como package.json en pruebas e2e.
+- json-sort: Una herramienta CLI para ordenar las claves de un archivo JSON.
+- snap-test: ejecución de pruebas de snapshot para la CLI.

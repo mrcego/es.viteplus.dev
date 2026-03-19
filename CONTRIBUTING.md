@@ -1,23 +1,23 @@
-# Contributing Guide
+# Guía de Contribución
 
-## Initial Setup
+## Configuración Inicial
 
 ### macOS / Linux
 
-You'll need the following tools installed on your system:
+Necesitarás las siguientes herramientas instaladas en tu sistema:
 
 ```
 brew install pnpm node just cmake
 ```
 
-Install Rust & Cargo using rustup:
+Instala Rust & Cargo usando rustup:
 
 ```
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 cargo install cargo-binstall
 ```
 
-Initial setup to install dependencies for Vite+:
+Configuración inicial para instalar las dependencias de Vite+:
 
 ```
 just init
@@ -25,109 +25,109 @@ just init
 
 ### Windows
 
-You'll need the following tools installed on your system. You can use [winget](https://learn.microsoft.com/en-us/windows/package-manager/).
+Necesitarás las siguientes herramientas instaladas en tu sistema. Puedes usar [winget](https://learn.microsoft.com/es-es/windows/package-manager/).
 
 ```powershell
 winget install pnpm.pnpm OpenJS.NodeJS.LTS Casey.Just Kitware.CMake
 ```
 
-Install Rust & Cargo from [rustup.rs](https://rustup.rs/), then install `cargo-binstall`:
+Instala Rust & Cargo desde [rustup.rs](https://rustup.rs/), luego instala `cargo-binstall`:
 
 ```powershell
 cargo install cargo-binstall
 ```
 
-Initial setup to install dependencies for Vite+:
+Configuración inicial para instalar las dependencias de Vite+:
 
 ```powershell
 just init
 ```
 
-**Note:** Run commands in PowerShell or Windows Terminal. Some commands may require elevated permissions.
+**Nota:** Ejecuta los comandos en PowerShell o Windows Terminal. Algunos comandos pueden requerir permisos elevados.
 
-## Build Vite+ and upstream dependencies
+## Construir Vite+ y las dependencias de origen
 
-To create a release build of Vite+ and all upstream dependencies, run:
+Para crear una construcción de lanzamiento (release) de Vite+ y todas sus dependencias de origen, ejecuta:
 
 ```
 just build
 ```
 
-## Install the Vite+ Global CLI from source code
+## Instalar la CLI Global de Vite+ desde el código fuente
 
 ```
 pnpm bootstrap-cli
 vp --version
 ```
 
-This builds all packages, compiles the Rust `vp` binary, and installs the CLI to `~/.vite-plus`.
+Esto construye todos los paquetes, compila el binario `vp` en Rust e instala la CLI en `~/.vite-plus`.
 
-## Workflow for build and test
+## Flujo de trabajo para construcción y pruebas
 
-You can run this command to build, test and check if there are any snapshot changes:
+Puedes ejecutar este comando para construir, probar y comprobar si hay cambios en los snapshots:
 
 ```
 pnpm bootstrap-cli && pnpm test && git status
 ```
 
-## Running Snap Tests
+## Ejecución de Pruebas de Snapshot (Snap Tests)
 
-Snap tests verify CLI output. They are located in `packages/cli/snap-tests/` (local CLI) and `packages/cli/snap-tests-global/` (global CLI).
+Las pruebas de snapshot verifican la salida de la CLI. Se encuentran en `packages/cli/snap-tests/` (CLI local) y `packages/cli/snap-tests-global/` (CLI global).
 
 ```bash
-# Run all snap tests (local + global)
+# Ejecutar todas las pruebas de snapshot (local + global)
 pnpm -F vite-plus snap-test
 
-# Run only local CLI snap tests
+# Ejecutar solo las pruebas de snapshot de la CLI local
 pnpm -F vite-plus snap-test-local
-pnpm -F vite-plus snap-test-local <name-filter>
+pnpm -F vite-plus snap-test-local <filtro-de-nombre>
 
-# Run only global CLI snap tests
+# Ejecutar solo las pruebas de snapshot de la CLI global
 pnpm -F vite-plus snap-test-global
-pnpm -F vite-plus snap-test-global <name-filter>
+pnpm -F vite-plus snap-test-global <filtro-de-nombre>
 ```
 
-Snap tests auto-generate `snap.txt` files. Check `git diff` to verify output changes are correct.
+Las pruebas de snapshot generan automáticamente archivos `snap.txt`. Revisa `git diff` para verificar que los cambios en la salida sean correctos.
 
-## Verified Commits
+## Commits Verificados
 
-All commits in PR branches should be GitHub-verified so reviewers can confirm commit authenticity.
+Todos los commits en las ramas de PR deben estar verificados por GitHub para que los revisores puedan confirmar su autenticidad.
 
-Set up local commit signing and GitHub verification first:
+Configura primero la firma de commits local y la verificación de GitHub:
 
-- Follow GitHub's guide for GPG commit signature verification: https://docs.github.com/en/authentication/managing-commit-signature-verification/about-commit-signature-verification#gpg-commit-signature-verification
-- If you use Graphite, add the Graphite GPG key to your GitHub account from the Graphite UI as well, otherwise commits updated by Graphite won't show as verified.
+- Sigue la guía de GitHub para la verificación de firmas de commits con GPG: https://docs.github.com/es/authentication/managing-commit-signature-verification/about-commit-signature-verification#gpg-commit-signature-verification
+- Si usas Graphite, añade también la clave GPG de Graphite a tu cuenta de GitHub desde la interfaz de Graphite, de lo contrario los commits actualizados por Graphite no aparecerán como verificados.
 
-After setup, re-sign any existing commits in your branch so the full branch is verified:
+Después de la configuración, vuelve a firmar cualquier commit existente en tu rama para que toda la rama esté verificada:
 
 ```bash
-# Re-sign each commit on your branch (replace origin/main with your branch base if needed)
+# Volver a firmar cada commit en tu rama (reemplaza origin/main con la base de tu rama si es necesario)
 git rebase -i origin/main
-# At each stop:
+# En cada parada:
 git commit --amend --date=now --no-edit -S
-# Then continue:
+# Luego continúa:
 git rebase --continue
 ```
 
-When done, force-push the updated branch history:
+Cuando termines, fuerza el envío (force-push) del historial de la rama actualizada:
 
 ```bash
 git push --force-with-lease
 ```
 
-## Pull upstream dependencies
+## Actualizar dependencias de origen
 
 > [!NOTE]
->
-> Upstream dependencies only need to be updated when an ["upgrade upstream dependencies"](https://github.com/voidzero-dev/vite-plus/pulls?q=is%3Apr+feat%28deps%29%3A+upgrade+upstream+dependencies+merged) pull request is merged.
+> 
+> Las dependencias de origen solo necesitan actualizarse cuando se fusiona un pull request de ["upgrade upstream dependencies"](https://github.com/voidzero-dev/vite-plus/pulls?q=is%3Apr+feat%28deps%29%3A+upgrade+upstream+dependencies+merged).
 
-To sync the latest upstream dependencies such as Rolldown and Vite, run:
+Para sincronizar las últimas dependencias de origen como Rolldown y Vite, ejecuta:
 
 ```
 pnpm tool sync-remote
 just build
 ```
 
-## macOS Performance Tip
+## Consejo de Rendimiento para macOS
 
-If you are using macOS, add your terminal app (Ghostty, iTerm2, Terminal, …) to the approved "Developer Tools" apps in the Privacy panel of System Settings and restart your terminal app. Your Rust builds will be about ~30% faster.
+Si usas macOS, añade tu aplicación de terminal (Ghostty, iTerm2, Terminal, …) a las aplicaciones aprobadas de "Herramientas de Desarrollador" en el panel de Privacidad de Ajustes del Sistema y reinicia tu terminal. Tus construcciones de Rust serán aproximadamente un 30% más rápidas.

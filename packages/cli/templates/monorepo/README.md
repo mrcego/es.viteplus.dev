@@ -1,28 +1,28 @@
-# Vite+ Monorepo Starter
+# Inicio de Monorepo Vite+
 
-A starter for creating a Vite+ monorepo.
+Un punto de partida para crear un monorepo con Vite+.
 
-## Development
+## Desarrollo
 
-- Check everything is ready:
+- Comprobar que todo esté listo:
 
 ```bash
 vp run ready
 ```
 
-- Run the tests:
+- Ejecutar las pruebas:
 
 ```bash
 vp run test -r
 ```
 
-- Build the monorepo:
+- Construir el monorepo:
 
 ```bash
 vp run build -r
 ```
 
-- Run the development server:
+- Ejecutar el servidor de desarrollo:
 
 ```bash
 vp run dev
