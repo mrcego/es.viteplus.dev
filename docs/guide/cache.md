@@ -36,7 +36,7 @@ Una tarea puede establecer [`cache: false`](/config/run#cache) para desactivarlo
 
 ### 2. Parámetros de CLI
 
-`--no-cache` desactiva el caché para todo. `--cache` habilita el caché tanto para tareas como para scripts, lo cual es equivalente a establecer [`run.cache: true`](/run-config#cache) para esa invocación.
+`--no-cache` desactiva el caché para todo. `--cache` habilita el caché tanto para tareas como para scripts, lo cual es equivalente a establecer [`run.cache: true`](/config/run#run-cache) para esa invocación.
 
 ### 3. Configuración del workspace
 
