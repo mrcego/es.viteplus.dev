@@ -28,6 +28,35 @@ vp help
 Vite+ gestionará tu entorno de ejecución global de Node.js y el gestor de paquetes. Si deseas desactivar este comportamiento, ejecuta `vp env off`. Si te das cuenta de que Vite+ no es para ti, escribe `vp implode`, pero por favor [comparte tus comentarios con nosotros](https://discord.gg/cAnsqHh5PX).
 :::
 
+::: details ¿Usando una plataforma menor (arquitectura de CPU, SO)?
+
+Los binarios precompilados se distribuyen para las siguientes plataformas (agrupados por [nivel de soporte de plataformas de Node.js v24](https://github.com/nodejs/node/blob/v24.x/BUILDING.md#platform-list)):
+
+- Nivel 1
+  - Linux x64 glibc (`x86_64-unknown-linux-gnu`)
+  - Linux arm64 glibc (`aarch64-unknown-linux-gnu`)
+  - Windows x64 (`x86_64-pc-windows-msvc`)
+  - macOS x64 (`x86_64-apple-darwin`)
+  - macOS arm64 (`aarch64-apple-darwin`)
+- Nivel 2
+  - Windows arm64 (`aarch64-pc-windows-msvc`)
+- Experimental
+  - Linux x64 musl (`x86_64-unknown-linux-musl`)
+- Otro
+  - Linux arm64 musl (`aarch64-unknown-linux-musl`)
+
+Si un binario precompilado no está disponible para tu plataforma, la instalación fallará con un error.
+
+En Alpine Linux (musl), necesitas instalar `libstdc++` antes de usar Vite+:
+
+```sh
+apk add libstdc++
+```
+
+Esto es requerido porque el entorno de ejecución gestionado de Node.js [unofficial-builds](https://unofficial-builds.nodejs.org/) depende de la biblioteca estándar de GNU C++.
+
+:::
+
 ## Inicio Rápido
 
 Crea un proyecto, instala las dependencias y usa los comandos predeterminados:

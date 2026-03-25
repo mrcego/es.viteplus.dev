@@ -25,8 +25,8 @@ Consulta la [guía de tsdown](https://tsdown.dev/guide/) y la [documentación de
 Úsalo para:
 
 - [archivos de declaración (`dts`)](https://tsdown.dev/options/dts)
-- [formatos de salida](https://tsdown.dev/options/format)
-- [modo escucha (watch)](https://tsdown.dev/options/watch)
+- [formatos de salida](https://tsdown.dev/options/output-format)
+- [modo escucha (watch)](https://tsdown.dev/options/watch-mode)
 - [ejecutables independientes](https://tsdown.dev/options/exe#executable)
 
 ```ts
