@@ -2,6 +2,10 @@
 
 `vp run` ejecuta tareas y scripts de `package.json` definidos en `vite.config.ts`. Funciona como `pnpm run`, con caché, orden de dependencias y ejecución consciente del workspace de forma integrada.
 
+::: tip
+`vpr` está disponible como un atajo independiente para `vp run`. Todos los ejemplos a continuación funcionan tanto con `vp run` como con `vpr`.
+:::
+
 ## Vista General
 
 Usa `vp run` con scripts de `package.json` existentes:
@@ -281,6 +285,34 @@ Usa `--last-details` para mostrar el resumen de la última ejecución sin volver
 
 ```bash
 vp run --last-details
+```
+
+## Concurrencia
+
+Por defecto, se ejecutan hasta 4 tareas al mismo tiempo. Usa `--concurrency-limit` para cambiar esto:
+
+```bash
+# Ejecutar hasta 8 tareas a la vez
+vp run -r --concurrency-limit 8 build
+
+# Ejecutar las tareas una por una
+vp run -r --concurrency-limit 1 build
+```
+
+El límite también puede establecerse mediante la variable de entorno `VP_RUN_CONCURRENCY_LIMIT`. El flag `--concurrency-limit` tiene prioridad sobre la variable de entorno.
+
+### Modo Paralelo
+
+Usa `--parallel` para ignorar las dependencias de tareas y ejecutar todas a la vez con concurrencia ilimitada:
+
+```bash
+vp run -r --parallel dev
+```
+
+Esto es útil cuando las tareas son independientes y deseas el máximo rendimiento. Puedes combinar `--parallel` con `--concurrency-limit` para ejecutar tareas sin orden de dependencia pero limitando el número de tareas concurrentes:
+
+```bash
+vp run -r --parallel --concurrency-limit 4 dev
 ```
 
 ## Argumentos Adicionales

@@ -6,7 +6,7 @@
 
 El modo gestionado está activado por defecto, por lo que `node`, `npm` y los shims relacionados se resuelven a través de Vite+ y seleccionan la versión correcta de Node.js para el proyecto actual.
 
-Por defecto, Vite+ almacena su entorno de ejecución gestionado y los archivos relacionados en `~/.vite-plus`. Si es necesario, puedes anular esa ubicación con `VITE_PLUS_HOME`.
+Por defecto, Vite+ almacena su entorno de ejecución gestionado y los archivos relacionados en `~/.vite-plus`. Si es necesario, puedes anular esa ubicación con `VP_HOME`.
 
 Si quieres mantener ese comportamiento, ejecuta:
 
@@ -28,7 +28,7 @@ Esto cambia al modo de "sistema primero", donde los shims prefieren el Node.js d
 
 ### Configuración
 
-- `vp env setup` crea o acredita shims en `VITE_PLUS_HOME/bin`.
+- `vp env setup` crea o actualiza shims en `VP_HOME/bin`.
 - `vp env on` habilita el modo gestionado para que los shims siempre usen Node.js de Vite+.
 - `vp env off` habilita el modo sistema primero para que los shims prefieran Node.js del sistema.
 - `vp env print` imprime el fragmento de código de la terminal para la sesión actual.

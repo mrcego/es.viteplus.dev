@@ -171,7 +171,7 @@ Un conjunto de variables de entorno comunes se pasan automáticamente a todas la
 
 ### `input`
 
-- **Tipo:** `Array<string | { auto: boolean }>`
+- **Tipo:** `Array<string | { auto: boolean } | { pattern: string, base: "workspace" | "package" }>`
 - **Por defecto:** `[{ auto: true }]` (inferido automáticamente)
 
 Vite Task detecta automáticamente qué archivos utiliza un comando (consulta [Rastreo Automático de Archivos](/guide/cache#rastreo-automático-de-archivos)). La opción `input` se puede usar para incluir o excluir explícitamente ciertos archivos.
@@ -199,6 +199,24 @@ tasks: {
 }
 ```
 
+**Resolver patrones relativos a la raíz del workspace** usando la forma de objeto:
+
+```ts
+tasks: {
+  build: {
+    command: 'vp build',
+    input: [
+      { auto: true },
+      { pattern: 'shared-config/**', base: 'workspace' },
+    ],
+  },
+}
+```
+
+El campo `base` es obligatorio y controla cómo se resuelve el patrón glob:
+- `"package"`: relativo al directorio del paquete
+- `"workspace"`: relativo a la raíz del workspace
+
 **Desactivar el rastreo de archivos** por completo y cachear solo por cambios en el comando o el entorno:
 
 ```ts
@@ -211,7 +229,7 @@ tasks: {
 ```
 
 ::: tip CONSEJO
-Los patrones glob se resuelven de forma relativa al directorio del paquete, no al `cwd` de la tarea.
+Por defecto, los patrones glob de cadenas se resuelven de forma relativa al directorio del paquete. Usa la forma de objeto con `base: "workspace"` para resolverlos de forma relativa a la raíz del workspace.
 :::
 
 ### `cwd`
