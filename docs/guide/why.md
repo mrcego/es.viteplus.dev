@@ -34,7 +34,7 @@ Unificar el toolchain tiene beneficios de rendimiento más allá de simplemente 
 
 ## Totalmente Open Source
 
-Vite+ es totalmente de código abierto y no es un nuevo framework ni una plataforma cerrada. Vite+ se integra con el ecosistema de Vite existente y los frameworks construidos sobre él, incluyendo React, Vue, Svelte y otros. Puede usar pnpm, npm o Yarn, y gestiona el entorno de ejecución de Node.js por ti.
+Vite+ es totalmente de código abierto y no es un nuevo framework ni una plataforma cerrada. Vite+ se integra con el ecosistema de Vite existente y los frameworks construidos sobre él, incluyendo React, Vue, Svelte y otros. Puede usar pnpm, npm, yarn o Bun como gestor de paquetes, y gestiona el entorno de ejecución de Node.js por ti.
 
 Siempre damos la bienvenida a las contribuciones de la comunidad. Consulta nuestras [Guías de Contribución](https://github.com/voidzero-dev/vite-plus/blob/main/CONTRIBUTING.md) para involucrarte.
 

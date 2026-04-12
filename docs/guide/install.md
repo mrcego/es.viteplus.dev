@@ -4,7 +4,7 @@
 
 ## Vista General
 
-Usa Vite+ para gestionar las dependencias a través de pnpm, npm y Yarn. En lugar de cambiar entre `pnpm install`, `npm install` y `yarn install`, puedes seguir usando `vp install`, `vp add`, `vp remove` y el resto de los comandos de gestión de paquetes de Vite+.
+Usa Vite+ para gestionar las dependencias a través de pnpm, npm, Yarn y Bun. En lugar de cambiar entre `pnpm install`, `npm install` y `yarn install`, puedes seguir usando `vp install`, `vp add`, `vp remove` y el resto de los comandos de gestión de paquetes de Vite+.
 
 Vite+ detecta el gestor de paquetes desde la raíz del workspace en este orden:
 
@@ -13,8 +13,10 @@ Vite+ detecta el gestor de paquetes desde la raíz del workspace en este orden:
 3. `pnpm-lock.yaml`
 4. `yarn.lock` o `.yarnrc.yml`
 5. `package-lock.json`
-6. `.pnpmfile.cjs` o `pnpmfile.cjs`
-7. `yarn.config.cjs`
+6. `bun.lock` o `bun.lockb`
+7. `.pnpmfile.cjs` o `pnpmfile.cjs`
+8. `bunfig.toml`
+9. `yarn.config.cjs`
 
 Si ninguno de esos archivos está presente, `vp` recurre a `pnpm` por defecto. Vite+ descarga automáticamente el gestor de paquetes correspondiente y lo utiliza para el comando que ejecutaste.
 
@@ -34,7 +36,7 @@ vp install --filter web
 vp install -w
 ```
 
-`vp install` se mapea al comportamiento de instalación subyacente correcto para el gestor de paquetes detectado, incluyendo los parámetros de archivo de bloqueo (lockfile) adecuados para pnpm, npm y Yarn.
+`vp install` se mapea al comportamiento de instalación subyacente correcto para el gestor de paquetes detectado, incluyendo los parámetros de archivo de bloqueo (lockfile) adecuados para pnpm, npm, Yarn y Bun.
 
 ## Paquetes Globales
 

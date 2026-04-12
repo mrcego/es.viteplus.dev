@@ -56,6 +56,37 @@ export default defineConfig({
 });
 ```
 
+## `vp lint` / `vp fmt` pueden fallar al leer `vite.config.ts`
+
+`vp lint`, `vp fmt` y la extensión de VS Code para Oxc intentan leer los bloques `lint` / `fmt` de tu `vite.config.ts`. Sin embargo, esta integración tiene limitaciones actualmente.
+
+La configuración de Vite se lee correctamente si utilizas exportaciones de objetos estáticos:
+
+```ts
+export default { ... }
+// o
+export default defineConfig({ ... })
+```
+
+Esta integración puede fallar en los siguientes casos:
+
+- **Configuraciones funcionales o asíncronas**: `defineConfig((env) => ({ ... }))`.
+- **Dependencia de transformaciones de Vite**: Archivos de configuración que dependen del comportamiento de empaquetado (bundling) de Vite para ser ejecutados.
+
+Estas integraciones se comportan de forma más similar a la carga nativa de ESM (como Vite con `--configLoader native`), lo que puede causar que las configuraciones que dependen de transformaciones fallen. Consulta la [issue #930](https://github.com/voidzero-dev/vite-plus/issues/930) para más detalles.
+
+### Soluciones Temporales
+
+Para asegurar que tu configuración de `lint` y `fmt` sea leída correctamente:
+
+1. **Usa exportaciones estáticas**: Prefiere `defineConfig({ ... })` siempre que sea posible.
+2. **Evita características no estándar**: No uses globales específicos de Node (como `__dirname` en ESM), importaciones de TypeScript no resueltas o importaciones de JSON sin atributos de importación.
+3. **Usa archivos de configuración dedicados**: Si es necesario, puedes usar archivos `.oxlintrc.*` o `.oxfmtrc.*` temporalmente, aunque unificarlo en `vite.config.ts` sigue siendo el objetivo a largo plazo.
+
+### Problemas con VS Code Multi-Root
+
+En espacios de trabajo con varias carpetas abiertas (Multi-Root), el servidor de lenguaje Oxc puede elegir un espacio de trabajo distinto al que esperas. Asegúrate de que la extensión esté utilizando el espacio de trabajo correcto y que se resuelva a una versión reciente del toolchain de Oxc.
+
 ## Pedir Ayuda
 
 Si te has quedado bloqueado, por favor contáctanos:

@@ -113,7 +113,7 @@ export default extendConfig(
           noExternal: ['@braintree/sanitize-url', 'mermaid', 'vitepress-plugin-mermaid'],
         },
         optimizeDeps: {
-          include: ['@braintree/sanitize-url', 'mermaid', 'vitepress-plugin-mermaid'],
+          include: ['mermaid > @braintree/sanitize-url', 'mermaid', 'vitepress-plugin-mermaid'],
         },
         resolve: {
           tsconfigPaths: true,
@@ -212,6 +212,27 @@ export default extendConfig(
             }
           }
         },
+        footer: {
+          copyright: `© ${new Date().getFullYear()} VoidZero Inc. y contribuyentes.`,
+          nav: [
+            {
+              title: "Empresa",
+              items: [
+                { text: "VoidZero", link: "https://voidzero.dev" },
+                { text: "Vite", link: "https://vite.dev" },
+                { text: "Vitest", link: "https://vitest.dev" },
+                { text: "Rolldown", link: "https://rolldown.rs" },
+                { text: "Oxc", link: "https://oxc.rs" },
+              ],
+            },
+          ],
+          social: [
+            { icon: "github", link: "https://github.com/voidzero-dev/vite-plus" },
+            { icon: "x", link: "https://x.com/voidzerodev" },
+            { icon: "discord", link: "https://discord.gg/cC6TEVFKSx" },
+            { icon: "bluesky", link: "https://bsky.app/profile/voidzero.dev" },
+          ],
+        }
       },
       transformHead({ page, pageData }) {
         const url = 'https://viteplus.dev/' + page.replace(/\.md$/, '').replace(/index$/, '');

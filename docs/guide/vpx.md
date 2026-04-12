@@ -8,7 +8,7 @@ Usa `vpx`, `vp exec` y `vp dlx` para ejecutar binarios sin cambiar entre instala
 
 Usa los otros comandos de binarios cuando necesites un control más estricto:
 
-- `vpx` resuelve primero un binario de paquete localmente y puede descargarlo cuando sea necesario.
+- `vpx` resuelve primero un binario de paquete localmente por defecto y lo descarga si no lo encuentra; con `pkg@version`, `--package/-p` o `--shell-mode`, se ejecuta a través de `vp dlx`.
 - `vp exec` ejecuta un binario desde el directorio `node_modules/.bin` del proyecto actual.
 - `vp dlx` ejecuta un binario de paquete sin añadirlo como dependencia.
 
@@ -22,7 +22,7 @@ vpx <pkg[@version]> [args...]
 
 ### Opciones
 
-- `-p, --package <nombre>` instala uno o más paquetes antes de ejecutar el comando.
+- `-p, --package <nombre>` instala uno o más paquetes adicionales antes de ejecutar el comando.
 - `-c, --shell-mode` ejecuta el comando dentro de una terminal (shell).
 - `-s, --silent` suprime la salida de Vite+ y solo muestra la salida del comando.
 

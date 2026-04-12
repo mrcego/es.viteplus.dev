@@ -83,3 +83,18 @@ vp env exec --node lts npm i  # Ejecutar npm con la última LTS
 vp env exec node -v           # Usar el modo shim con resolución automática de versión
 ```
 
+## Espejo Personalizado de Node.js (Mirror)
+
+Por defecto, Vite+ descarga Node.js desde `https://nodejs.org/dist`. Si estás detrás de un proxy corporativo o necesitas usar un espejo interno (por ejemplo, Artifactory), establece la variable de entorno `VP_NODE_DIST_MIRROR`:
+
+```bash
+# Instala una versión específica desde tu espejo personalizado
+VP_NODE_DIST_MIRROR=https://mi-espejo.ejemplo.com/nodejs/dist vp env install 22
+
+# Establece la versión global predeterminada usando un espejo personalizado
+VP_NODE_DIST_MIRROR=https://mi-espejo.ejemplo.com/nodejs/dist vp env default lts
+
+# Establécelo permanentemente en el perfil de tu terminal (.bashrc, .zshrc, etc.)
+echo 'export VP_NODE_DIST_MIRROR=https://mi-espejo.ejemplo.com/nodejs/dist' >> ~/.zshrc
+```
+

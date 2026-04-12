@@ -33,5 +33,20 @@ Cuando creas o migras un proyecto, Vite+ te pregunta si quieres que se escriba l
 }
 ```
 
-Esto proporciona al proyecto un formateador predeterminado compartido y habilita las acciones de corrección de Oxc al guardar. Establecer `oxc.fmt.configPath` en `./vite.config.ts` mantiene el formateo al guardar del editor alineado con el bloque `fmt` en tu configuración de Vite+. Vite+ utiliza `formatOnSaveMode: "file"` porque Oxfmt no soporta el formateo parcial.
+
+## Panel de Scripts de NPM de VS Code
+
+Al crear un nuevo proyecto con `vp create`, Vite+ añade automáticamente `"npm.scriptRunner": "vp"` a la configuración de tu área de trabajo (`.vscode/settings.json`) de VS Code. Esto permite que los scripts ejecutados a través de la interfaz de usuario de VS Code utilicen el ejecutor de tareas de Vite+.
+
+Para proyectos existentes o migrados, puedes añadir esta configuración manualmente a tu archivo `.vscode/settings.json`:
+
+```json
+{
+  "npm.scriptRunner": "vp"
+}
+```
+
+::: warning Nota sobre vp migrate
+`vp migrate` **no** añade esta configuración automáticamente. Esto es intencional para evitar romper el flujo de trabajo de otros miembros del equipo que podrían no tener `vp` instalado todavía.
+:::
 

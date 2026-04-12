@@ -18,6 +18,12 @@ curl -fsSL https://vite.plus | bash
 irm https://vite.plus/ps1 | iex
 ```
 
+Alternativamente, descarga y ejecuta [`vp-setup.exe`](https://viteplus.dev/vp-setup).
+
+::: tip Advertencia de SmartScreen
+El archivo `vp-setup.exe` aún no está firmado digitalmente. Tu navegador puede mostrar una advertencia al descargarlo. Haz clic en **"..."** → **"Conservar"** → **"Conservar de todos modos"** para continuar. Si Windows Defender SmartScreen bloquea el archivo al ejecutarlo, haz clic en **"Más información"** → **"Ejecutar de todas formas"**.
+:::
+
 Después de la instalación, abre una nueva terminal y ejecuta:
 
 ```bash
@@ -94,10 +100,10 @@ Vite+ puede manejar todo el ciclo de desarrollo frontend local, desde iniciar un
 ### Ejecutar
 
 - [`vp run`](/guide/run) ejecuta tareas a través de los workspaces con caché.
-- [`vp cache`](/guide/cache) limpia las entradas de caché de tareas.
-- [`vpx`](/guide/vpx) ejecuta binarios globalmente.
+- [`vp cache clean`](/guide/cache) limpia las entradas de caché de tareas.
+- [`vpx`](/guide/vpx) descarga y ejecuta binarios globalmente.
 - [`vp exec`](/guide/vpx) ejecuta binarios locales del proyecto.
-- [`vp dlx`](/guide/vpx) ejecuta binarios de paquetes sin añadirlos como dependencias.
+- [`vp dlx`](/guide/vpx) descarga y ejecuta binarios de paquetes sin añadirlos como dependencias.
 
 ### Construir
 
@@ -116,7 +122,7 @@ Vite+ puede manejar todo el ciclo de desarrollo frontend local, desde iniciar un
 - [`vp implode`](/guide/implode) elimina `vp` y los datos relacionados con Vite+ de tu máquina.
 
 ::: info
-Vite+ viene con muchos comandos predefinidos como `vp build`, `vp test` y `vp dev`. Estos comandos están integrados y no se pueden cambiar. Si deseas ejecutar un comando de los scripts de tu `package.json`, usa `vp run <comando>`.
+Vite+ viene con muchos comandos predefinidos como `vp build`, `vp test` y `vp dev`. Estos comandos están integrados y no se pueden cambiar. Si deseas ejecutar un comando de los scripts de tu `package.json`, usa `vp run <comando>` o `vpr <comando>`.
 
 [Más información sobre `vp run`.](/guide/run)
 :::
