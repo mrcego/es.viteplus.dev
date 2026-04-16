@@ -4,6 +4,7 @@
   <img alt="Vite+" src="/logo.svg">
 </picture>
 
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/be1eff1f-48fa-4f3f-928d-55a2b1e86edd/deploy-status)](https://app.netlify.com/projects/es-viteplus-dev/deploys)
 
 **El Toolchain Unificado para la Web**
