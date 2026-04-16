@@ -18,7 +18,7 @@ curl -fsSL https://vite.plus | bash
 irm https://vite.plus/ps1 | iex
 ```
 
-Alternativamente, descarga y ejecuta [`vp-setup.exe`](https://viteplus.dev/vp-setup).
+Alternativamente, descarga y ejecuta [`vp-setup.exe`](https://setup.viteplus.dev).
 
 ::: tip Advertencia de SmartScreen
 El archivo `vp-setup.exe` aún no está firmado digitalmente. Tu navegador puede mostrar una advertencia al descargarlo. Haz clic en **"..."** → **"Conservar"** → **"Conservar de todos modos"** para continuar. Si Windows Defender SmartScreen bloquea el archivo al ejecutarlo, haz clic en **"Más información"** → **"Ejecutar de todas formas"**.

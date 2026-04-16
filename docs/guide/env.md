@@ -42,6 +42,7 @@ Esto cambia al modo de "sistema primero", donde los shims prefieren el Node.js d
 - `vp env install` instala una versión de Node.js.
 - `vp env uninstall` elimina una versión instalada de Node.js.
 - `vp env exec` ejecuta un comando con una versión específica de Node.js.
+- `vp node` ejecuta un script de Node.js — un atajo para `vp env exec node`.
 
 ### Inspeccionar
 
@@ -81,6 +82,8 @@ vp env list-remote --lts      # Enumerar solo las versiones LTS
 # Ejecutar
 vp env exec --node lts npm i  # Ejecutar npm con la última LTS
 vp env exec node -v           # Usar el modo shim con resolución automática de versión
+vp node script.js             # Atajo: ejecuta un script de Node.js con la versión resuelta
+vp node -e "console.log(1+1)" # Atajo: reenvía cualquier flag o argumento de node
 ```
 
 ## Espejo Personalizado de Node.js (Mirror)
