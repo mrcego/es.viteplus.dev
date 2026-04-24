@@ -87,6 +87,34 @@ Para asegurar que tu configuración de `lint` y `fmt` sea leída correctamente:
 
 En espacios de trabajo con varias carpetas abiertas (Multi-Root), el servidor de lenguaje Oxc puede elegir un espacio de trabajo distinto al que esperas. Asegúrate de que la extensión esté utilizando el espacio de trabajo correcto y que se resuelva a una versión reciente del toolchain de Oxc.
 
+## Carga lenta de configuración causada por plugins pesados
+
+Cuando `vite.config.ts` importa plugins pesados en el nivel superior, cada `import` se evalúa de manera ansiosa, incluso para comandos como `vp lint` o `vp fmt` que no necesitan esos plugins. Esto puede hacer que la carga de la configuración sea notablemente lenta.
+
+Usa `lazyPlugins` para envolver la carga de los plugins. Los plugins solo se cargarán para los comandos que los necesitan (`dev`, `build`, `test`, `preview`), y se omitirán para el resto:
+
+```ts
+import { defineConfig, lazyPlugins } from 'vite-plus';
+import myPlugin from 'vite-plugin-foo';
+
+export default defineConfig({
+  plugins: lazyPlugins(() => [myPlugin()]),
+});
+```
+
+Para plugins pesados que deberían ser importados perezosamente (lazy import), combínalo con un `import()` dinámico:
+
+```ts
+import { defineConfig, lazyPlugins } from 'vite-plus';
+
+export default defineConfig({
+  plugins: lazyPlugins(async () => {
+    const { default: heavyPlugin } = await import('vite-plugin-heavy');
+    return [heavyPlugin()];
+  }),
+});
+```
+
 ## Pedir Ayuda
 
 Si te has quedado bloqueado, por favor contáctanos:

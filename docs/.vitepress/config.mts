@@ -147,6 +147,7 @@ export default extendConfig(
           {
             text: 'Recursos',
             items: [
+              { text: 'Equipo', link: '/team' },
               { text: 'GitHub', link: 'https://github.com/voidzero-dev/vite-plus' },
               { text: 'Versiones', link: 'https://github.com/voidzero-dev/vite-plus/releases' },
               {

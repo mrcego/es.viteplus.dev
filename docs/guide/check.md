@@ -14,7 +14,10 @@ Recomendamos activar `typeCheck` para que `vp check` se convierta en el comando 
 
 ```bash
 vp check
-vp check --fix # Formatear y ejecutar autocorrectores.
+vp check --fix             # Formatear y ejecutar autocorrectores.
+vp check --no-fmt          # Omitir el formato; ejecutar lint (y verificación de tipos si está habilitado).
+vp check --no-lint         # Omitir reglas de lint; mantener la verificación de tipos cuando esté habilitada.
+vp check --no-fmt --no-lint # Solo verificación de tipos (requiere que `typeCheck` esté habilitado).
 ```
 
 ## Configuración

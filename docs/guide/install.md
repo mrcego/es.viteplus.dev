@@ -60,6 +60,7 @@ Vite+ proporciona todos los comandos familiares de gestión de paquetes:
 - `vp list` muestra los paquetes instalados.
 - `vp why <pkg>` explica por qué un paquete está presente.
 - `vp info <pkg>` muestra los metadatos del registro de un paquete.
+- `vp rebuild` reconstruye los módulos nativos (ej. después de cambiar la versión de Node.js)
 - `vp link` y `vp unlink` gestionan enlaces de paquetes locales.
 - `vp dlx <pkg>` ejecuta el binario de un paquete sin añadirlo al proyecto.
 - `vp pm <comando>` reenvía un comando bruto específico del gestor de paquetes cuando necesites un comportamiento fuera del conjunto de comandos normalizados de `vp`.
@@ -112,8 +113,22 @@ Usa estos comandos para mantener el grafo de dependencias a lo largo del tiempo.
 Usa estos comandos cuando necesites entender el estado actual de las dependencias.
 
 - `vp list` muestra los paquetes instalados.
-- `vp why react` explica por qué `react` está instalado.
-- `vp info react` muestra los metadatos del registro, como versiones y dist-tags.
+- `vp why react` explica por qué `react` está instalado
+- `vp info react` muestra metadatos del registro como versiones y dist-tags
+
+#### Reconstruir (Rebuild)
+
+Usa `vp rebuild` cuando los módulos nativos necesiten ser recompilados, por ejemplo, después de cambiar la versión de Node.js o cuando un addon de C/C++ falla al cargar.
+
+- `vp rebuild` reconstruye todos los módulos nativos
+- `vp rebuild -- <args>` pasa argumentos adicionales al gestor de paquetes subyacente
+
+```bash
+vp rebuild
+vp rebuild -- --update-binary
+```
+
+`vp rebuild` es un atajo para `vp pm rebuild`.
 
 #### Avanzado
 
