@@ -11,8 +11,5 @@
   "packageManager": "pnpm@10.33.2",
   "engines": {
     "node": ">=22.18.0"
-  },
-  "devDependencies": {
-    "vitepress-plugin-group-icons": "^1.7.5"
   }
 }
