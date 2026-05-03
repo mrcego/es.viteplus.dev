@@ -22,7 +22,7 @@ Coloca la configuración de lint directamente en el bloque `lint` en `vite.confi
 
 Para ver el conjunto de reglas original, las opciones y detalles de compatibilidad, consulta la [documentación de Oxlint](https://oxc.rs/docs/guide/usage/linter.html).
 
-```ts
+```ts [vite.config.ts]
 import { defineConfig } from 'vite-plus';
 
 export default defineConfig({

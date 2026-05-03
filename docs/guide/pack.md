@@ -29,7 +29,7 @@ Consulta la [guía de tsdown](https://tsdown.dev/guide/) y la [documentación de
 - [modo escucha (watch)](https://tsdown.dev/options/watch-mode)
 - [ejecutables independientes](https://tsdown.dev/options/exe#executable)
 
-```ts
+```ts [vite.config.ts]
 import { defineConfig } from 'vite-plus';
 
 export default defineConfig({
@@ -47,7 +47,7 @@ export default defineConfig({
 
 Usa esto cuando quieras distribuir un CLI u otra herramienta basada en Node como un ejecutable nativo que funcione sin necesidad de tener Node.js instalado por separado.
 
-```ts
+```ts [vite.config.ts]
 import { defineConfig } from 'vite-plus';
 
 export default defineConfig({

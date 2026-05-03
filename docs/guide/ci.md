@@ -10,7 +10,7 @@ Esto significa que normalmente no necesitas pasos separados de `setup-node`, con
 
 ## GitHub Actions
 
-```yaml
+```yaml [.github/workflows/ci.yml]
 - uses: voidzero-dev/setup-vp@v1
   with:
     node-version: '22'
@@ -29,7 +29,7 @@ Si estás migrando un flujo de trabajo de GitHub Actions existente, a menudo pue
 
 #### Antes:
 
-```yaml
+```yaml [.github/workflows/ci.yml]
 - uses: actions/setup-node@v4
   with:
     node-version: '24'
@@ -52,7 +52,7 @@ Si estás migrando un flujo de trabajo de GitHub Actions existente, a menudo pue
 
 #### Después:
 
-```yaml
+```yaml [.github/workflows/ci.yml]
 - uses: voidzero-dev/setup-vp@v1
   with:
     node-version: '24'

@@ -2,7 +2,7 @@
 
 Puedes configurar Vite Task bajo el campo `run` en `vite.config.ts`. Consulta [`vp run`](/guide/run) para aprender más sobre la ejecución de scripts y tareas con Vite+.
 
-```ts
+```ts [vite.config.ts]
 import { defineConfig } from 'vite-plus';
 
 export default defineConfig({
@@ -27,7 +27,7 @@ Indica si se deben ejecutar automáticamente los scripts `preX`/`postX` de `pack
 
 Cuando está habilitado (por defecto), ejecutar un script como `test` ejecutará automáticamente `pretest` antes y `posttest` después, si existen en el `package.json`.
 
-```ts
+```ts [vite.config.ts]
 export default defineConfig({
   run: {
     enablePrePostScripts: false, // Desactivar hooks de ciclo de vida pre/post
@@ -46,7 +46,7 @@ Esta opción solo se puede establecer en el `vite.config.ts` de la raíz del wor
 
 Controla si los resultados de las tareas se almacenan en caché y se reproducen en ejecuciones posteriores.
 
-```ts
+```ts [vite.config.ts]
 export default defineConfig({
   run: {
     cache: {
@@ -71,7 +71,7 @@ Define las tareas que se pueden ejecutar con `vp run <tarea>`.
 
 Define el comando de terminal que se ejecutará para la tarea.
 
-```ts
+```ts [vite.config.ts]
 tasks: {
   build: {
     command: 'vp build',
@@ -90,7 +90,7 @@ Los comandos unidos con `&&` se dividen automáticamente en subtareas almacenada
 
 Tareas que deben completarse con éxito antes de que comience esta.
 
-```ts
+```ts [vite.config.ts]
 tasks: {
   deploy: {
     command: 'deploy-script --prod',
@@ -101,7 +101,7 @@ tasks: {
 
 Las dependencias pueden hacer referencia a tareas en otros paquetes utilizando el formato `paquete#tarea`:
 
-```ts
+```ts [vite.config.ts]
 dependsOn: ['@my/core#build', '@my/utils#lint'];
 ```
 
@@ -114,7 +114,7 @@ Consulta [Dependencias de Tareas](/guide/run#dependencias-de-tareas) para obtene
 
 Indica si se debe almacenar en caché la salida de esta tarea. Establécelo en `false` para tareas que nunca deberían almacenarse en caché, como los servidores de desarrollo:
 
-```ts
+```ts [vite.config.ts]
 tasks: {
   dev: {
     command: 'vp dev',
@@ -130,7 +130,7 @@ tasks: {
 
 Variables de entorno incluidas en la huella digital (fingerprint) del caché. Cuando el valor de cualquier variable listada cambia, el caché se invalida.
 
-```ts
+```ts [vite.config.ts]
 tasks: {
   build: {
     command: 'vp build',
@@ -153,7 +153,7 @@ $ NODE_ENV=production vp run build     # fallo de caché: la variable cambió
 
 Variables de entorno que se pasan al proceso de la tarea pero que **no** se incluyen en la huella digital del caché. Cambiar estos valores no invalidará el caché.
 
-```ts
+```ts [vite.config.ts]
 tasks: {
   build: {
     command: 'vp build',
@@ -178,7 +178,7 @@ Vite Task detecta automáticamente qué archivos utiliza un comando (consulta [R
 
 **Excluir archivos** del rastreo automático:
 
-```ts
+```ts [vite.config.ts]
 tasks: {
   build: {
     command: 'vp build',
@@ -190,7 +190,7 @@ tasks: {
 
 **Especificar archivos explícitos** únicamente, sin rastreo automático:
 
-```ts
+```ts [vite.config.ts]
 tasks: {
   build: {
     command: 'vp build',
@@ -201,7 +201,7 @@ tasks: {
 
 **Resolver patrones relativos a la raíz del workspace** usando la forma de objeto:
 
-```ts
+```ts [vite.config.ts]
 tasks: {
   build: {
     command: 'vp build',
@@ -219,7 +219,7 @@ El campo `base` es obligatorio y controla cómo se resuelve el patrón glob:
 
 **Desactivar el rastreo de archivos** por completo y cachear solo por cambios en el comando o el entorno:
 
-```ts
+```ts [vite.config.ts]
 tasks: {
   greet: {
     command: 'node greet.mjs',
@@ -239,7 +239,7 @@ Por defecto, los patrones glob de cadenas se resuelven de forma relativa al dire
 
 Directorio de trabajo para la tarea, relativo a la raíz del paquete.
 
-```ts
+```ts [vite.config.ts]
 tasks: {
   'test-e2e': {
     command: 'vp test',

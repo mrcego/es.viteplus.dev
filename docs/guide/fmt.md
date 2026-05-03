@@ -22,7 +22,7 @@ Coloca la configuración de formateo directamente en el bloque `fmt` en `vite.co
 
 Para los editores, apunta la ruta de configuración del formateador a `./vite.config.ts` para que la función de "formatear al guardar" use el mismo bloque `fmt`:
 
-```json
+```json [.vscode/settings.json]
 {
   "oxc.fmt.configPath": "./vite.config.ts"
 }
@@ -30,7 +30,7 @@ Para los editores, apunta la ruta de configuración del formateador a `./vite.co
 
 Para ver el comportamiento del formateador original y la referencia de configuración, consulta la [documentación de Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html).
 
-```ts
+```ts [vite.config.ts]
 import { defineConfig } from 'vite-plus';
 
 export default defineConfig({

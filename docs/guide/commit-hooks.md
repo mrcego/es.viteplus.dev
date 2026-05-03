@@ -38,7 +38,7 @@ vp staged --fail-on-changes
 
 Define las comprobaciones de archivos staged en el bloque `staged` de `vite.config.ts`:
 
-```ts
+```ts [vite.config.ts]
 import { defineConfig } from 'vite-plus';
 
 export default defineConfig({

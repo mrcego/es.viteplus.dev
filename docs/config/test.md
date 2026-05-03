@@ -4,7 +4,7 @@
 
 ## Ejemplo
 
-```ts
+```ts [vite.config.ts]
 import { defineConfig } from 'vite-plus';
 
 export default defineConfig({

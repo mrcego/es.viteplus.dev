@@ -65,7 +65,7 @@ El rastreo automático a veces puede incluir más archivos de los necesarios, ca
 
 Usa la opción [`input`](/config/run#input) para excluir archivos o para reemplazar el rastreo automático por patrones de archivos explícitos:
 
-```ts
+```ts [vite.config.ts]
 tasks: {
   build: {
     command: 'tsc',

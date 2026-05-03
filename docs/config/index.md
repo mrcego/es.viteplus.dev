@@ -2,7 +2,7 @@
 
 Vite+ mantiene la configuración del proyecto en un solo lugar: `vite.config.ts`, lo que te permite consolidar muchos archivos de configuración de nivel superior en un único archivo. Puedes seguir utilizando tu configuración habitual de Vite, como `server` o `build`, y añadir bloques de Vite+ para el resto de tu flujo de trabajo:
 
-```ts
+```ts [vite.config.ts]
 import { defineConfig } from 'vite-plus';
 
 export default defineConfig({

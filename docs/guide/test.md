@@ -22,7 +22,7 @@ A diferencia de Vitest por sí solo, `vp test` no permanece en modo de observaci
 
 Coloca la configuración de prueba directamente en el bloque `test` en `vite.config.ts` para que toda tu configuración permanezca en un solo lugar. No recomendamos usar `vitest.config.ts` con Vite+.
 
-```ts
+```ts [vite.config.ts]
 import { defineConfig } from 'vite-plus';
 
 export default defineConfig({

@@ -30,7 +30,7 @@ vp check --no-fmt --no-lint # Solo verificación de tipos (requiere que `typeChe
 
 Configuración base de `lint` recomendada:
 
-```ts
+```ts [vite.config.ts]
 import { defineConfig } from 'vite-plus';
 
 export default defineConfig({

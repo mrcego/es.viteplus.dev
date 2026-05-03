@@ -71,7 +71,7 @@ $ node compile-legacy-app.js ✗ cache miss: 'legacy/index.js' modified, executi
 
 Vite Task rastrea automáticamente qué archivos utiliza tu comando. Puedes definir tareas directamente en `vite.config.ts` para habilitar el caché por defecto o controlar qué archivos y variables de entorno afectan al comportamiento del caché.
 
-```ts
+```ts [vite.config.ts]
 import { defineConfig } from 'vite-plus';
 
 export default defineConfig({
@@ -104,7 +104,7 @@ Consulta [Configuración de Ejecución](/config/run) para ver la referencia comp
 
 Usa [Dependencias de Tareas](#dependencias-de-tareas) para ejecutar tareas en el orden correcto. Ejecutar `vp run deploy` con la configuración anterior ejecuta primero `build` y `test`. Las dependencias también pueden dirigirse a otros paquetes en el mismo proyecto con la notación `paquete#tarea`:
 
-```ts
+```ts [vite.config.ts]
 dependsOn: ['@my/core#build', '@my/utils#lint'];
 ```
 
@@ -239,7 +239,7 @@ Los parámetros también funcionan dentro de los scripts anidados. Por ejemplo, 
 ::: info
 Un patrón común en monorepos es un script en la raíz que ejecuta una tarea de forma recursiva:
 
-```json [package.json (raíz)]
+```json [package.json (raíz) ~vscode-icons:file-type-node~]
 {
   "scripts": {
     "build": "vp run -r build"

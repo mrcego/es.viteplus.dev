@@ -4,6 +4,7 @@ import type { VoidZeroThemeConfig } from '@voidzero-dev/vitepress-theme';
 import { extendConfig } from '@voidzero-dev/vitepress-theme/config';
 import { defineConfig, type HeadConfig } from 'vitepress';
 import { withMermaid } from 'vitepress-plugin-mermaid';
+import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
 
 const taskRunnerGuideItems = [
   {
@@ -109,11 +110,8 @@ export default extendConfig(
         ],
       ],
       vite: {
-        ssr: {
-          noExternal: ['@braintree/sanitize-url', 'mermaid', 'vitepress-plugin-mermaid'],
-        },
         optimizeDeps: {
-          include: ['mermaid > @braintree/sanitize-url', 'mermaid', 'vitepress-plugin-mermaid'],
+          include: ['mermaid > @braintree/sanitize-url'],
         },
         resolve: {
           tsconfigPaths: true,
@@ -125,11 +123,13 @@ export default extendConfig(
             { find: /^dayjs$/, replacement: 'dayjs/esm' },
           ],
         },
-        build: {
-          commonjsOptions: {
-            include: [/@braintree\/sanitize-url/, /node_modules/],
-          },
-        },
+        plugins: [
+          groupIconVitePlugin({
+            customIcon: {
+              tsdown: 'https://tsdown.dev/tsdown.svg'
+            }
+          })
+        ],
       },
       themeConfig: {
         variant: 'viteplus' as VoidZeroThemeConfig['variant'],
@@ -267,7 +267,11 @@ export default extendConfig(
 
         return [...ogInfo, canonicalUrlEntry];
       },
-
+      markdown: {
+        config(md) {
+          md.use(groupIconMdPlugin)
+        },
+      },
     }),
   ),
 );
