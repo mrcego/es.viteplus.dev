@@ -167,7 +167,7 @@ Un conjunto de variables de entorno comunes se pasan automáticamente a todas la
 - **Sistema:** `HOME`, `USER`, `PATH`, `SHELL`, `LANG`, `TZ`
 - **Node.js:** `NODE_OPTIONS`, `COREPACK_HOME`, `PNPM_HOME`
 - **CI/CD:** `CI`, `VERCEL_*`, `NEXT_*`
-- **Terminal:** `TERM`, `COLORTERM`, `FORCE_COLOR`, `NO_COLOR`
+- **Terminal:** Las variables de color (`FORCE_COLOR`, `NO_COLOR`, `COLORTERM`, `TERM`, `TERM_PROGRAM`) no se pasan a las tareas a menos que las incluyas en `env` (el valor se incluye en la huella digital, por lo que cambiarlo invalida el caché) o en `untrackedEnv` (se pasan sin incluirse en la huella digital). Si `FORCE_COLOR` no está en ninguna de las listas, el proceso hijo recibe `FORCE_COLOR=1` para que los registros almacenados en caché mantengan el color. Los colores se eliminan al mostrarse cuando la terminal no puede renderizarlos.
 
 ### `input`
 
@@ -231,6 +231,36 @@ tasks: {
 ::: tip CONSEJO
 Por defecto, los patrones glob de cadenas se resuelven de forma relativa al directorio del paquete. Usa la forma de objeto con `base: "workspace"` para resolverlos de forma relativa a la raíz del workspace.
 :::
+
+### `output`
+
+- **Tipo:** `Array<string | { pattern: string, base: "workspace" | "package" }>`
+- **Por defecto:** `[]` (no se archiva nada)
+
+Los archivos que produce la tarea. Se archivan después de una ejecución exitosa y se restauran cuando hay un acierto en el caché (cache hit), por lo que no tienes que volver a construirlos. Déjalo vacío (o omítelo) y no se archivará nada.
+
+```ts [vite.config.ts]
+tasks: {
+  build: {
+    command: 'vp build',
+    output: ['dist/**', '!dist/cache/**'],
+  },
+}
+```
+
+Si una tarea escribe fuera de su propio paquete, utiliza la forma de objeto con `base: "workspace"`:
+
+```ts [vite.config.ts]
+tasks: {
+  build: {
+    command: 'vp build',
+    output: [
+      'dist/**',
+      { pattern: 'shared-artifacts/**', base: 'workspace' },
+    ],
+  },
+}
+```
 
 ### `cwd`
 
