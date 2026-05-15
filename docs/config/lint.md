@@ -23,3 +23,7 @@ export default defineConfig({
 
 Recomendamos habilitar tanto `options.typeAware` como `options.typeCheck` para que `vp lint` y `vp check` puedan utilizar el motor completo con conocimiento de tipos (type-aware).
 
+## Overrides
+
+Para configuraciones de lint específicas de paquetes en un monorepo, consulta la [guía de Monorepo](/guide/monorepo#configuracion-de-raiz-con-overrides).
+

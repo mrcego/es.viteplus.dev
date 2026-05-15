@@ -30,6 +30,7 @@ const guideSidebar = [
       { text: 'Migrar a Vite+', link: '/guide/migrate' },
       { text: 'Instalar Dependencias', link: '/guide/install' },
       { text: 'Entorno', link: '/guide/env' },
+      { text: 'Monorepo', link: '/guide/monorepo' },
       { text: '¿Por qué Vite+?', link: '/guide/why' },
     ],
   },

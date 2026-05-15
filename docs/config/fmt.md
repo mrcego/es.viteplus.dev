@@ -17,3 +17,7 @@ export default defineConfig({
 });
 ```
 
+## Overrides
+
+Para opciones del formateador específicas de paquetes en un monorepo, consulta la [guía de Monorepo](/guide/monorepo#overrides-de-formato).
+
