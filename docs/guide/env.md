@@ -28,10 +28,32 @@ Esto cambia al modo de "sistema primero", donde los shims prefieren el Node.js d
 
 ### Configuración
 
-- `vp env setup` crea o actualiza shims en `VP_HOME/bin`.
+- `vp env setup` crea o actualiza shims en `VP_HOME/bin` (y escribe los scripts de configuración por terminal en `~/.vite-plus/`).
 - `vp env on` habilita el modo gestionado para que los shims siempre usen Node.js de Vite+.
 - `vp env off` habilita el modo sistema primero para que los shims prefieran Node.js del sistema.
 - `vp env print` imprime el fragmento de código de la terminal para la sesión actual.
+
+PowerShell necesita hacer dot-source del script de configuración generado en la terminal actual antes de que `vp env use` pueda afectar solo a esa sesión:
+
+```powershell
+. "$env:USERPROFILE\.vite-plus\env.ps1"
+```
+
+Añade esa línea al final de tu `$PROFILE` de PowerShell para aplicarlo automáticamente en nuevas terminales. No requiere privilegios elevados.
+
+Crea el archivo de perfil si aún no existe:
+
+```powershell
+if (-not (Test-Path $PROFILE)) { New-Item $PROFILE -Force }
+```
+
+Abre el archivo de perfil para editarlo:
+
+```powershell
+Invoke-Item $PROFILE
+```
+
+En CI, `vp env use` puede ejecutarse sin inicialización de la terminal. Escribe un archivo temporal de sesión en `VP_HOME` para que las llamadas posteriores a shims en el mismo job puedan resolver la versión seleccionada de Node.js.
 
 ### Gestionar
 
