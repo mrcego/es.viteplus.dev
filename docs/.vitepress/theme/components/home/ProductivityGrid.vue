@@ -31,13 +31,13 @@ import tileVitest from '@local-assets/tiles/vitest.png';
             <div
               class="relative flex flex-col flex-1 sm:pl-6 before:content-none sm:before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-full before:w-px before:bg-stroke"
             >
-              <p class="text-primary font-medium text-base sm:text-xl">69m+</p>
+              <p class="text-primary font-medium text-base sm:text-xl">123m+</p>
               <p class="leading-tight text-base">Descargas semanales en npm</p>
             </div>
             <div
               class="relative flex flex-col flex-shrink-0 pl-6 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-full before:w-px before:bg-stroke"
             >
-              <p class="text-primary font-medium text-base sm:text-xl">78.7k</p>
+              <p class="text-primary font-medium text-base sm:text-xl">80.6k</p>
               <p class="leading-tight text-base">Estrellas en GitHub</p>
             </div>
           </div>
@@ -54,14 +54,14 @@ import tileVitest from '@local-assets/tiles/vitest.png';
             <div
               class="relative flex flex-col flex-1 sm:pl-6 before:content-none sm:before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-full before:w-px before:bg-stroke"
             >
-              <p class="text-primary font-medium text-base sm:text-xl">35m+</p>
-              <p class="leading-tight text-base">Weekly npm downloads</p>
+              <p class="text-primary font-medium text-base sm:text-xl">55m+</p>
+              <p class="leading-tight text-base">Descargas semanales en npm</p>
             </div>
             <div
               class="relative flex flex-col flex-shrink-0 pl-6 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-full before:w-px before:bg-stroke"
             >
-              <p class="text-primary font-medium text-base sm:text-xl">16.1k</p>
-              <p class="leading-tight text-base">GitHub stars</p>
+              <p class="text-primary font-medium text-base sm:text-xl">16.5k</p>
+              <p class="leading-tight text-base">Estrellas en GitHub</p>
             </div>
           </div>
         </div>
@@ -77,14 +77,14 @@ import tileVitest from '@local-assets/tiles/vitest.png';
             <div
               class="relative flex flex-col flex-1 sm:pl-6 before:content-none sm:before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-full before:w-px before:bg-stroke"
             >
-              <p class="text-primary font-medium text-base sm:text-xl">5m+</p>
-              <p class="leading-tight text-base">Weekly npm downloads</p>
+              <p class="text-primary font-medium text-base sm:text-xl">6.6m+</p>
+              <p class="leading-tight text-base">Descargas semanales en npm</p>
             </div>
             <div
               class="relative flex flex-col flex-shrink-0 pl-6 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-full before:w-px before:bg-stroke"
             >
-              <p class="text-primary font-medium text-base sm:text-xl">19.8k</p>
-              <p class="leading-tight text-base">GitHub stars</p>
+              <p class="text-primary font-medium text-base sm:text-xl">21.1k</p>
+              <p class="leading-tight text-base">Estrellas en GitHub</p>
             </div>
           </div>
         </div>
