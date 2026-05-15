@@ -181,7 +181,7 @@ Cada entrada soporta:
 Un manifiesto inválido genera un error crítico, no una omisión silenciosa; el mantenedor que envió el manifiesto debe ser notificado sobre el campo infractor, por ejemplo: `@tu-org/create: createConfig.templates[2].template must be a non-empty string`.
 
 ### Plantillas en subdirectorios empaquetados
-Las rutas relativas `./...` se resuelven contra la raíz del paquete `@org/create` que las contiene, **no** contra el cwd del usuario. El directorio referenciado se copia íntegramente en el proyecto de destino (sin procesamiento de motor de plantillas). Las rutas que escapan de la raíz del paquete son rechazadas.
+Las rutas relativas `./...` se resuelven contra la raíz del paquete `@org/create` que las contiene, **no** contra el cwd del usuario. El directorio referenciado se copia íntegramente en el proyecto de destino (sin procesamiento de motor de plantillas); la única excepción es que un pequeño conjunto de archivos de estructura con prefijo de guion bajo (`_gitignore`, `_npmrc`, `_yarnrc.yml`) se renombran a sus equivalentes de archivo oculto (dotfile). Las rutas que escapan de la raíz del paquete son rechazadas.
 
 ### Establecer la organización como predeterminada en un repositorio
 Confirma esto en `vite.config.ts` en la raíz del proyecto:
