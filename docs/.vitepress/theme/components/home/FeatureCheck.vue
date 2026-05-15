@@ -17,7 +17,7 @@ import oxcIcon from '@assets/icons/oxc-light.svg';
             Formateo compatible con <code class="mx-1 outline-none bg-nickel/50 text-aqua">Prettier</code>
           </li>
           <li>
-            Más de 600 reglas compatibles con <code class="mx-1 outline-none bg-nickel/50 text-aqua">ESLint</code>
+            Más de 750 reglas compatibles con <code class="mx-1 outline-none bg-nickel/50 text-aqua">ESLint</code>
           </li>
           <li>
             Linting consciente de tipos y verificaciones rápidas con
