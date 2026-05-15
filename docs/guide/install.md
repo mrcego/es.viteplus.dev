@@ -121,14 +121,18 @@ Usa estos comandos cuando necesites entender el estado actual de las dependencia
 Usa `vp rebuild` cuando los módulos nativos necesiten ser recompilados, por ejemplo, después de cambiar la versión de Node.js o cuando un addon de C/C++ falla al cargar.
 
 - `vp rebuild` reconstruye todos los módulos nativos
+- `vp rebuild <paquete...>` reconstruye solo los paquetes listados
 - `vp rebuild -- <args>` pasa argumentos adicionales al gestor de paquetes subyacente
 
 ```bash
 vp rebuild
+vp rebuild better-sqlite3 sharp
 vp rebuild -- --update-binary
 ```
 
 `vp rebuild` es un atajo para `vp pm rebuild`.
+
+Con pnpm v10+, un `vp rebuild` sin argumentos solo reconstruye los paquetes cuyos scripts de construcción están listados en `onlyBuiltDependencies` (o aprobados mediante `pnpm approve-builds`); nombra el paquete explícitamente para forzar una reconstrucción que omita el paso de aprobación.
 
 #### Avanzado
 
