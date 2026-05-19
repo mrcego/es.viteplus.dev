@@ -31,13 +31,13 @@ import tileVitest from '@local-assets/tiles/vitest.png';
             <div
               class="relative flex flex-col flex-1 sm:pl-6 before:content-none sm:before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-full before:w-px before:bg-stroke"
             >
-              <p class="text-primary font-medium text-base sm:text-xl">123m+</p>
+              <p class="text-primary font-medium text-base sm:text-xl">127m+</p>
               <p class="leading-tight text-base">Descargas semanales en npm</p>
             </div>
             <div
               class="relative flex flex-col flex-shrink-0 pl-6 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-full before:w-px before:bg-stroke"
             >
-              <p class="text-primary font-medium text-base sm:text-xl">80.6k</p>
+              <p class="text-primary font-medium text-base sm:text-xl">80.7k</p>
               <p class="leading-tight text-base">Estrellas en GitHub</p>
             </div>
           </div>
