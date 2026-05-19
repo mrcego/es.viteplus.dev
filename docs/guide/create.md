@@ -45,6 +45,8 @@ Ejecuta `vp create --list` para ver las plantillas integradas y los atajos comun
 - `--directory <dir>` escribe el proyecto generado en un directorio de destino específico.
 - `--agent <nombre>` crea archivos de instrucciones para agentes durante la creación.
 - `--editor <nombre>` escribe archivos de configuración del editor.
+- `--git` inicializa un repositorio git.
+- `--no-git` omite la inicialización del repositorio git.
 - `--hooks` habilita la configuración de hooks de pre-commit.
 - `--no-hooks` omite la configuración de hooks.
 - `--no-interactive` se ejecuta sin preguntas.
