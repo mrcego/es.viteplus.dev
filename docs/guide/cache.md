@@ -13,8 +13,17 @@ Cuando una tarea se ejecuta con éxito (código de salida 0), se guarda su salid
 Si todo coincide, la salida en caché se reproduce instantáneamente y el comando no se ejecuta.
 
 ::: info
-Actualmente, solo se almacena en caché y se reproduce la salida de la terminal. Los archivos de salida como `dist/` no se almacenan en caché. Si los eliminas, usa `--no-cache` para forzar una nueva ejecución. El almacenamiento en caché de archivos de salida está planeado para una versión futura.
+Por defecto, solo se almacena en caché y se reproduce la salida de la terminal. Para almacenar en caché los archivos producidos por una tarea, configura los globs de [`output`](/config/run#output). Los archivos coincidentes se archivan después de una ejecución exitosa y se restauran en un acierto de caché.
 :::
+
+```ts [vite.config.ts]
+tasks: {
+  build: {
+    command: 'vp build',
+    output: ['dist/**'],
+  },
+}
+```
 
 Cuando ocurre un fallo de caché (cache miss), Vite Task te indica exactamente por qué:
 
