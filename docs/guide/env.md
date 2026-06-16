@@ -6,6 +6,8 @@
 
 El modo gestionado está activado por defecto, por lo que `node`, `npm` y los shims relacionados se resuelven a través de Vite+ y seleccionan la versión correcta de Node.js para el proyecto actual.
 
+Cuando un proyecto declara `packageManager` en `package.json`, los shims del gestor de paquetes correspondientes también usan esa versión exacta del gestor de paquetes. Por ejemplo, `packageManager: "npm@10.9.4"` hace que tanto `npm` como `npx` se ejecuten a través de npm 10.9.4. Los pares de alias siguen los shims de los gestores de paquetes instalados: `npm`/`npx`, `pnpm`/`pnpx`, `yarn`/`yarnpkg` y `bun`/`bunx`. Vite+ no traduce comandos que no coinciden, por lo que un proyecto fijado a `pnpm` todavía permite que `npm` recurra al npm que viene con el entorno de ejecución de Node.js resuelto.
+
 Por defecto, Vite+ almacena su entorno de ejecución gestionado y los archivos relacionados en `~/.vite-plus`. Si es necesario, puedes anular esa ubicación con `VP_HOME`.
 
 Si quieres mantener ese comportamiento, ejecuta:
@@ -99,6 +101,7 @@ vp env use --unset            # Eliminar la anulación de la sesión
 vp env current                # Mostrar el entorno resuelto actual
 vp env current --json         # Salida JSON para automatización
 vp env which node             # Mostrar qué binario de node se utilizará
+vp env which npx              # Muestra el alias del gestor de paquetes fijado cuando packageManager coincide
 vp env list-remote --lts      # Enumerar solo las versiones LTS
 
 # Ejecutar

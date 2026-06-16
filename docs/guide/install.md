@@ -20,6 +20,8 @@ Vite+ detecta el gestor de paquetes desde la raíz del workspace en este orden:
 
 Si ninguno de esos archivos está presente, `vp` recurre a `pnpm` por defecto. Vite+ descarga automáticamente el gestor de paquetes correspondiente y lo utiliza para el comando que ejecutaste.
 
+El campo explícito `packageManager` también afecta a los shims de los gestores de paquetes correspondientes. Si un proyecto tiene `packageManager: "npm@10.9.4"`, `npm` y `npx` usan npm 10.9.4. Otros pares de alias generados se comportan de la misma manera: `pnpm`/`pnpx`, `yarn`/`yarnpkg` y `bun`/`bunx`. Las herramientas que no coinciden no se traducen; `npm` en un proyecto `pnpm` todavía se resuelve como npm.
+
 ## Uso
 
 ```bash
