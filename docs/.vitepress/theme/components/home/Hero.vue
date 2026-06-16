@@ -12,7 +12,7 @@
         </p>
         <p class="text-sm text-grey">Gratuito y de código abierto bajo la licencia MIT.</p>
       </div>
-      <div class="flex items-center gap-5">
+      <div class="flex flex-wrap items-center justify-center gap-5">
         <a href="/guide" target="_self" class="button button--primary"> Primeros pasos </a>
         <a
           href="https://voidzero.dev/posts/announcing-vite-plus-alpha"
@@ -22,6 +22,7 @@
         >
           Leer el anuncio
         </a>
+        <CopyPrompt />
       </div>
     </div>
   </div>
