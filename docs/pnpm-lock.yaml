@@ -16,7 +16,7 @@ importers:
         version: 11.16.0
       reka-ui:
         specifier: ^2.7.0
-        version: 2.10.0(vue@3.5.39)
+        version: 2.10.1(vue@3.5.39)
       typewriter-effect:
         specifier: ^2.22.0
         version: 2.22.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -38,7 +38,7 @@ importers:
         version: 0.138.0
       tailwindcss:
         specifier: ^4.1.18
-        version: 4.3.1
+        version: 4.3.2
       vitepress:
         specifier: 2.0.0-alpha.17
         version: 2.0.0-alpha.17(jiti@2.6.1)(lightningcss@1.31.1)(oxc-minify@0.138.0)(postcss@8.5.16)
@@ -717,11 +717,11 @@ packages:
     peerDependencies:
       vite: ^5.2.0 || ^6 || ^7
 
-  '@tanstack/virtual-core@3.17.2':
-    resolution: {integrity: sha512-w43MvWvmShpb6kIC9MOoLyUkLmRTLPjt61bHWs+X29hACSpX+n8DvgZ3qM7cUfflKlRRcHR9KVJE6TmcqnQvcA==}
+  '@tanstack/virtual-core@3.17.3':
+    resolution: {integrity: sha512-8Np/TFELpI0ySuJoVmjvOrQYXH/8sTX0Biv9szhFhY39xOdAAY+smrMxjxOum/ux3eM8MUJQsEJ0/R0UpvC8dw==}
 
-  '@tanstack/vue-virtual@3.13.30':
-    resolution: {integrity: sha512-5IpTZf5US81z9CHaRm2imVC44WDU1V/pd8mN1OIvIerRmo6C179UN+vnzlO/dx9Fpt9X7Rjl7fyvolPhPgtfqg==}
+  '@tanstack/vue-virtual@3.13.31':
+    resolution: {integrity: sha512-wZMEoSf852jQqaf3Ika1J7PiBae6341LNy/2CxmIyn0XKDQXMuK41wVX+xp6G0yx8jyR95Ef+Tdr13DK7mbJtQ==}
     peerDependencies:
       vue: ^2.7.0 || ^3.0.0
 
@@ -1713,8 +1713,8 @@ packages:
   regex@6.1.0:
     resolution: {integrity: sha512-6VwtthbV4o/7+OaAF9I5L5V3llLEsoPyq9P1JVXkedTP33c7MfCG0/5NOPcSJn0TzXcG9YUrR0gQSWioew3LDg==}
 
-  reka-ui@2.10.0:
-    resolution: {integrity: sha512-HIUVfSBM/AyGkcUI7aiOxxMc4N+0UD2ZEun8dcrT0H4fveotEoeDdvzyZu97eeEvEa1H9oGHoOpApkfxlgnC7g==}
+  reka-ui@2.10.1:
+    resolution: {integrity: sha512-drcOQ4rQtDYAcGCsyQBqQg8QQ+H3B+zDaMJU0h8KPEPMa7g9BHu3zcOi4OB39XJSWizceFoNO0Z9tctSGLOXqg==}
     peerDependencies:
       vue: '>= 3.4.0'
 
@@ -1795,8 +1795,8 @@ packages:
   tailwindcss@4.2.1:
     resolution: {integrity: sha512-/tBrSQ36vCleJkAOsy9kbNTgaxvGbyOamC30PRePTQe/o1MFwEKHQk4Cn7BNGaPtjp+PuUrByJehM1hgxfq4sw==}
 
-  tailwindcss@4.3.1:
-    resolution: {integrity: sha512-hk+TB1m+K8CYNrP6rjQaq/Y+4Zylwpa87mLYBKCunwnnQ9p+fHb7kmSfGqyEJoxF/O6CDyABWVFEafNSYKll+Q==}
+  tailwindcss@4.3.2:
+    resolution: {integrity: sha512-WtctNNSH8A9jlMIqxzuYumOHU5uGZyRv0Q5svQl+oEPy5w84YpBxdb7MdqyiSPQge5jTJ6zFQLq0PFygdccSBA==}
 
   tapable@2.3.0:
     resolution: {integrity: sha512-g9ljZiwki/LfxmQADO3dEY1CbpmXT5Hm2fJ+QaGKwSXUylMybePR7/67YW7jOrrvjEgL1Fmz5kzyAjWVWLlucg==}
@@ -2452,10 +2452,10 @@ snapshots:
       '@tailwindcss/oxide-win32-arm64-msvc': 4.2.1
       '@tailwindcss/oxide-win32-x64-msvc': 4.2.1
 
-  '@tailwindcss/typography@0.5.19(tailwindcss@4.3.1)':
+  '@tailwindcss/typography@0.5.19(tailwindcss@4.3.2)':
     dependencies:
       postcss-selector-parser: 6.0.10
-      tailwindcss: 4.3.1
+      tailwindcss: 4.3.2
 
   '@tailwindcss/vite@4.2.1(vite@7.3.1(jiti@2.6.1)(lightningcss@1.31.1))':
     dependencies:
@@ -2464,11 +2464,11 @@ snapshots:
       tailwindcss: 4.2.1
       vite: 7.3.1(jiti@2.6.1)(lightningcss@1.31.1)
 
-  '@tanstack/virtual-core@3.17.2': {}
+  '@tanstack/virtual-core@3.17.3': {}
 
-  '@tanstack/vue-virtual@3.13.30(vue@3.5.39)':
+  '@tanstack/vue-virtual@3.13.31(vue@3.5.39)':
     dependencies:
-      '@tanstack/virtual-core': 3.17.2
+      '@tanstack/virtual-core': 3.17.3
       vue: 3.5.39
 
   '@tybys/wasm-util@0.10.3':
@@ -2647,7 +2647,7 @@ snapshots:
       '@docsearch/sidepanel-js': 4.6.0
       '@iconify/vue': 5.0.1(vue@3.5.39)
       '@rive-app/canvas-lite': 2.35.2
-      '@tailwindcss/typography': 0.5.19(tailwindcss@4.3.1)
+      '@tailwindcss/typography': 0.5.19(tailwindcss@4.3.2)
       '@tailwindcss/vite': 4.2.1(vite@7.3.1(jiti@2.6.1)(lightningcss@1.31.1))
       '@vue/shared': 3.5.39
       '@vueuse/core': 14.3.0(vue@3.5.39)
@@ -2655,8 +2655,8 @@ snapshots:
       '@vueuse/shared': 14.3.0(vue@3.5.39)
       mark.js: 8.11.1
       minisearch: 7.2.0
-      reka-ui: 2.10.0(vue@3.5.39)
-      tailwindcss: 4.3.1
+      reka-ui: 2.10.1(vue@3.5.39)
+      tailwindcss: 4.3.2
       vitepress: 2.0.0-alpha.17(jiti@2.6.1)(lightningcss@1.31.1)(oxc-minify@0.138.0)(postcss@8.5.16)
       vue: 3.5.39
     transitivePeerDependencies:
@@ -3623,13 +3623,13 @@ snapshots:
     dependencies:
       regex-utilities: 2.3.0
 
-  reka-ui@2.10.0(vue@3.5.39):
+  reka-ui@2.10.1(vue@3.5.39):
     dependencies:
       '@floating-ui/dom': 1.7.6
       '@floating-ui/vue': 1.1.11(vue@3.5.39)
       '@internationalized/date': 3.12.2
       '@internationalized/number': 3.6.7
-      '@tanstack/vue-virtual': 3.13.30(vue@3.5.39)
+      '@tanstack/vue-virtual': 3.13.31(vue@3.5.39)
       '@vueuse/core': 14.3.0(vue@3.5.39)
       '@vueuse/shared': 14.3.0(vue@3.5.39)
       aria-hidden: 1.2.6
@@ -3765,7 +3765,7 @@ snapshots:
 
   tailwindcss@4.2.1: {}
 
-  tailwindcss@4.3.1: {}
+  tailwindcss@4.3.2: {}
 
   tapable@2.3.0: {}
 
