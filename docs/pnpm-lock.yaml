@@ -20,6 +20,12 @@ importers:
       typewriter-effect:
         specifier: ^2.22.0
         version: 2.22.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      vitepress-plugin-group-icons:
+        specifier: ^1.7.5
+        version: 1.7.5(vite@7.3.1(jiti@2.6.1)(lightningcss@1.31.1))
+      vitepress-plugin-llms:
+        specifier: ^1.12.2
+        version: 1.13.2
       vitepress-plugin-mermaid:
         specifier: ^2.0.17
         version: 2.0.17(mermaid@11.16.0)(vitepress@2.0.0-alpha.17(jiti@2.6.1)(lightningcss@1.31.1)(oxc-minify@0.139.0)(postcss@8.5.16))
@@ -42,12 +48,6 @@ importers:
       vitepress:
         specifier: 2.0.0-alpha.17
         version: 2.0.0-alpha.17(jiti@2.6.1)(lightningcss@1.31.1)(oxc-minify@0.139.0)(postcss@8.5.16)
-      vitepress-plugin-group-icons:
-        specifier: ^1.7.5
-        version: 1.7.5(vite@7.3.1(jiti@2.6.1)(lightningcss@1.31.1))
-      vitepress-plugin-llms:
-        specifier: ^1.12.2
-        version: 1.13.2
 
 packages:
 
