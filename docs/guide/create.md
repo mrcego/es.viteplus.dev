@@ -52,9 +52,20 @@ Ejecuta `vp create --list` para ver las plantillas integradas y los atajos comun
 - `--hooks` habilita la configuración de hooks de pre-commit.
 - `--no-hooks` omite la configuración de hooks.
 - `--package-manager <nombre>` utiliza el gestor de paquetes especificado (`pnpm`, `npm`, `yarn` o `bun`).
+- `--approve-builds` aprueba y ejecuta scripts de construcción de dependencias restringidos sin preguntar.
 - `--no-interactive` se ejecuta sin preguntas.
 - `--verbose` muestra una salida detallada de la creación.
 - `--list` imprime las plantillas integradas y populares disponibles.
+
+### Scripts de construcción de dependencias
+
+Por seguridad, pnpm, bun y yarn (Berry) no ejecutan los scripts de construcción de una dependencia (`install` / `postinstall`, por ejemplo, compilaciones nativas como `better-sqlite3`) hasta que los apruebas. Cuando una plantilla agrega tal dependencia directamente, `vp create` la presenta después de instalar en lugar de dejar el proyecto en un estado a medio construir:
+
+- Interactivo: se te pregunta qué dependencias deseas aprobar y compilar (por defecto no se selecciona ninguna).
+- No interactivo: una nota las enumera y apunta a `vp pm approve-builds`.
+- `--approve-builds`: las aprueba y compila automáticamente, de modo que las ejecuciones no interactivas (CI) puedan producir un proyecto listo para usar.
+
+La aprobación se registra de la forma en que cada gestor de paquetes espera: `allowBuilds` de pnpm, `trustedDependencies` de bun o `dependenciesMeta.<pkg>.built` de yarn (en el manifiesto raíz del workspace). Los scripts de construcción transitivos que no elegiste (por ejemplo, `esbuild` arrastrado por Vite) se dejan en los valores predeterminados del gestor de paquetes y no se presentan. npm ejecuta los scripts de construcción de forma predeterminada, por lo que allí no hay nada que aprobar.
 
 ## Opciones de Plantilla
 
@@ -223,4 +234,14 @@ Ejemplos:
   # O usa una plantilla integrada de Vite+
   vp create vite:application --no-interactive
 ```
+
+### Lista de verificación de publicación
+
+1. Crea `@org/create` (paquete de npm con ámbito) si aún no tienes uno.
+2. Agrega un array `createConfig.templates` a `package.json`. (Empaqueta las plantillas bajo `./templates/...` o apunta a paquetes externos).
+3. (Opcional) Proporciona un lanzador `bin` para compatibilidad con `npm create @org`.
+4. Publica.
+5. Verifica: `vp create @org --no-interactive` imprime la tabla del manifiesto; `vp create @org` abre el selector.
+6. (Opcional) Confirma `create: { defaultTemplate: '@org' }` en tus repositorios de plantillas internos.
+
 

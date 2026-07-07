@@ -15,12 +15,12 @@
       <div class="flex flex-wrap items-center justify-center gap-5">
         <a href="/guide" target="_self" class="button button--primary"> Primeros pasos </a>
         <a
-          href="https://voidzero.dev/posts/announcing-vite-plus-alpha"
+          href="https://voidzero.dev/posts/announcing-vite-plus-beta"
           target="_blank"
           rel="noopener noreferrer"
           class="button"
         >
-          Leer el anuncio
+          Leer el anuncio de la Beta
         </a>
         <CopyPrompt />
       </div>

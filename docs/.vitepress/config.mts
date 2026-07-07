@@ -15,6 +15,10 @@ const taskRunnerGuideItems = [
   {
     text: 'Caché de Tareas',
     link: '/guide/cache',
+    items: [
+      { text: 'Rastreo Automático de Datos', link: '/guide/automatic-data-tracking' },
+      { text: 'Caché de GitHub Actions', link: '/guide/github-actions-cache' },
+    ],
   },
   {
     text: 'Ejecutar Binarios',
@@ -31,7 +35,6 @@ const guideSidebar = [
       { text: 'Migrar a Vite+', link: '/guide/migrate' },
       { text: 'Instalar Dependencias', link: '/guide/install' },
       { text: 'Entorno', link: '/guide/env' },
-      { text: 'Monorepo', link: '/guide/monorepo' },
       { text: '¿Por qué Vite+?', link: '/guide/why' },
     ],
   },
@@ -73,7 +76,9 @@ const guideSidebar = [
     items: [
       { text: 'Integración con IDE', link: '/guide/ide-integration' },
       { text: 'CI', link: '/guide/ci' },
+      { text: 'Docker', link: '/guide/docker' },
       { text: 'Hooks de Commit', link: '/guide/commit-hooks' },
+      { text: 'Guía de Monorepo', link: '/guide/monorepo' },
       { text: 'Solución de Problemas', link: '/guide/troubleshooting' },
     ],
   },
@@ -101,15 +106,6 @@ export default extendConfig(
         ['meta', { property: 'og:site_name', content: 'Vite+' }],
         ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
         ['meta', { name: 'twitter:site', content: '@voidzerodev' }],
-        [
-          'script',
-          {
-            src: 'https://cdn.usefathom.com/script.js',
-            'data-site': 'JFDLUWBH',
-            'data-spa': 'auto',
-            defer: '',
-          },
-        ],
       ],
       vite: {
         optimizeDeps: {
@@ -157,7 +153,7 @@ export default extendConfig(
               { text: 'Versiones', link: 'https://github.com/voidzero-dev/vite-plus/releases' },
               {
                 text: 'Anuncio',
-                link: 'https://voidzero.dev/posts/announcing-vite-plus-alpha',
+                link: 'https://voidzero.dev/posts/announcing-vite-plus-beta',
               },
               {
                 text: 'Contribuir',
@@ -177,6 +173,7 @@ export default extendConfig(
                 { text: 'Ejecución (Run)', link: '/config/run' },
                 { text: 'Formato (Fmt)', link: '/config/fmt' },
                 { text: 'Lint', link: '/config/lint' },
+                { text: 'Comprobación (Check)', link: '/config/check' },
                 { text: 'Pruebas (Test)', link: '/config/test' },
                 { text: 'Construcción (Build)', link: '/config/build' },
                 { text: 'Empaquetado (Pack)', link: '/config/pack' },

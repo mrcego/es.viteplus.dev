@@ -6,7 +6,16 @@
 
 El modo gestionado está activado por defecto, por lo que `node`, `npm` y los shims relacionados se resuelven a través de Vite+ y seleccionan la versión correcta de Node.js para el proyecto actual.
 
-Cuando un proyecto declara `packageManager` en `package.json`, los shims del gestor de paquetes correspondientes también usan esa versión exacta del gestor de paquetes. Por ejemplo, `packageManager: "npm@10.9.4"` hace que tanto `npm` como `npx` se ejecuten a través de npm 10.9.4. Los pares de alias siguen los shims de los gestores de paquetes instalados: `npm`/`npx`, `pnpm`/`pnpx`, `yarn`/`yarnpkg` y `bun`/`bunx`. Vite+ no traduce comandos que no coinciden, por lo que un proyecto fijado a `pnpm` todavía permite que `npm` recurra al npm que viene con el entorno de ejecución de Node.js resuelto.
+La versión de Node.js del proyecto se resuelve a partir de estas fuentes, en orden de prioridad:
+
+1. El archivo `.node-version` (directorio actual o directorios padres)
+2. `devEngines.runtime` en el `package.json` (el [estándar devEngines](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#devengines))
+3. `engines.node` en el `package.json`
+4. El valor predeterminado global (`vp env default`), luego la última versión LTS
+
+`devEngines.runtime` tiene mayor prioridad que `engines.node` porque declara el requisito del entorno de desarrollo, mientras que `engines.node` es un rango de soporte orientado al consumidor. `vp env doctor` advierte cuando las fuentes declaradas entran en conflicto.
+
+Cuando un proyecto declara `packageManager` (o `devEngines.packageManager`) en `package.json`, los shims del gestor de paquetes correspondientes también usan esa versión exacta del gestor de paquetes. Por ejemplo, `packageManager: "npm@10.9.4"` hace que tanto `npm` como `npx` se ejecuten a través de npm 10.9.4. Los pares de alias siguen los shims de los gestores de paquetes instalados: `npm`/`npx`, `pnpm`/`pnpx`, `yarn`/`yarnpkg` y `bun`/`bunx`. Vite+ no traduce comandos que no coinciden, por lo que un proyecto fijado a `pnpm` todavía permite que `npm` recurra al npm que viene con el entorno de ejecución de Node.js resuelto.
 
 Por defecto, Vite+ almacena su entorno de ejecución gestionado y los archivos relacionados en `~/.vite-plus`. Si es necesario, puedes anular esa ubicación con `VP_HOME`.
 
@@ -30,7 +39,7 @@ Esto cambia al modo de "sistema primero", donde los shims prefieren el Node.js d
 
 ### Configuración
 
-- `vp env setup` crea o actualiza shims en `VP_HOME/bin` (y escribe los scripts de configuración por terminal en `~/.vite-plus/`).
+- `vp env setup` crea o actualiza shims en `VP_HOME/bin` (y escribe los scripts de configuración por terminal en `VP_HOME`).
 - `vp env on` habilita el modo gestionado para que los shims siempre usen Node.js de Vite+.
 - `vp env off` habilita el modo sistema primero para que los shims prefieran Node.js del sistema.
 - `vp env print` imprime el fragmento de código de la terminal para la sesión actual.
@@ -60,8 +69,8 @@ En CI, `vp env use` puede ejecutarse sin inicialización de la terminal. Escribe
 ### Gestionar
 
 - `vp env default` establece o muestra la versión global predeterminada de Node.js.
-- `vp env pin` fija una versión de Node.js en el directorio actual.
-- `vp env unpin` elimina `.node-version` del directorio actual.
+- `vp env pin` fija una versión de Node.js en el directorio actual: si ya existe `.node-version`, se sigue actualizando; de lo contrario, la fijación se escribe en `package.json#devEngines.runtime`; `.node-version` solo se crea cuando el directorio no tiene `package.json`. Usa `--target node-version` o `--target dev-engines` para elegir explícitamente. Un `engines.node` existente nunca se modifica.
+- `vp env unpin` elimina la fijación de la misma fuente en la que escribiría `vp env pin`.
 - `vp env use` establece una versión de Node.js para la sesión actual de la terminal.
 - `vp env install` instala una versión de Node.js.
 - `vp env uninstall` elimina una versión instalada de Node.js.
@@ -78,7 +87,7 @@ En CI, `vp env use` puede ejecutarse sin inicialización de la terminal. Escribe
 
 ## Configuración del Proyecto
 
-- Fija la versión de un proyecto con `.node-version`.
+- Fija la versión de un proyecto con `vp env pin`.
 - Usa `vp install`, `vp dev` y `vp build` normalmente.
 - Deja que Vite+ elija el entorno de ejecución adecuado para el proyecto.
 
@@ -86,7 +95,7 @@ En CI, `vp env use` puede ejecutarse sin inicialización de la terminal. Escribe
 
 ```bash
 # Configuración
-vp env setup                  # Crear shims para node, npm, npx
+vp env setup                  # Crear shims para node, npm, npx, corepack
 vp env on                     # Usar Node.js gestionado por Vite+
 vp env print                  # Imprimir fragmento de la terminal para esta sesión
 
@@ -125,4 +134,36 @@ VP_NODE_DIST_MIRROR=https://mi-espejo.ejemplo.com/nodejs/dist vp env default lts
 # Establécelo permanentemente en el perfil de tu terminal (.bashrc, .zshrc, etc.)
 echo 'export VP_NODE_DIST_MIRROR=https://mi-espejo.ejemplo.com/nodejs/dist' >> ~/.zshrc
 ```
+
+## Corepack
+
+Vite+ crea un shim de `corepack` por defecto, por lo que corepack funciona sin necesidad de una instalación del sistema de Node.js:
+
+- En Node.js 24 y versiones anteriores, el shim ejecuta el corepack empaquetado con la versión de Node.js resuelta.
+- En Node.js 25 y versiones posteriores, donde corepack ya no viene empaquetado, Vite+ instala corepack como un paquete global gestionado en el primer uso. Solo se vincula el binario `corepack`; ejecuta `vp install -g corepack` tú mismo si también deseas que los ejecutores pnpm/yarn del paquete se expongan directamente.
+- Si instalas corepack explícitamente con `vp install -g corepack`, siempre se preferirá esa instalación.
+
+`corepack enable` normalmente crea los ejecutores `pnpm`/`yarn` junto al binario de corepack, los cuales bajo Vite+ no estarían en el `PATH`. El shim soluciona esto estableciendo de forma predeterminada `--install-directory` en `VP_HOME/bin`, de modo que después de `corepack enable` los ejecutores estén disponibles en todas partes y sigan resolviendo las versiones de Node.js y del gestor de paquetes del proyecto:
+
+```bash
+corepack enable               # pnpm y yarn ahora se resuelven a través de corepack
+corepack disable              # Elimina los ejecutores de pnpm/yarn nuevamente
+```
+
+Los ejecutores hacen referencia a la copia de corepack que los creó. Si esa copia se elimina posteriormente (por ejemplo, al desinstalar la versión de Node.js con la que se envió), vuelve a ejecutar `corepack enable` para recrearlos.
+
+Los shims que pertenecen a Vite+ (`npm`, `npx` y los binarios instalados con `vp install -g`) están protegidos: si corepack los elimina o reemplaza, Vite+ los restaura e imprime una advertencia.
+
+## Verificación de Firmas de Node.js
+
+Al instalar Node.js desde la distribución oficial de `nodejs.org`, Vite+ descarga el archivo `SHASUMS256.txt.asc` firmado con PGP y lo verifica contra las claves de lanzamiento de Node.js empaquetadas antes de confiar en cualquier suma de verificación. Esto protege contra un archivo `SHASUMS256.txt` manipulado que se haya emparejado con un archivo comprimido malicioso correspondiente. La suma de verificación SHA-256 del archivo comprimido descargado siempre se verifica después.
+
+Los espejos personalizados (`VP_NODE_DIST_MIRROR`) que publican solo el archivo `SHASUMS256.txt` simple recurren a la verificación basada únicamente en sumas de verificación. Un espejo que sí publica un archivo `.asc` seguirá teniendo su firma verificada, y una firma no válida generará un error fatal.
+
+Si un problema futuro con el llavero (keyring) o los certificados bloquea las descargas, establece `VP_NODE_SKIP_SIGNATURE_VERIFY` para omitir temporalmente la verificación de PGP. La suma de verificación SHA-256 se seguirá verificando y Vite+ imprimirá una advertencia cuando se omita la comprobación de firmas:
+
+```bash
+VP_NODE_SKIP_SIGNATURE_VERIFY=1 vp env install 22
+```
+
 

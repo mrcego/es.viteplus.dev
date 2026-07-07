@@ -4,23 +4,42 @@
 
 ## Vista General
 
-Usa Vite+ para gestionar las dependencias a través de pnpm, npm, Yarn y Bun. En lugar de cambiar entre `pnpm install`, `npm install` y `yarn install`, puedes seguir usando `vp install`, `vp add`, `vp remove` y el resto de los comandos de gestión de paquetes de Vite+.
+Usa Vite+ para gestionar las dependencias a través de pnpm, npm, Yarn y Bun. En lugar de cambiar entre `pnpm install`, `npm install`, `yarn install` y `bun install`, puedes seguir usando `vp install`, `vp add`, `vp remove` y el resto de los comandos de gestión de paquetes de Vite+.
 
 Vite+ detecta el gestor de paquetes desde la raíz del workspace en este orden:
 
 1. `packageManager` en el `package.json`
-2. `pnpm-workspace.yaml`
-3. `pnpm-lock.yaml`
-4. `yarn.lock` o `.yarnrc.yml`
-5. `package-lock.json`
-6. `bun.lock` o `bun.lockb`
-7. `.pnpmfile.cjs` o `pnpmfile.cjs`
-8. `bunfig.toml`
-9. `yarn.config.cjs`
+2. `devEngines.packageManager` en el `package.json`
+3. `pnpm-workspace.yaml`
+4. `pnpm-lock.yaml`
+5. `yarn.lock` o `.yarnrc.yml`
+6. `package-lock.json`
+7. `bun.lock` o `bun.lockb`
+8. `.pnpmfile.cjs` o `pnpmfile.cjs`
+9. `bunfig.toml`
+10. `yarn.config.cjs`
 
-Si ninguno de esos archivos está presente, `vp` recurre a `pnpm` por defecto. Vite+ descarga automáticamente el gestor de paquetes correspondiente y lo utiliza para el comando que ejecutaste.
+Si ninguno de esos archivos está presente, `vp` recurre a `pnpm` por defecto. Vite+ descarga automáticamente el gestor de paquetes correspondiente y lo utiliza para el comando que ejecutaste. Cuando la detección proviene de archivos lockfile o archivos de configuración, la versión resuelta se escribe en `devEngines.packageManager` para que las ejecuciones futuras sean deterministas; los proyectos que ya declaran `packageManager` o `devEngines.packageManager` se dejan como están.
 
-El campo explícito `packageManager` también afecta a los shims de los gestores de paquetes correspondientes. Si un proyecto tiene `packageManager: "npm@10.9.4"`, `npm` y `npx` usan npm 10.9.4. Otros pares de alias generados se comportan de la misma manera: `pnpm`/`pnpx`, `yarn`/`yarnpkg` y `bun`/`bunx`. Las herramientas que no coinciden no se traducen; `npm` en un proyecto `pnpm` todavía se resuelve como npm.
+El campo [`devEngines.packageManager`](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#devengines) acepta un solo objeto o un array de objetos, y su `version` puede ser un rango semver (semver range):
+
+```json
+{
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.0.0",
+      "onFail": "download"
+    }
+  }
+}
+```
+
+Un rango se resuelve a una versión satisfactoria ya descargada cuando sea posible; de lo contrario, se resuelve a la última versión satisfactoria del registro de npm. El rango en sí sigue siendo la fuente de verdad; Vite+ nunca lo congela en una fijación (pin) exacta en `packageManager`. Cuando se declaran tanto `packageManager` como `devEngines.packageManager`, el campo `packageManager` dirige la selección y Vite+ advierte cuando este no cumple con la restricción de devEngines (`vp env doctor` muestra los detalles).
+
+Actualmente, Vite+ descarga el gestor de paquetes declarado (el comportamiento de `onFail: "download"`); los otros valores de `onFail` se aceptan pero aún no se diferencian.
+
+El campo explícito `packageManager` (o la declaración `devEngines.packageManager`) también afecta a los shims de los gestores de paquetes correspondientes. Si un proyecto tiene `packageManager: "npm@10.9.4"`, `npm` y `npx` usan npm 10.9.4. Otros pares de alias generados se comportan de la misma manera: `pnpm`/`pnpx`, `yarn`/`yarnpkg` y `bun`/`bunx`. Las herramientas que no coinciden no se traducen; `npm` en un proyecto `pnpm` todavía se resuelve como npm.
 
 ## Uso
 
@@ -48,6 +67,15 @@ Usa el parámetro `-g` para instalar, actualizar o eliminar paquetes instalados 
 - `vp uninstall -g <pkg>` elimina un paquete global.
 - `vp update -g [pkg]` acredita un paquete global o todos ellos.
 - `vp list -g [pkg]` enumera los paquetes globales.
+- `vp outdated -g [pkg]` imprime los paquetes desactualizados.
+
+::: warning ADVERTENCIA
+Estos comandos **NO** interactúan con el directorio de instalación global del gestor de paquetes subyacente.
+
+En su lugar, Vite+ gestiona sus propios paquetes globales bajo `VP_HOME/packages`, lo que permite que sigan estando disponibles en diferentes versiones de Node.js.
+
+Como resultado, comandos como `vp link` no afectan a los paquetes globales de Vite+ y no aparecerán en `vp list -g`.
+:::
 
 ## Gestionar Dependencias
 
@@ -62,7 +90,7 @@ Vite+ proporciona todos los comandos familiares de gestión de paquetes:
 - `vp list` muestra los paquetes instalados.
 - `vp why <pkg>` explica por qué un paquete está presente.
 - `vp info <pkg>` muestra los metadatos del registro de un paquete.
-- `vp rebuild` reconstruye los módulos nativos (ej. después de cambiar la versión de Node.js)
+- `vp rebuild` reconstruye los módulos nativos (ej. después de cambiar la versión de Node.js).
 - `vp link` y `vp unlink` gestionan enlaces de paquetes locales.
 - `vp dlx <pkg>` ejecuta el binario de un paquete sin añadirlo al proyecto.
 - `vp pm <comando>` reenvía un comando bruto específico del gestor de paquetes cuando necesites un comportamiento fuera del conjunto de comandos normalizados de `vp`.
@@ -90,6 +118,7 @@ Usa estos comandos cuando quieras que las herramientas gestionadas por el gestor
 - `vp uninstall -g typescript`
 - `vp update -g`
 - `vp list -g`
+- `vp outdated -g`
 
 #### Add y Remove
 
@@ -148,7 +177,24 @@ Ejemplos:
 
 ```bash
 vp pm config get registry
-vp pm cache clean --force
-vp pm exec tsc --version
+vp pm cache clean -- --force
+vp pm audit --json
 ```
+
+#### Publicación por etapas (Staged publishing)
+
+`vp pm stage` expone el flujo de trabajo de [publicación por etapas (staged publishing) de npm](https://docs.npmjs.com/staged-publishing): se sube una compilación a un área de pruebas (sin 2FA, ideal para CI), luego un mantenedor la aprueba o rechaza desde un dispositivo de confianza (con 2FA). Se adapta al gestor de paquetes detectado.
+
+```bash
+vp pm stage publish              # sube el paquete al área de pruebas (sin 2FA)
+vp pm stage list                 # enumera las versiones en el área de pruebas
+vp pm stage view <stage-id>      # inspecciona una versión en el área de pruebas
+vp pm stage download <stage-id>  # descarga el tarball de la versión del área de pruebas
+vp pm stage approve <stage-id>   # promueve al registro activo (con 2FA)
+vp pm stage reject <stage-id>    # descarta una versión del área de pruebas (con 2FA)
+```
+
+- pnpm (`pnpm stage`, requiere pnpm ≥ 11.3) y npm (`npm stage`, requiere npm ≥ 11.15 y Node ≥ 22.14) se reenvían directamente.
+- yarn (Berry) utiliza su plugin npm (`yarn npm publish --staged`, `yarn npm stage …`); `view`/`download` recurren a npm.
+- yarn Classic y bun no tienen soporte de publicación por etapas y recurren a `npm stage`.
 

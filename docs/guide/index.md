@@ -104,10 +104,11 @@ Vite+ puede manejar todo el ciclo de desarrollo frontend local, desde iniciar un
 ### Ejecutar
 
 - [`vp run`](/guide/run) ejecuta tareas a través de los workspaces con caché.
+- [`vp exec`](/guide/vpx) ejecuta binarios locales del proyecto.
+- [`vp node`](/guide/env) ejecuta scripts de Node.js con el entorno de Vite+ resuelto.
+- [`vp dlx`](/guide/vpx) descarga y ejecuta binarios de paquetes sin añadirlos como dependencias.
 - [`vp cache clean`](/guide/cache) limpia las entradas de caché de tareas.
 - [`vpx`](/guide/vpx) descarga y ejecuta binarios globalmente.
-- [`vp exec`](/guide/vpx) ejecuta binarios locales del proyecto.
-- [`vp dlx`](/guide/vpx) descarga y ejecuta binarios de paquetes sin añadirlos como dependencias.
 
 ### Construir
 
@@ -117,7 +118,8 @@ Vite+ puede manejar todo el ciclo de desarrollo frontend local, desde iniciar un
 
 ### Gestionar Dependencias
 
-- [`vp add`](/guide/install), [`vp remove`](/guide/install), [`vp update`](/guide/install), [`vp dedupe`](/guide/install), [`vp outdated`](/guide/install), [`vp why`](/guide/install) y [`vp info`](/guide/install) envuelven los flujos de trabajo del gestor de paquetes.
+- [`vp add`](/guide/install), [`vp remove`](/guide/install), [`vp update`](/guide/install), [`vp dedupe`](/guide/install), [`vp outdated`](/guide/install), [`vp list`](/guide/install), [`vp why`](/guide/install) y [`vp info`](/guide/install) envuelven los flujos de trabajo del gestor de paquetes.
+- [`vp link`](/guide/install), [`vp unlink`](/guide/install) y [`vp rebuild`](/guide/install) cubren enlaces de paquetes locales y reconstrucciones de módulos nativos.
 - [`vp pm <comando>`](/guide/install) llama directamente a otros comandos del gestor de paquetes.
 
 ### Mantener

@@ -22,7 +22,13 @@ Si usas [`vp create`](/guide/create) o [`vp migrate`](/guide/migrate), Vite+ te 
 ```bash
 vp config
 vp config --hooks-dir .vite-hooks
+vp config --no-hooks
+vp config --no-agent
 ```
+
+Usa `--no-hooks` cuando quieras que `vp config` deje intacta la configuración de hooks de Git existente. Usa `--no-agent` cuando quieras que omita las actualizaciones de los archivos de instrucciones de agentes de programación existentes. Puedes pasar ambos flags cuando quieras que `vp config` omita ambos pasos de configuración.
+
+También puedes establecer `VITE_GIT_HOOKS=0` para deshabilitar la instalación de hooks desde scripts de ciclo de vida como `prepare` o `postinstall`.
 
 ### `vp staged`
 

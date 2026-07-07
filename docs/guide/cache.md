@@ -4,32 +4,19 @@ Vite Task puede rastrear automáticamente las dependencias y almacenar en caché
 
 ## Vista General
 
-Cuando una tarea se ejecuta con éxito (código de salida 0), se guarda su salida en la terminal (stdout/stderr). En la siguiente ejecución, Vite Task comprueba si algo ha cambiado:
+Cuando una tarea se ejecuta con éxito (código de salida 0), se guarda su salida en la terminal (stdout/stderr) y todos los archivos escritos (archivos de salida). En la siguiente ejecución, Vite Task comprueba si algo ha cambiado:
 
 1. **Argumentos:** ¿Han cambiado los [argumentos adicionales](/guide/run#argumentos-adicionales) pasados a la tarea?
 2. **Variables de entorno:** ¿Ha cambiado alguna [variable de entorno registrada](/config/run#env)?
-3. **Archivos de entrada:** ¿Ha cambiado algún archivo que el comando lee?
+3. **Entradas:** ¿Ha cambiado algún archivo de entrada que el comando lee?
 
-Si todo coincide, la salida en caché se reproduce instantáneamente y el comando no se ejecuta.
-
-::: info
-Por defecto, solo se almacena en caché y se reproduce la salida de la terminal. Para almacenar en caché los archivos producidos por una tarea, configura los globs de [`output`](/config/run#output). Los archivos coincidentes se archivan después de una ejecución exitosa y se restauran en un acierto de caché.
-:::
-
-```ts [vite.config.ts]
-tasks: {
-  build: {
-    command: 'vp build',
-    output: ['dist/**'],
-  },
-}
-```
+Cuando todas las comprobaciones coinciden, Vite Task reproduce la salida de terminal almacenada en caché, restaura los archivos de salida guardados y omite el comando.
 
 Cuando ocurre un fallo de caché (cache miss), Vite Task te indica exactamente por qué:
 
 ```
 $ vp lint ✗ cache miss: 'src/utils.ts' modified, executing
-$ vp build ✗ cache miss: env changed, executing
+$ vp build ✗ cache miss: env 'VITE_GREETING' changed, executing
 $ vp test ✗ cache miss: args changed, executing
 ```
 
@@ -45,7 +32,7 @@ Una tarea puede establecer [`cache: false`](/config/run#cache) para desactivarlo
 
 ### 2. Parámetros de CLI
 
-`--no-cache` desactiva el caché para todo. `--cache` habilita el caché tanto para tareas como para scripts, lo cual es equivalente a establecer [`run.cache: true`](/config/run#run-cache) para esa invocación.
+`--no-cache` desactiva el caché para cada tarea y script en esa ejecución. `--cache` habilita el caché tanto para tareas como para scripts, lo cual es equivalente a establecer [`run.cache: true`](/config/run#run-cache) para esa invocación.
 
 ### 3. Configuración del workspace
 
@@ -56,29 +43,21 @@ La opción [`run.cache`](/config/run#run-cache) en tu `vite.config.ts` de la ra�
 | `cache.tasks`    | `true`      | Cachear tareas definidas en `vite.config.ts`    |
 | `cache.scripts`  | `false`     | Cachear scripts de `package.json`               |
 
-## Rastreo Automático de Archivos
+## Rastreo Automático de Datos
 
-Vite Task rastrea qué archivos lee cada comando durante la ejecución. Cuando una tarea se ejecuta, registra qué archivos abre el proceso, como tus archivos fuente `.ts`, `vite.config.ts` y `package.json`, y registra los hashes de su contenido. En la siguiente ejecución, vuelve a comprobar esos hashes para determinar si algo ha cambiado.
+Vite Task utiliza el [rastreo automático de datos](/guide/automatic-data-tracking) para aprender qué necesita cada tarea para el almacenamiento en caché, de modo que no tengas que configurarlo manualmente. El rastreo automático de datos tiene dos niveles:
 
-Esto significa que el caché funciona de inmediato para la mayoría de los comandos sin ninguna configuración. Vite Task también registra:
+- **Rastreo del sistema de archivos:** Vite Task registra las lecturas de archivos, las búsquedas de archivos faltantes, los listados de directorios y los archivos de salida escritos para cada tarea que tenga habilitado el almacenamiento en caché.
+- **Rastreo cooperativo:** las herramientas que informan a la caché pueden reportar metadatos que el rastreo del sistema de archivos no puede inferir. Vite+ admite esto para `vp build` hoy en día.
 
-- **Archivos faltantes:** si un comando busca un archivo que no existe, como `utils.ts` durante la resolución de módulos, crear ese archivo más tarde invalida correctamente el caché.
-- **Listados de directorios:** si un comando escanea un directorio, como un ejecutor de pruebas buscando `*.test.ts`, añadir o quitar archivos en ese directorio invalida el caché.
-
-### Evitar un Rastreo de Entrada Demasiado Amplio
-
-El rastreo automático a veces puede incluir más archivos de los necesarios, causando fallos de caché innecesarios:
-
-- **Archivos de caché de herramientas:** algunas herramientas mantienen su propio caché, como `.tsbuildinfo` de TypeScript o `target/` de Cargo. Estos archivos pueden cambiar entre ejecuciones incluso cuando tu código fuente no lo ha hecho, causando una invalidación innecesaria del caché.
-- **Listados de directorios:** cuando un comando escanea un directorio, como cuando busca patrones glob para `**/*.js`, Vite Task ve la lectura del directorio pero no el patrón glob. Cualquier archivo añadido o eliminado en ese directorio, incluso los no relacionados, invalida el caché.
-
-Usa la opción [`input`](/config/run#input) para excluir archivos o para reemplazar el rastreo automático por patrones de archivos explícitos:
+Usa [`input`](/config/run#input) u [`output`](/config/run#output) cuando una tarea necesite reglas de rastreo manuales. `input` controla qué invalida la caché. `output` controla qué archivos restaura Vite Task en caso de acierto de caché (cache hit).
 
 ```ts [vite.config.ts]
 tasks: {
   build: {
-    command: 'tsc',
-    input: [{ auto: true }, '!**/*.tsbuildinfo'],
+    command: 'node build.mjs',
+    input: [{ auto: true }, '!dist/**'],
+    output: ['dist/**'],
   },
 }
 ```
@@ -89,7 +68,7 @@ Por defecto, las tareas se ejecutan en un entorno limpio. Solo se pasan un peque
 
 Para añadir una variable de entorno a la clave del caché, añádela a [`env`](/config/run#env). Cambiar su valor invalidará entonces el caché:
 
-```ts
+```ts [vite.config.ts]
 tasks: {
   build: {
     command: 'webpack --mode production',
@@ -98,7 +77,7 @@ tasks: {
 }
 ```
 
-Para pasar una variable a la tarea **sin** afectar al comportamiento del caché, usa [`untrackedEnv`](/config/run#untracked-env). Esto es útil para variables como `CI` o `GITHUB_ACTIONS` que deben estar disponibles en la tarea, pero que generalmente no afectan al comportamiento del caché.
+Para pasar una variable a la tarea **sin** afectar al comportamiento del caché, usa [`untrackedEnv`](/config/run#untrackedenv). Esto es útil para variables como `CI` o `GITHUB_ACTIONS` que deben estar disponibles en la tarea, pero que generalmente no afectan al comportamiento del caché.
 
 Consulta [Configuración de Ejecución](/config/run#env) para obtener detalles sobre patrones de comodines y la lista completa de variables que se pasan automáticamente.
 

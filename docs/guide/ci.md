@@ -23,6 +23,10 @@ Esto significa que normalmente no necesitas pasos separados de `setup-node`, con
 
 Con `cache: true`, `setup-vp` gestiona el almacenamiento en caché de dependencias por ti de forma automática.
 
+::: tip CONSEJO
+`setup-vp` almacena en caché los datos del gestor de paquetes. Para reutilizar los resultados de Vite Task en diferentes ejecuciones de CI, añade una caché de GitHub Actions separada para Vite Task (consulta [Caché de GitHub Actions para Vite Task](/guide/github-actions-cache)).
+:::
+
 ## Simplificando Flujos de Trabajo Existentes
 
 Si estás migrando un flujo de trabajo de GitHub Actions existente, a menudo puedes reemplazar grandes bloques de configuración de Node, gestor de paquetes y caché con un único paso `setup-vp`.

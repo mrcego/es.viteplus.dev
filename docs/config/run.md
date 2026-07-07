@@ -85,8 +85,10 @@ Los comandos unidos con `&&` se dividen automáticamente en subtareas almacenada
 
 ### `dependsOn`
 
-- **Tipo:** `string[]`
+- **Tipo:** `Array<string | { task: string, from: DependsOnFrom }>`
 - **Por defecto:** `[]`
+
+`from` acepta los tipos de dependencia `"dependencies"`, `"devDependencies"`, `"peerDependencies"`, o un array de esos valores, como `["dependencies", "devDependencies"]`.
 
 Tareas que deben completarse con éxito antes de que comience esta.
 
@@ -105,7 +107,20 @@ Las dependencias pueden hacer referencia a tareas en otros paquetes utilizando e
 dependsOn: ['@my/core#build', '@my/utils#lint'];
 ```
 
-Consulta [Dependencias de Tareas](/guide/run#dependencias-de-tareas) para obtener detalles sobre cómo interactúan las dependencias explícitas y topológicas.
+Usa la forma de objeto `{ task: string, from: DependsOnFrom }` para hacer referencia a las tareas de todas las dependencias:
+
+```ts [vite.config.ts]
+tasks: {
+  test: {
+    command: 'vp test',
+    dependsOn: [{ task: 'build', from: ['dependencies', 'devDependencies'] }],
+  },
+}
+```
+
+Para el ejemplo anterior, Vite Task lee las `dependencies` y `devDependencies` directas del paquete declarante y ejecuta la tarea `build` en cada dependencia que la defina. Los paquetes sin `build` se omiten.
+
+Consulta [Dependencias de Tareas](/guide/run#dependencias-de-tareas) para obtener detalles sobre cómo interactúan las dependencias explícitamente y las topológicas.
 
 ### `cache`
 
@@ -133,17 +148,19 @@ Variables de entorno incluidas en la huella digital (fingerprint) del caché. Cu
 ```ts [vite.config.ts]
 tasks: {
   build: {
-    command: 'vp build',
+    command: 'node build.mjs',
     env: ['NODE_ENV'],
   },
 }
 ```
 
-Se admiten patrones de comodines: `VITE_*` coincide con todas las variables que comienzan con `VITE_`.
+Se admiten patrones de comodines y patrones de exclusión `!`: `VITE_*` coincide con todas las variables que comienzan con `VITE_`, y `!VITE_SECRET` excluye la variable `VITE_SECRET` de la coincidencia.
+
+Para `vp build`, Vite informa automáticamente las variables de entorno de Vite a través del [rastreo automático](/guide/automatic-data-tracking#rastreo-cooperativo). No agregues `VITE_*` o `NODE_ENV` aquí para una compilación de Vite estándar a menos que tu proyecto tenga un comportamiento de compilación adicional que Vite no pueda informar.
 
 ```bash
 $ NODE_ENV=development vp run build    # primera ejecución
-$ NODE_ENV=production vp run build     # fallo de caché: la variable cambió
+$ NODE_ENV=production vp run build     # fallo de caché: env 'NODE_ENV' cambió
 ```
 
 ### `untrackedEnv`
@@ -156,13 +173,17 @@ Variables de entorno que se pasan al proceso de la tarea pero que **no** se incl
 ```ts [vite.config.ts]
 tasks: {
   build: {
-    command: 'vp build',
+    command: 'node build.mjs',
     untrackedEnv: ['CI', 'GITHUB_ACTIONS'],
   },
 }
 ```
 
-Un conjunto de variables de entorno comunes se pasan automáticamente a todas las tareas:
+`untrackedEnv` acepta los mismos patrones de comodines y de exclusión `!` que [`env`](#env).
+
+No coloques una variable en `untrackedEnv` si su valor cambia el resultado de la tarea. Si una herramienta que informa a la caché cubre la variable a través del [rastreo automático](/guide/automatic-data-tracking#rastreo-cooperativo), déjala fuera tanto de `env` como de `untrackedEnv`.
+
+Vite Task pasa un conjunto de variables de entorno comunes a todas las tareas:
 
 - **Sistema:** `HOME`, `USER`, `PATH`, `SHELL`, `LANG`, `TZ`
 - **Node.js:** `NODE_OPTIONS`, `COREPACK_HOME`, `PNPM_HOME`
@@ -174,7 +195,7 @@ Un conjunto de variables de entorno comunes se pasan automáticamente a todas la
 - **Tipo:** `Array<string | { auto: boolean } | { pattern: string, base: "workspace" | "package" }>`
 - **Por defecto:** `[{ auto: true }]` (inferido automáticamente)
 
-Vite Task detecta automáticamente qué archivos utiliza un comando (consulta [Rastreo Automático de Archivos](/guide/cache#rastreo-automático-de-archivos)). La opción `input` se puede usar para incluir o excluir explícitamente ciertos archivos.
+Vite Task detecta automáticamente qué archivos utiliza un comando. Consulta [Rastreo Automático de Datos](/guide/automatic-data-tracking) para obtener detalles y saber cuándo agregar configuración manual.
 
 **Excluir archivos** del rastreo automático:
 
@@ -234,16 +255,31 @@ Por defecto, los patrones glob de cadenas se resuelven de forma relativa al dire
 
 ### `output`
 
-- **Tipo:** `Array<string | { pattern: string, base: "workspace" | "package" }>`
-- **Por defecto:** `[]` (no se archiva nada)
+- **Tipo:** `Array<string | { auto: boolean } | { pattern: string, base: "workspace" | "package" }>`
+- **Por defecto:** rastreo automático de escritura
 
-Los archivos que produce la tarea. Se archivan después de una ejecución exitosa y se restauran cuando hay un acierto en el caché (cache hit), por lo que no tienes que volver a construirlos. Déjalo vacío (o omítelo) y no se archivará nada.
+Vite Task archiva automáticamente los archivos generados por la ejecución exitosa de una tarea y los restaura cuando hay un acierto en la caché.
+
+Si omites `output`, Vite Task utiliza el rastreo automático de escritura para elegir esos archivos. Agrega entradas explícitas en `output` cuando necesites sobrescribir qué archivos se restauran.
 
 ```ts [vite.config.ts]
 tasks: {
   build: {
-    command: 'vp build',
+    command: 'node build.mjs',
     output: ['dist/**', '!dist/cache/**'],
+  },
+}
+```
+
+Usa `{ auto: true }` para mantener el rastreo automático de escritura mientras agregas globs de salida explícitos.
+
+Esto es útil cuando una tarea escribe archivos que no deben restaurarse desde la caché. Por ejemplo, excluye los archivos `.tsbuildinfo` de TypeScript:
+
+```ts [vite.config.ts]
+tasks: {
+  typecheck: {
+    command: 'tsc --build',
+    output: [{ auto: true }, '!*.tsbuildinfo'],
   },
 }
 ```
@@ -253,7 +289,7 @@ Si una tarea escribe fuera de su propio paquete, utiliza la forma de objeto con 
 ```ts [vite.config.ts]
 tasks: {
   build: {
-    command: 'vp build',
+    command: 'node build.mjs',
     output: [
       'dist/**',
       { pattern: 'shared-artifacts/**', base: 'workspace' },
@@ -261,6 +297,19 @@ tasks: {
   },
 }
 ```
+
+Establece `output: []` para deshabilitar la restauración de salida para una tarea almacenada en caché:
+
+```ts [vite.config.ts]
+tasks: {
+  report: {
+    command: 'node scripts/report.mjs',
+    output: [],
+  },
+}
+```
+
+A diferencia de `cache: false`, `output: []` todavía permite que Vite Task registre la huella digital de la tarea. En un acierto de caché, Vite Task omite el comando y reproduce su salida de terminal. Usa esto para cachés locales cuando los archivos de salida de la tarea ya están allí y no necesitan ser restaurados.
 
 ### `cwd`
 

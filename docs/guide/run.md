@@ -69,7 +69,7 @@ $ node compile-legacy-app.js ✗ cache miss: 'legacy/index.js' modified, executi
 
 ## Definiciones de Tareas
 
-Vite Task rastrea automáticamente qué archivos utiliza tu comando. Puedes definir tareas directamente en `vite.config.ts` para habilitar el caché por defecto o controlar qué archivos y variables de entorno afectan al comportamiento del caché.
+Vite Task [rastrea automáticamente](/guide/automatic-data-tracking) lo que cada tarea necesita para el almacenamiento en caché. Puedes definir tareas directamente en `vite.config.ts` para habilitar el caché por defecto o controlar qué archivos y variables de entorno afectan al comportamiento del caché.
 
 ```ts [vite.config.ts]
 import { defineConfig } from 'vite-plus';
@@ -102,10 +102,40 @@ Consulta [Configuración de Ejecución](/config/run) para ver la referencia comp
 
 ## Dependencias de Tareas
 
-Usa [Dependencias de Tareas](#dependencias-de-tareas) para ejecutar tareas en el orden correcto. Ejecutar `vp run deploy` con la configuración anterior ejecuta primero `build` y `test`. Las dependencias también pueden dirigirse a otros paquetes en el mismo proyecto con la notación `paquete#tarea`:
+Usa [`dependsOn`](/config/run#dependson) para ejecutar las tareas en el orden correcto. Ejecutar `vp run deploy` con la configuración anterior ejecuta primero `build` y `test`.
+
+Los nombres de tareas como cadenas (strings) en `dependsOn` hacen referencia a tareas en el paquete actual o en otro paquete:
 
 ```ts [vite.config.ts]
-dependsOn: ['@my/core#build', '@my/utils#lint'];
+dependsOn: [
+  'build', // mismo paquete
+  '@my/core#build', // otro paquete
+];
+```
+
+Usa la forma de objeto cuando necesites hacer referencia a todas las tareas con un nombre dado a partir de las dependencias del paquete actual:
+
+```ts [vite.config.ts]
+import { defineConfig } from 'vite-plus';
+
+export default defineConfig({
+  run: {
+    tasks: {
+      test: {
+        command: 'vp test',
+        dependsOn: [{ task: 'build', from: 'dependencies' }],
+      },
+    },
+  },
+});
+```
+
+En este ejemplo, `vp run test` comprueba las `dependencies` del paquete actual. Para cada dependencia directa del workspace que define `build`, Vite Task ejecuta la tarea `build` de esa dependencia antes de `test`.
+
+Usa un array cuando necesites más de un campo de dependencias:
+
+```ts [vite.config.ts]
+dependsOn: [{ task: 'build', from: ['dependencies', 'devDependencies'] }];
 ```
 
 ## Ejecutar en un Workspace
@@ -170,6 +200,8 @@ vp run --filter "@my/*" --filter "!@my/utils" build
 ```
 
 Múltiples parámetros `--filter` se combinan como una unión. Los filtros de exclusión se aplican después de todas las inclusiones.
+
+Cuando un `--filter` no coincide con ningún paquete, Vite+ imprime una advertencia y finaliza con éxito. En su lugar, pasa `--fail-if-no-match` para abortar la ejecución si algún filtro no coincide con nada.
 
 ### Raíz del Workspace (`-w`)
 
