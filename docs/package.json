@@ -23,7 +23,7 @@
     "@voidzero-dev/vitepress-theme": "4.8.4",
     "oxc-minify": "^0.139.0",
     "tailwindcss": "^4.1.18",
-    "vitepress": "2.0.0-alpha.17"
+    "vitepress": "2.0.0-alpha.18"
   },
   "packageManager": "pnpm@10.34.4"
 }
