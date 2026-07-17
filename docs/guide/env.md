@@ -64,6 +64,16 @@ Abre el archivo de perfil para editarlo:
 Invoke-Item $PROFILE
 ```
 
+El símbolo del sistema de Windows (`cmd.exe`) no puede definir la función wrapper necesaria para que `vp env use` actualice la sesión actual de la terminal. Usa el comando generado `vp-use.cmd` en su lugar:
+
+```batch
+vp-use 20
+node --version
+vp-use --unset
+```
+
+Solo `vp env use` necesita este comando alternativo. Otros comandos `vp env` funcionan normalmente en el símbolo del sistema. `vp env setup` crea `vp-use.cmd` bajo `VP_HOME/bin` en Windows.
+
 En CI, `vp env use` puede ejecutarse sin inicialización de la terminal. Escribe un archivo temporal de sesión en `VP_HOME` para que las llamadas posteriores a shims en el mismo job puedan resolver la versión seleccionada de Node.js.
 
 ### Gestionar
@@ -74,6 +84,7 @@ En CI, `vp env use` puede ejecutarse sin inicialización de la terminal. Escribe
 - `vp env use` establece una versión de Node.js para la sesión actual de la terminal.
 - `vp env install` instala una versión de Node.js.
 - `vp env uninstall` elimina una versión instalada de Node.js.
+- `vp env clean` elimina los entornos de ejecución de Node.js gestionados que no se utilicen, todos los gestores de paquetes descargados y la caché de Corepack.
 - `vp env exec` ejecuta un comando con una versión específica de Node.js.
 - `vp node` ejecuta un script de Node.js — un atajo para `vp env exec node`.
 
@@ -105,6 +116,7 @@ vp env install                # Instalar la versión de .node-version o package.
 vp env default lts            # Establecer la versión global predeterminada
 vp env use 20                 # Usar Node.js 20 para la sesión actual de la terminal
 vp env use --unset            # Eliminar la anulación de la sesión
+vp env clean                  # Eliminar cachés gestionadas no utilizadas
 
 # Inspeccionar
 vp env current                # Mostrar el entorno resuelto actual

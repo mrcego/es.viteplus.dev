@@ -24,6 +24,8 @@ irm https://vite.plus/ps1 | iex
 
 Alternativamente, descarga y ejecuta [`vp-setup.exe`](https://setup.viteplus.dev).
 
+Los scripts de instalación y `vp-setup.exe` leen [variables de entorno](/guide/installer-env-vars) como `VP_VERSION` y `VP_HOME`.
+
 ::: tip Advertencia de SmartScreen
 El archivo `vp-setup.exe` aún no está firmado digitalmente. Tu navegador puede mostrar una advertencia al descargarlo. Haz clic en **"..."** → **"Conservar"** → **"Conservar de todos modos"** para continuar. Si Windows Defender SmartScreen bloquea el archivo al ejecutarlo, haz clic en **"Más información"** → **"Ejecutar de todas formas"**.
 :::

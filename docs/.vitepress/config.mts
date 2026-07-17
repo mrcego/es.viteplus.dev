@@ -35,6 +35,7 @@ const guideSidebar = [
       { text: 'Migrar a Vite+', link: '/guide/migrate' },
       { text: 'Instalar Dependencias', link: '/guide/install' },
       { text: 'Entorno', link: '/guide/env' },
+      { text: 'Variables de Entorno del Instalador', link: '/guide/installer-env-vars' },
       { text: '¿Por qué Vite+?', link: '/guide/why' },
     ],
   },
@@ -58,9 +59,9 @@ const guideSidebar = [
     items: taskRunnerGuideItems,
   },
   {
-    text: 'Construcción',
+    text: 'Compilación',
     items: [
-      { text: 'Construir (Build)', link: '/guide/build' },
+      { text: 'Compilar (Build)', link: '/guide/build' },
       { text: 'Empaquetar (Pack)', link: '/guide/pack' },
     ],
   },

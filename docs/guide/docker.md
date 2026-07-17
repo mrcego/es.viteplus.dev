@@ -23,7 +23,7 @@ Las etiquetas rastrean la versión de `vp`:
 | `ghcr.io/voidzero-dev/vite-plus:<major>.<minor>` | Última versión menor |
 | `ghcr.io/voidzero-dev/vite-plus:<major>.<minor>.<patch>` | Versión exacta |
 
-Los ejemplos utilizan `:latest` para rastrear la versión más reciente; fija una etiqueta exacta o un digest si necesitas compilaciones reproducibles. La imagen se publica para `linux/amd64` y `linux/arm64` y se ejecuta como un usuario no root por defecto.
+Los ejemplos utilizan `:latest` para rastrear la versión más reciente; fija una etiqueta exacta o un digest si necesitas compilaciones reproducibles. La imagen se publica para `linux/amd64` y `linux/arm64` y se ejecuta como el usuario no root `vp` por defecto. Ese usuario tiene `sudo` sin contraseña, por lo que los pasos de compilación/CI que necesitan privilegios de root (paquetes apt adicionales, `playwright install --with-deps`) funcionan sin cambiar el usuario de la imagen.
 
 Explora todas las versiones y digests publicados en la [página del paquete de GitHub](https://github.com/voidzero-dev/vite-plus/pkgs/container/vite-plus).
 
@@ -117,6 +117,33 @@ build:
 
 En GitHub Actions, prefiere [`setup-vp`](./ci) en lugar de la imagen.
 
+## Pruebas en modo navegador (Vitest / Playwright)
+
+Ejecutar como el usuario no root `vp` es lo que se desea para los navegadores: Chromium mantiene su sandbox (ejecutar un navegador como root lo desactiva). Instala el navegador y sus bibliotecas del sistema en el job. `playwright install --with-deps` necesita privilegios de root para ejecutar `apt-get install` de esas bibliotecas. El usuario `vp` tiene `sudo` sin contraseña, por lo que Playwright lo utiliza para instalarlas sin cambiar el usuario de la imagen:
+
+```yaml [.gitlab-ci.yml]
+test:
+  image: ghcr.io/voidzero-dev/vite-plus:latest
+  script:
+    - vp install --frozen-lockfile
+    - vp exec playwright install --with-deps chromium
+    - vp test
+```
+
+`vp exec` ejecuta el propio Playwright del proyecto (desde tu lockfile), por lo que instala la revisión del navegador que tus pruebas esperan. Es preferible en lugar de `vpx playwright install`, que descargaría la versión más reciente de Playwright y podría obtener una revisión de navegador diferente.
+
+Para integrar el navegador y sus bibliotecas en una imagen derivada en lugar de instalarlos en cada ejecución, instala primero las dependencias del proyecto para que el navegador integrado coincida con tu lockfile, luego realiza la instalación con el Playwright del proyecto (el acceso a root está disponible a través de `sudo`):
+
+```dockerfile [Dockerfile]
+FROM ghcr.io/voidzero-dev/vite-plus:latest
+WORKDIR /app
+COPY --chown=vp:vp package.json pnpm-lock.yaml pnpm-workspace.yaml .node-version* ./
+RUN vp install --frozen-lockfile
+RUN vp exec playwright install --with-deps chromium
+```
+
+Si Chromium se cierra inesperadamente bajo carga en CI, dale más memoria compartida al contenedor con `--ipc=host`; consulta la [documentación de Docker de Playwright](https://playwright.dev/docs/docker).
+
 ## Devcontainers
 
 Usa la imagen como un contenedor de desarrollo listo para usar con el toolchain preinstalado:
@@ -138,7 +165,7 @@ docker run --rm -it -v "$PWD:/app" -w /app ghcr.io/voidzero-dev/vite-plus vp bui
 ## Notas
 
 - **Versión de Node.js**: se aprovisiona desde `.node-version`, `engines.node` o `devEngines.runtime` en tiempo de compilación, por lo que no existe una etiqueta de imagen específica para Node. La instrucción `COPY` de dependencias utiliza el patrón `.node-version*` para que el archivo sea opcional: los proyectos que fijan la versión mediante `engines.node`/`devEngines.runtime` no necesitan un `.node-version`, y los que lo usan lo tienen disponible en todas las etapas.
-- **Usuario no root**: la imagen se ejecuta como el usuario no root `vp`, así que copia los archivos fuente usando `COPY --chown=vp:vp ...` como se muestra. Sin esto, `COPY` escribe archivos propiedad de root que `vp install` no podrá actualizar (permiso denegado).
+- **Usuario no root**: la imagen se ejecuta como el usuario no root `vp`, así que copia los archivos fuente usando `COPY --chown=vp:vp ...` como se muestra. Sin esto, `COPY` escribe archivos propiedad de root que `vp install` no podrá actualizar (permiso denegado). El usuario `vp` tiene `sudo` sin contraseña para los pasos ocasionales que requieren root (instalar paquetes apt adicionales o `playwright install --with-deps`), por lo que rara vez necesitarás cambiar el usuario de la imagen. La etapa de ejecución de producción utiliza una imagen base separada libre de vp, por lo que esta conveniencia no llega a tu imagen desplegada.
 - **Complementos nativos (native addons)**: la imagen incluye un toolchain de compilación C/C++ (`build-essential`, `python3`), por lo que las dependencias nativas como `better-sqlite3` se compilan durante `vp install`.
 - **glibc**: la imagen está basada en glibc, por lo que utiliza las compilaciones oficiales y con firma verificada de Node.js.
 - **Imagen base personalizada**: para agregar `vp` a tu propia imagen base, ejecuta el instalador: `curl -fsSL https://vite.plus | bash` (establece `VP_VERSION` para fijar una versión).
