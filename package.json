@@ -8,7 +8,7 @@
     "build": "pnpm -C docs build",
     "preview": "pnpm -C docs preview"
   },
-  "packageManager": "pnpm@10.34.4",
+  "packageManager": "pnpm@11.13.1",
   "engines": {
     "node": ">=22.18.0"
   }

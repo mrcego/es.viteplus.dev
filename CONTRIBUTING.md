@@ -6,20 +6,20 @@
 
 Necesitarás las siguientes herramientas instaladas en tu sistema:
 
-```
+```bash
 brew install pnpm node just cmake
 ```
 
 Instala Rust & Cargo usando rustup:
 
-```
+```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 cargo install cargo-binstall
 ```
 
 Configuración inicial para instalar las dependencias de Vite+:
 
-```
+```bash
 just init
 ```
 
@@ -49,13 +49,13 @@ just init
 
 Para crear una construcción de lanzamiento (release) de Vite+ y todas sus dependencias de origen, ejecuta:
 
-```
+```bash
 just build
 ```
 
 ## Instalar la CLI Global de Vite+ desde el código fuente
 
-```
+```bash
 pnpm bootstrap-cli
 vp --version
 ```
@@ -66,7 +66,7 @@ Esto construye todos los paquetes, compila el binario `vp` en Rust e instala la 
 
 Puedes ejecutar este comando para construir, probar y comprobar si hay cambios en los snapshots:
 
-```
+```bash
 pnpm bootstrap-cli && pnpm test && git status
 ```
 
@@ -123,7 +123,7 @@ git push --force-with-lease
 
 Para sincronizar las últimas dependencias de origen como Rolldown y Vite, ejecuta:
 
-```
+```bash
 pnpm tool sync-remote
 just build
 ```
