@@ -21,9 +21,9 @@
   },
   "devDependencies": {
     "@voidzero-dev/vitepress-theme": "5.0.2",
-    "oxc-minify": "^0.140.0",
+    "oxc-minify": "^0.141.0",
     "tailwindcss": "^4.1.18",
     "vitepress": "2.0.0-alpha.18"
   },
-  "packageManager": "pnpm@11.13.1"
+  "packageManager": "pnpm@11.15.1"
 }

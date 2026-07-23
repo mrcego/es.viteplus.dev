@@ -32,7 +32,11 @@ const guideSidebar = [
     items: [
       { text: 'Primeros Pasos', link: '/guide/' },
       { text: 'Crear un Proyecto', link: '/guide/create' },
-      { text: 'Migrar a Vite+', link: '/guide/migrate' },
+      {
+        text: 'Migrar a Vite+',
+        link: '/guide/migrate',
+        items: [{ text: 'Reglas de Migración', link: '/guide/migrate-rules' }],
+      },
       { text: 'Instalar Dependencias', link: '/guide/install' },
       { text: 'Entorno', link: '/guide/env' },
       { text: 'Variables de Entorno del Instalador', link: '/guide/installer-env-vars' },
