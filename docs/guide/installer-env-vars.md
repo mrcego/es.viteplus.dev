@@ -81,7 +81,7 @@ Estas variables configuran la CLI de Vite+ instalada. `VP_HOME` (arriba) tambié
 
 - **Propósito**: URL del espejo de distribución de Node.js
 - **Predeterminado**: `https://nodejs.org/dist`
-- **Detalles**: [Espejo Personalizado de Node.js](/guide/env#espejo-personalizado-de-nodejs-mirror)
+- **Detalles**: [Espejo Personalizado de Node.js](/guide/env#espejo-personalizado-de-node-js-mirror)
 
 ### `VP_NODE_VERSION`
 
@@ -98,7 +98,7 @@ Estas variables configuran la CLI de Vite+ instalada. `VP_HOME` (arriba) tambié
 - **Propósito**: Omitir la verificación de firma PGP de las descargas de Node.js
 - **Valores**: Cualquier valor no vacío
 - **Predeterminado**: Ninguno (verificación habilitada)
-- **Detalles**: [Verificación de Firma de Node.js](/guide/env#verificacion-de-firma-de-nodejs)
+- **Detalles**: [Verificación de Firma de Node.js](/guide/env#verificacion-de-firmas-de-node-js)
 
 ### `VP_SHELL`
 

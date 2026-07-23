@@ -48,7 +48,7 @@ export default defineConfig({
 });
 ```
 
-Esta guía asume que cada tarea ya tiene un acierto de caché (cache hit) localmente. Si una tarea falla, corrige su configuración de rastreo en `vite.config.ts` antes de agregar los pasos de caché de GitHub Actions. Consulta [Rastreo Automático de Datos](/guide/automatic-data-tracking) y [`run.tasks`](/config/run#tasks).
+Esta guía asume que cada tarea ya tiene un acierto de caché (cache hit) localmente. Si una tarea falla, corrige su configuración de rastreo en `vite.config.ts` antes de agregar los pasos de caché de GitHub Actions. Consulta [Rastreo Automático de Datos](/guide/automatic-data-tracking) y [`run.tasks`](/config/run#run-tasks).
 
 Ejecuta cada tarea dos veces:
 
@@ -129,7 +129,7 @@ Si GitHub restaura una caché pero Vite Task muestra un fallo de caché (cache m
 
 ## Mantener Estable el Rastreo de Tareas
 
-Si GitHub restaura una caché pero `vp run` muestra un fallo de caché, corrige la huella digital de la tarea antes de cambiar la clave de la caché de Actions. Consulta [Rastreo Automático de Datos](/guide/automatic-data-tracking) y [`run.tasks`](/config/run#tasks).
+Si GitHub restaura una caché pero `vp run` muestra un fallo de caché, corrige la huella digital de la tarea antes de cambiar la clave de la caché de Actions. Consulta [Rastreo Automático de Datos](/guide/automatic-data-tracking) y [`run.tasks`](/config/run#run-tasks).
 
 ## Elegir una Clave de Caché
 
