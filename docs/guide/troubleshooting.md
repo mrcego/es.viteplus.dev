@@ -28,15 +28,18 @@ Si VS Code tiene múltiples carpetas abiertas, el servidor de lenguaje Oxc compa
 
 - Confirma que la extensión está utilizando el espacio de trabajo previsto.
 
-## `vp build` no ejecuta mi script de construcción
+## `vp dev` o `vp build` no ejecuta mi script
 
-A diferencia de los gestores de paquetes, los comandos integrados no pueden ser sobrescritos. Si intentas ejecutar un script de `package.json`, utiliza `vp run build` en su lugar.
+A diferencia de los gestores de paquetes, los comandos integrados no pueden ser sobrescritos. Si intentas ejecutar un script de `package.json`, utiliza `vp run <script>` en su lugar.
 
 Por ejemplo:
 
+- `vp dev` siempre inicia el servidor de desarrollo integrado de Vite.
 - `vp build` siempre ejecuta la construcción integrada de Vite.
 - `vp test` siempre ejecuta el comando integrado de Vitest.
-- `vp run build` y `vp run test` ejecutan los scripts del `package.json` en su lugar.
+- `vp run dev`, `vp run build` y `vp run test` ejecutan los scripts de `package.json` correspondientes en su lugar.
+
+Consulta [Comandos Integrados frente a Scripts](/guide/run#comandos-integrados-frente-a-scripts) para saber cuándo preferir cada opción.
 
 ::: info INFORMACIÓN
 También puedes ejecutar tareas personalizadas definidas en `vite.config.ts` y migrar por completo fuera de los scripts de `package.json`.

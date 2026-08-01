@@ -38,6 +38,14 @@ Select a task (↑/↓, Enter to run, Esc to clear):
     test: jest
 ```
 
+## Comandos Integrados frente a Scripts
+
+Vite+ tiene comandos integrados como `vp dev`, `vp build`, `vp test`, `vp lint`, `vp fmt`, `vp check` y `vp pack`. `vp <nombre>` siempre ejecuta el comando integrado y nunca ejecuta un script con el mismo nombre en `package.json`.
+
+`build`, `preview`, `lint`, `fmt`, `check` y `pack` funcionan de la misma manera.
+
+Si el proyecto define ese script o tarea, ejecútalo con `vp run <nombre>`. Por ejemplo, con un script `"dev": "astro dev"`, `vp run dev` inicia Astro, mientras que `vp dev` ignora el script e inicia Vite.
+
 ## Caché
 
 Los scripts de `package.json` no se almacenan en caché por defecto. Usa `--cache` para habilitar el almacenamiento en caché:
