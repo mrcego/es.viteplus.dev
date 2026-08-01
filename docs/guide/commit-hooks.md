@@ -56,3 +56,52 @@ export default defineConfig({
 
 Este es el enfoque predeterminado de Vite+ y debería reemplazar la configuración separada de `lint-staged` en la mayoría de los proyectos. Debido a que `vp staged` lee de `vite.config.ts`, tus comprobaciones de archivos staged permanecen en el mismo lugar que tu configuración de lint, formato, pruebas, construcción y ejecución de tareas.
 
+## Deshabilitar hooks en entornos específicos
+
+Los hooks instalados comprueban el entorno en cada ejecución, por lo que puedes deshabilitarlos por máquina o por proceso sin desinstalar nada. Esto es útil cuando las confirmaciones (commits) ocurren fuera del desarrollo, por ejemplo a través de un CMS de archivos planos u otros procesos.
+
+### Variable de entorno
+
+Establece `VITE_GIT_HOOKS=0` en el entorno del proceso que ejecuta `git commit`, y cada hook de Vite+ finalizará inmediatamente sin ejecutarse:
+
+```bash
+VITE_GIT_HOOKS=0 git commit -m "actualización de contenido"
+```
+
+`HUSKY=0` se respeta de la misma manera para mantener la compatibilidad con las herramientas del ecosistema. Establecer `VITE_GIT_HOOKS=0` en un entorno también evita que `vp config` reinstale los hooks allí cuando se ejecuta un script del ciclo de vida como `prepare`.
+
+### Script de inicialización
+
+Antes de verificar la variable de entorno, cada hook ejecuta un script de inicialización si existe uno:
+
+1. `$XDG_CONFIG_HOME/vite-plus/hooks-init.sh` (por defecto `~/.config/vite-plus/hooks-init.sh`)
+2. `$XDG_CONFIG_HOME/husky/init.sh` como alternativa (fallback)
+
+Para deshabilitar los hooks en toda la máquina, crea el script de inicialización y exporta la variable allí:
+
+```sh [~/.config/vite-plus/hooks-init.sh]
+export VITE_GIT_HOOKS=0
+```
+
+Dado que el propio hook lee este archivo, funciona incluso cuando el proceso que realiza el commit no hereda tu entorno de shell, por ejemplo si un demonio o servidor web está haciendo commits.
+
+## Eliminar hooks de commit
+
+Para eliminar por completo los hooks de commit de Vite+, deshace cada configuración realizada por `vp config`:
+
+1. Elimina la ruta de hooks de Git que apunta al despachador de Vite+:
+
+```bash
+git config --unset core.hooksPath
+```
+
+2. Elimina el directorio de hooks (usa el valor de tu `--hooks-dir` si lo cambiaste):
+
+```bash
+rm -rf .vite-hooks
+```
+
+3. Elimina `vp config` del script `prepare` en `package.json`. De lo contrario, la siguiente instalación volverá a ejecutar `vp config` y reinstalará los hooks.
+
+4. Elimina el bloque `staged` de `vite.config.ts` si existe.
+

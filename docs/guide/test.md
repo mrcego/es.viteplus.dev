@@ -6,6 +6,10 @@
 
 `vp test` está basado en [Vitest](https://vitest.dev/), por lo que obtienes un ejecutor de pruebas nativo de Vite que reutiliza tu configuración y plugins de Vite, admite expectativas de estilo Jest, instantáneas (snapshots) y cobertura, y maneja proyectos modernos de ESM, TypeScript y JSX de forma limpia.
 
+::: info INFORMACIÓN
+`vp test` siempre ejecuta el comando integrado de Vitest. Si tu proyecto también tiene un script `test` en `package.json`, ejecuta `vp run test` cuando desees ejecutar ese script en su lugar. Consulta [Comandos Integrados frente a Scripts](/guide/run#comandos-integrados-frente-a-scripts).
+:::
+
 ## Uso
 
 ```bash
