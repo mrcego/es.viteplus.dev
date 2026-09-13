@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@iconify/vue": "^5.0.0",
-    "mermaid": "^11.13.0",
+    "mermaid": "^12.0.0",
     "reka-ui": "^2.7.0",
     "vitepress-plugin-group-icons": "^1.7.5",
     "vitepress-plugin-llms": "^1.12.2",
@@ -19,7 +19,7 @@
     "vue3-carousel": "^0.17.0"
   },
   "devDependencies": {
-    "@voidzero-dev/vitepress-theme": "5.0.2",
+    "@voidzero-dev/vitepress-theme": "5.0.7",
     "oxc-minify": "^0.147.0",
     "tailwindcss": "^4.1.18",
     "vitepress": "2.0.0-alpha.18"
