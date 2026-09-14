@@ -146,12 +146,16 @@ Para los comandos lanzados a través de `bunx`, la migración conserva `bunx` y 
 
 Los comandos de `bunx` no relacionados y otras formas de ejecutores de paquetes permanecen sin cambios.
 
+## Reglas de Integración Continua
+
+La migración reemplaza referencias exactas a `voidzero-dev/setup-vp@v1` en los flujos de trabajo de GitHub Actions y acciones compuestas bajo `.github` con la versión exacta más reciente de `setup-vp` conocida por esa versión de Vite+. La etiqueta congelada `v1` ya no recibe nuevas versiones. Las versiones exactas existentes y los SHAs de commit se mantienen sin cambios.
+
 ## Reglas de Versión de Node.js
 
 La migración convierte los archivos heredados del gestor de versiones de Node.js a `.node-version`, el formato que lee Vite+. En un proyecto de Vite+ existente, esta conversión es parte del grupo de configuración completa, por lo que se ejecuta con `vp migrate --full`; las migraciones nuevas la ejecutan de forma incondicional.
 
 - Los pines de `.nvmrc` y Volta `volta.node` se convierten a `.node-version`. Se mantiene un `.node-version` existente.
-- Cuando se elimina `.nvmrc`, cualquier referencia a `actions/setup-node` `node-version-file: .nvmrc` en `.github/workflows/*.{yml,yaml}` y acciones compuestas (`.github/actions/**/action.{yml,yaml}`) se redirige a `.node-version` para que la CI no falle con "node version file ... does not exist".
+- Cuando se elimina `.nvmrc`, cualquier referencia a `actions/setup-node` `node-version-file: .nvmrc` en `.github/workflows/*.{yml,yaml}` y acciones compuestas bajo `.github` (`.github/**/action.{yml,yaml}`) se redirige a `.node-version` para que la CI no falle con "node version file ... does not exist".
 
 ## Reglas de Gestores de Paquetes
 

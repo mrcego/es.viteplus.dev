@@ -62,6 +62,27 @@ Estas variables controlan los scripts del instalador y el instalador independien
   curl -fsSL https://vite.plus | VP_NODE_MANAGER=no bash
   ```
 
+### `VP_PM_MANAGER`
+
+- **Propósito**: Establecer la preferencia de administración para las cuatro familias de gestores de paquetes: npm, pnpm, Yarn y Bun.
+- **Valores**: `yes` utiliza la administración de Vite+; `no` prefiere las herramientas del sistema, con herramientas administradas como respaldo cuando una herramienta del sistema no está disponible.
+- **Predeterminado**: No establecido. La elección combinada de Node.js y gestor de paquetes del instalador sigue siendo la predeterminada. Con los instaladores de script, establecer solo `VP_NODE_MANAGER` preserva las preferencias existentes del gestor de paquetes.
+
+### `VP_NPM_MANAGER` / `VP_PNPM_MANAGER` / `VP_YARN_MANAGER` / `VP_BUN_MANAGER`
+
+- **Propósito**: Establecer la preferencia de administración para una familia individual de gestor de paquetes. Cada variable anula `VP_PM_MANAGER` para esa familia.
+- **Valores**: `yes` o `no`, con el mismo significado que `VP_PM_MANAGER`.
+- **Predeterminado**: No establecido (usa `VP_PM_MANAGER`, luego la elección combinada del instalador, o preserva la preferencia existente).
+- **Ejemplo**:
+
+  ```bash
+  # Mantener Node.js y gestores de paquetes del sistema, pero permitir que Vite+ administre pnpm.
+  curl -fsSL https://vite.plus | VP_NODE_MANAGER=no VP_PM_MANAGER=no VP_PNPM_MANAGER=yes bash
+  ```
+
+Estas variables de administración son opciones de instalación guardadas en la configuración de Vite+. El mensaje interactivo sigue controlando tanto Node.js como los gestores de paquetes; las variables explícitas del gestor de paquetes anulan esa elección combinada. El instalador independiente `vp-setup` utiliza su opción combinada existente como valor predeterminado para ambas variables, tanto en instalaciones interactivas como silenciosas.
+Las actualizaciones in situ preservan las opciones guardadas. Los valores no reconocidos se ignoran. Seleccionan el comportamiento de administración, no las versiones del gestor de paquetes, y no impiden que el instalador cree shims. Las versiones anteriores instaladas mediante el instalador heredado conservan su comportamiento original.
+
 ### `VP_PR_VERSION`
 
 - **Propósito**: Instalar una compilación de vista previa (preview) desde un pull request o un commit SHA
@@ -91,6 +112,16 @@ Estas variables configuran la CLI de Vite+ instalada. `VP_HOME` (arriba) tambié
   ```bash
   # Ejecutar un comando con una versión específica de Node.js
   VP_NODE_VERSION=22 vp env exec node -v
+  ```
+
+### `VP_PACKAGE_MANAGER`
+
+- **Propósito**: Anular el gestor de paquetes y la versión seleccionados
+- **Predeterminado**: Ninguno (resuelto desde el proyecto o el valor predeterminado global)
+- **Formato**: `npm|pnpm|yarn|bun@<versión>`
+- **Ejemplo**:
+  ```bash
+  VP_PACKAGE_MANAGER=pnpm@10.18.0 vp install
   ```
 
 ### `VP_NODE_SKIP_SIGNATURE_VERIFY`

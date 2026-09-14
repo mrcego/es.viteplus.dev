@@ -95,7 +95,7 @@ Vite+ puede manejar todo el ciclo de desarrollo frontend local, desde iniciar un
 - [`vp config`](/guide/commit-hooks) configura los hooks de commit y la integración con agentes.
 - [`vp staged`](/guide/commit-hooks) ejecuta verificaciones en archivos preparados (staged).
 - [`vp install`](/guide/install) instala dependencias con el gestor de paquetes correcto.
-- [`vp env`](/guide/env) gestiona versiones de Node.js.
+- [`vp env`](/guide/env) gestiona entornos de Node.js y de gestores de paquetes.
 
 ### Desarrollar
 
