@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "vitepress dev",
     "build": "vitepress build",
+    "build:cloudflare": "vitepress build",
+    "build:netlify": "vitepress build",
     "preview": "vitepress preview",
     "update-trusted-stack-stats": "node .vitepress/theme/data/fetch-trusted-stack-stats.ts"
   },
@@ -20,9 +22,10 @@
   },
   "devDependencies": {
     "@voidzero-dev/vitepress-theme": "5.0.2",
-    "oxc-minify": "^0.147.0",
+    "oxc-minify": "^0.150.0",
     "tailwindcss": "^4.1.18",
-    "vitepress": "2.0.0-alpha.18"
+    "vitepress": "2.0.0-alpha.18",
+    "wrangler": "^4.127.1"
   },
   "packageManager": "pnpm@11.24.0"
 }

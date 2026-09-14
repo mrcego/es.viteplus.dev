@@ -2,6 +2,8 @@
 
 Vite+ soporta monorepos con un archivo `vite.config.ts` en la raíz. Puedes definir los valores predeterminados para `lint`, `fmt`, etc., en la raíz y utilizar `overrides` para aplicar configuraciones específicas de lint y formato para cada paquete.
 
+Vite+ lee la configuración de lint y formato únicamente desde el `vite.config.ts` de la raíz. Los archivos `vite.config.ts`, `.oxlintrc.json` y `.oxfmtrc.json` anidados en paquetes del workspace no se leen. Consulta [Solución de problemas](/guide/troubleshooting#configuraciones-anidadas-de-lint-o-formato-no-admitidas) para más detalles.
+
 Debido a que `vite.config.ts` es simplemente JavaScript, puedes elegir poner toda tu configuración en este archivo o componerla utilizando importaciones regulares de JavaScript. Aún puedes tener archivos `vite.config.ts` separados en cada paquete para la configuración de Vite, Vitest, el framework o el runtime.
 
 ## Configuración de Raíz con Overrides
