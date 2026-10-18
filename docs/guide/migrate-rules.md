@@ -23,6 +23,35 @@ En un proyecto que ya depende de `vite-plus`, `vp migrate` realiza solo una actu
 
 Cuando una actualización predeterminada omite acciones de configuración que se aplicarían, imprime una sugerencia para ejecutar `vp migrate --full`. Los proyectos nuevos (que no son de Vite+) siempre ejecutan la migración completa.
 
+## Configuración de Pack
+
+`vp migrate` actualiza los objetos estáticos de `pack` en `vite.config.*` y los objetos exportados en `tsdown.config.*` para [tsdown 0.23](https://github.com/rolldown/tsdown/releases/tag/v0.23.0). Esto también se ejecuta en proyectos Vite+ existentes sin `--full`, incluidos los paquetes del espacio de trabajo. Se admiten arrays y objetos directos devueltos por callbacks de `defineConfig`. Las configuraciones JSON de tsdown reciben las mismas actualizaciones tras fusionarse en `vite.config.ts`.
+
+| Opción anterior                                                    | Opción actualizada                                                                             |
+| ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- |
+| `bundle: false`                                                    | `unbundle: true`                                                                               |
+| `bundle: true`                                                     | Eliminada; el empaquetado (bundling) sigue siendo el valor por defecto                         |
+| `outExtension`                                                     | `outExtensions`                                                                                |
+| `publicDir`                                                        | `copy`                                                                                         |
+| `removeNodeProtocol: true`                                         | `nodeProtocol: 'strip'`                                                                        |
+| `injectStyle`                                                      | `css.inject`                                                                                   |
+| `inlineOnly` / `deps.onlyAllowBundle`                              | `deps.onlyBundle`                                                                              |
+| `noExternal`                                                       | `deps.alwaysBundle`                                                                            |
+| `skipNodeModulesBundle: true` / `deps.skipNodeModulesBundle: true` | `deps.neverBundle: true`                                                                       |
+| `dts.tsgo` / `dts.oxc`                                             | Seleccionar con `dts.generator`; conservar objetos de opciones de generador y eliminar flags booleanos |
+| `dts.cjsReexport`                                                  | Eliminada; tsdown genera declaraciones CJS por separado                                          |
+| `--public-dir` en scripts de `tsdown` o `vp pack`                    | `--copy`                                                                                       |
+
+La migración preserva los valores predeterminados anteriores estableciendo `deps.resolveDepSubpath` en `true` cuando esté ausente. Las comprobaciones de ATTW habilitadas reciben `profile: 'strict'` cuando no se ha definido ningún perfil. Los valores explícitos, incluido `false`, permanecen sin cambios.
+
+Los ajustes insertados incluyen comentarios con enlaces a la documentación e instrucciones para adoptar los nuevos valores predeterminados. Elimina `deps.resolveDepSubpath: true` para [preservar las importaciones de subrutas externas tal como están escritas](https://tsdown.dev/options/dependencies#deps-resolvedepsubpath). Elimina el `attw.profile: 'strict'` insertado para usar el nuevo [perfil de resolución](https://tsdown.dev/options/lint#profiles) `esm-only`. Esto omite las comprobaciones de resolución de `node10` y CommonJS. Mantén cualquiera de los dos ajustes si tu paquete requiere el comportamiento anterior. La migración no añade estos comentarios a los ajustes explícitos.
+
+`noExternal` se traslada a `deps.alwaysBundle`, preservando expresiones de coincidencia (matchers), referencias y métodos callback. Los valores existentes de `deps.alwaysBundle` se mantienen sin cambios.
+
+Cuando `external` acompaña a cualquiera de las formas de `skipNodeModulesBundle`, los comparadores estáticos y las referencias a constantes locales se mueven a `inputOptions.external` antes de que se establezca `deps.neverBundle`. Las declaraciones y referencias a constantes se mantienen intactas. Esto preserva las reglas de coincidencia originales, incluidas las rutas de archivos externos. Los comparadores no admitidos, los `inputOptions` conflictivos y las reglas de dependencias específicas de declaraciones dejan el objeto pack sin cambios y generan una advertencia de migración manual.
+
+La transformación no evalúa código de configuración. Los objetos con operadores spread, claves calculadas o duplicadas, y opciones antiguas y nuevas en conflicto requieren revisión manual. Los selectores booleanos dinámicos permanecen sin cambios. Las opciones no relacionadas de Vite y plugins se mantienen intactas. Ejecuta `vp pack` después de la migración para comprobar el resultado. Los requisitos de Node.js, la resolución de módulos de TypeScript y los valores de retorno programáticos de `build()` requieren una revisión independiente.
+
 ## Reglas de Dependencias
 
 Qué le sucede a cada dependencia del toolchain, de un vistazo:
@@ -111,6 +140,28 @@ Las declaraciones de aumento de módulo `declare module 'vite'` siguen la misma 
 - Las importaciones de proveedores heredados de Playwright y WebdriverIO se detectan antes de esta reescritura para que no se pierdan sus dependencias de proveedores opcionales.
 - Las importaciones de `@vitest/browser*` con ámbito se reescriben a las exportaciones correspondientes de `vite-plus/test/browser*`, aprovisionando proveedores opcionales cuando sea necesario.
 - Las importaciones existentes de `vite-plus/test*` se dejan sin cambios.
+
+### Importaciones de Plugins JS de Oxlint
+
+Vite+ empaqueta Oxlint, por lo que la migración elimina una dependencia independiente de `oxlint`. Tus propios plugins JS de Oxlint importan la API de autoría por nombre. Esa importación deja de resolverse cuando la dependencia desaparece y `vp lint` fallará al cargar el plugin.
+
+La migración redirige esas importaciones hacia Vite+:
+
+- Reescribe `@oxlint/plugins` a `vite-plus/lint/plugins`.
+- Reescribe `oxlint/plugins-dev` a `vite-plus/lint/plugins-dev`.
+- Reescribe `oxlint` a `vite-plus/lint/plugins` cuando la importación nombra una exportación de la API de autoría, como `defineRule`, `definePlugin` o `Context`. Las versiones más antiguas de Oxlint exponían esa API desde la entrada principal; ahora reside en `@oxlint/plugins`.
+
+Una importación a través de Vite+ siempre coincide con la versión de Oxlint empaquetada en Vite+. No necesitas fijar un segundo paquete. La importación también se resuelve desde cualquier paquete que ya dependa de `vite-plus`.
+
+La migración deja tres formas intactas:
+
+- Importaciones de `oxlint` que nombran únicamente la superficie de configuración, como `defineConfig`, `OxlintConfig` o `OxlintOverride`. Estas continúan resolviéndose contra el paquete independiente.
+- Importaciones por defecto y de espacio de nombres (namespace) de `oxlint`. Al no nombrar una exportación específica, la migración no puede distinguir entre ambas superficies.
+- Importaciones simples con efectos secundarios de `oxlint`, por la misma razón.
+
+La migración también omite un paquete que declara `oxlint` o `@oxlint/plugins` en `dependencies` o `peerDependencies`, o `@oxlint/plugins` en `optionalDependencies`. Estas dependencias pueden suministrar un plugin de Oxlint publicado cuyos consumidores podrían no ejecutar Vite+.
+
+La limpieza conserva una dependencia de desarrollo de `@oxlint/plugins` cuando el código fuente, los alias de importación de paquetes o los plugins construidos aún hacen referencia a ella. Esto incluye la salida ignorada en directorios como `dist`, `build` y `out`.
 
 ### Qué No Se Reescribe Nunca
 

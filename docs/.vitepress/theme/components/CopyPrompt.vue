@@ -1,20 +1,8 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
-import { onBeforeUnmount, ref } from 'vue';
+import { computed, onBeforeUnmount, ref, useId } from 'vue';
 
-const DEFAULT_PROMPT = `Quiero usar Vite+ en mi proyecto. Vite+ es el toolchain unificado para la web detrás de la CLI \`vp\` — una herramienta que combina Vite, Rolldown, Vitest, tsdown, Oxlint, Oxfmt y Vite Task, además de gestión del entorno de ejecución y del gestor de paquetes.
-
-Primero, lee https://es.viteplus.dev/llms-full.txt para aprender los comandos y la configuración de Vite+.
-
-Instala la CLI \`vp\`:
-- macOS / Linux: curl -fsSL https://vite.plus | bash
-- Windows (PowerShell): irm https://vite.plus/ps1 | iex
-
-Luego abre una nueva terminal y ejecuta \`vp help\`. Para crear un nuevo proyecto ejecuta \`vp create\`; para mover un proyecto Vite existente a Vite+ ejecuta \`vp migrate\`.
-
-Comandos del día a día: \`vp install\` (dependencias), \`vp dev\` (servidor de desarrollo), \`vp check\` (formatear + lint + validación de tipos), \`vp test\` (pruebas) y \`vp build\` (construcción para producción).
-
-Ayúdame a configurarlo y explícame cualquier cosa que deba saber.`;
+import { setupPrompt } from '../data/migration-prompts.ts';
 
 const props = withDefaults(
   defineProps<{
@@ -22,12 +10,30 @@ const props = withDefaults(
     label?: string;
   }>(),
   {
-    prompt: DEFAULT_PROMPT,
-    label: 'Copiar Prompt',
+    prompt: '',
+    label: 'Ver Prompt',
   },
 );
 
+const promptText = computed(() => props.prompt || setupPrompt);
+
+const titleId = useId();
+const dialogEl = ref<HTMLDialogElement | null>(null);
 const state = ref<'idle' | 'copied' | 'error'>('idle');
+const copyLabel = computed(() =>
+  state.value === 'copied'
+    ? '¡Prompt copiado!'
+    : state.value === 'error'
+      ? 'No se pudo copiar'
+      : 'Copiar prompt',
+);
+const copyIcon = computed(() =>
+  state.value === 'copied'
+    ? 'lucide:check'
+    : state.value === 'error'
+      ? 'lucide:x'
+      : 'lucide:clipboard',
+);
 let resetTimer: ReturnType<typeof setTimeout> | null = null;
 
 const flash = (next: 'copied' | 'error') => {
@@ -41,15 +47,31 @@ const flash = (next: 'copied' | 'error') => {
   }, 1600);
 };
 
-const copyPrompt = async (event: MouseEvent) => {
-  if (event.detail > 0) {
-    (event.currentTarget as HTMLElement | null)?.blur();
-  }
+const blurPointerTarget = (event: MouseEvent) => {
+  const target = event.currentTarget as HTMLElement;
+  requestAnimationFrame(() => target.blur());
+};
+
+const copyPrompt = async () => {
   try {
-    await navigator.clipboard.writeText(props.prompt);
+    await navigator.clipboard.writeText(promptText.value);
     flash('copied');
   } catch {
     flash('error');
+  }
+};
+
+const openView = () => {
+  dialogEl.value?.showModal();
+};
+
+const closeView = () => {
+  dialogEl.value?.close();
+};
+
+const onDialogClick = (event: MouseEvent) => {
+  if (event.target === dialogEl.value) {
+    closeView();
   }
 };
 
@@ -57,6 +79,7 @@ onBeforeUnmount(() => {
   if (resetTimer) {
     clearTimeout(resetTimer);
   }
+  dialogEl.value?.close();
 });
 </script>
 
@@ -65,17 +88,45 @@ onBeforeUnmount(() => {
     type="button"
     class="button"
     :aria-label="`${label} para configurar Vite+ con un asistente de IA`"
-    @click="copyPrompt"
+    @mousedown="blurPointerTarget"
+    @click="openView"
   >
-    <Icon
-      :icon="
-        state === 'copied' ? 'lucide:check' : state === 'error' ? 'lucide:x' : 'lucide:clipboard'
-      "
-      class="size-4"
-      aria-hidden="true"
-    />
-    <span>{{ state === 'copied' ? '¡Copiado!' : state === 'error' ? 'No se pudo copiar' : label }}</span>
+    <Icon icon="lucide:eye" class="size-4" aria-hidden="true" />
+    <span>{{ label }}</span>
   </button>
+
+  <Teleport to="body">
+    <dialog
+      ref="dialogEl"
+      class="m-auto w-[min(48rem,calc(100vw-2rem))] max-h-[min(80vh,36rem)] flex-col overflow-hidden rounded-xl border border-stroke bg-white p-0 text-primary shadow-xl open:flex backdrop:bg-black/40 dark:border-nickel dark:bg-slate dark:text-white"
+      :aria-labelledby="titleId"
+      @click="onDialogClick"
+    >
+      <form class="flex min-h-0 flex-col" method="dialog">
+        <header class="flex shrink-0 items-center justify-between gap-4 px-5 pt-4 pb-3">
+          <h2 :id="titleId" class="m-0 text-base font-medium">Prompt de configuración</h2>
+          <button
+            type="submit"
+            class="inline-flex size-8 items-center justify-center rounded-md text-grey hover:bg-beige hover:text-primary dark:text-white dark:hover:bg-slate dark:hover:text-white"
+            aria-label="Cerrar"
+          >
+            <Icon icon="lucide:x" class="size-4" aria-hidden="true" />
+          </button>
+        </header>
+        <pre
+          class="m-0 overflow-auto px-5 pb-4 font-mono text-sm leading-relaxed break-words whitespace-pre-wrap"
+          >{{ promptText }}</pre>
+        <footer
+          class="flex shrink-0 justify-end border-t border-stroke px-5 py-3 dark:border-nickel"
+        >
+          <button type="button" class="button" @mousedown="blurPointerTarget" @click="copyPrompt">
+            <Icon :icon="copyIcon" class="size-4" aria-hidden="true" />
+            <span>{{ copyLabel }}</span>
+          </button>
+        </footer>
+      </form>
+    </dialog>
+  </Teleport>
 </template>
 
 <style scoped>

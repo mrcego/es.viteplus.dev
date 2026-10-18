@@ -39,7 +39,7 @@ Un rango se resuelve a una versión satisfactoria ya descargada cuando sea posib
 
 Actualmente, Vite+ descarga el gestor de paquetes declarado (el comportamiento de `onFail: "download"`); los otros valores de `onFail` se aceptan pero aún no se diferencian.
 
-El campo explícito `packageManager` (o la declaración `devEngines.packageManager`) también afecta a los shims de los gestores de paquetes correspondientes. Si un proyecto tiene `packageManager: "npm@10.9.4"`, `npm` y `npx` usan npm 10.9.4. Otros pares de alias generados se comportan de la misma manera: `pnpm`/`pnpx`, `yarn`/`yarnpkg` y `bun`/`bunx`. Las herramientas que no coinciden no se traducen; `npm` en un proyecto `pnpm` todavía se resuelve como npm.
+El campo explícito `packageManager` (o la declaración `devEngines.packageManager`) también afecta a los shims de los gestores de paquetes correspondientes. Si un proyecto tiene `packageManager: "npm@10.9.4"`, `npm` y `npx` usan npm 10.9.4. Otros alias generados se comportan de la misma manera: `pnpm`/`pnpx`/`pn`/`pnx`, `yarn`/`yarnpkg` y `bun`/`bunx`. Las herramientas que no coinciden no se traducen; `npm` en un proyecto `pnpm` todavía se resuelve como npm.
 
 ## Uso
 

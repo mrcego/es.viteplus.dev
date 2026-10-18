@@ -58,6 +58,18 @@ vp --version
 
 Luego, establece la sobrescritura de `vitest` a esa versión exacta, o vuelve a ejecutar `vp migrate` para que actualice el pin por ti.
 
+### Homebrew
+
+Homebrew gestiona su propio binario y paquete de JavaScript instalados. Actualízalos con:
+
+```bash
+brew upgrade vite-plus
+```
+
+`vp upgrade` detecta las instalaciones de Homebrew y te redirige a este comando sin descargar ni instalar otra versión. Esto también se aplica a `--force`, una versión específica y `--rollback`. Utiliza Homebrew para gestionar estas instalaciones.
+
+`vp upgrade --check` te redirige a `brew outdated vite-plus`. Las comprobaciones y avisos automáticos de actualización de npm están deshabilitados para las instalaciones de Homebrew.
+
 ## Compilaciones de Vista Previa (Preview Builds)
 
 Algunas solicitudes de extracción (pull requests) de Vite+ publican paquetes temporales para realizar pruebas antes de un lanzamiento en npm. Trata estas compilaciones como nocturnas (nightly) o de vanguardia (bleeding-edge): son útiles cuando deseas verificar una corrección específica, probar una nueva actualización de dependencias de upstream o confirmar un cambio antes del próximo lanzamiento. Para el trabajo diario, prefiere la versión `latest` publicada.

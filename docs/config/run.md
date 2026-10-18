@@ -188,7 +188,7 @@ Vite Task pasa un conjunto de variables de entorno comunes a todas las tareas:
 
 - **Sistema:** `HOME`, `USER`, `PATH`, `SHELL`, `LANG`, `TZ`
 - **Node.js:** `NODE_OPTIONS`, `COREPACK_HOME`, `PNPM_HOME`
-- **CI/CD:** `CI`, `VERCEL_*`, `NEXT_*`
+- **CI/CD:** `CI`, `VERCEL_*`, `NEXT_*`, `GITHUB_*`, `RUNNER_*`, `ACTIONS_ID_TOKEN_REQUEST_URL`, `ACTIONS_ID_TOKEN_REQUEST_TOKEN`
 - **Terminal:** Las variables de color (`FORCE_COLOR`, `NO_COLOR`, `COLORTERM`, `TERM`, `TERM_PROGRAM`) no se pasan a las tareas a menos que las incluyas en `env` (el valor se incluye en la huella digital, por lo que cambiarlo invalida el caché) o en `untrackedEnv` (se pasan sin incluirse en la huella digital). Si `FORCE_COLOR` no está en ninguna de las listas, el proceso hijo recibe `FORCE_COLOR=1` para que los registros almacenados en caché mantengan el color. Los colores se eliminan al mostrarse cuando la terminal no puede renderizarlos.
 
 ### `input`
