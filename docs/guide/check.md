@@ -29,6 +29,8 @@ vp check --no-fmt --no-lint # Solo verificación de tipos (requiere que `typeChe
 - Bloque [`fmt`](/guide/fmt#configuración) en `vite.config.ts`
 - Estructura del proyecto TypeScript y archivos tsconfig para linting consciente del tipo
 
+Cuando se ejecuta desde un paquete del espacio de trabajo, `vp check` utiliza los bloques `lint` y `fmt` de la raíz del espacio de trabajo. Las configuraciones de paquetes no pueden reemplazar los ajustes de formato raíz, las reglas de lint ni las opciones de comprobación de tipos. Las rutas de archivos y los proyectos de TypeScript aún se resuelven desde el directorio de trabajo del paquete.
+
 Configuración base de `lint` recomendada:
 
 ```ts [vite.config.ts]

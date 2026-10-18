@@ -2,11 +2,16 @@
 
 Vite+ soporta monorepos con un archivo `vite.config.ts` en la raíz. Puedes definir los valores predeterminados para `lint`, `fmt`, etc., en la raíz y utilizar `overrides` para aplicar configuraciones específicas de lint y formato para cada paquete.
 
-Vite+ lee la configuración de lint y formato únicamente desde el `vite.config.ts` de la raíz. Los archivos `vite.config.ts`, `.oxlintrc.json` y `.oxfmtrc.json` anidados en paquetes del workspace no se leen. Consulta [Solución de problemas](/guide/troubleshooting#configuraciones-anidadas-de-lint-o-formato-no-admitidas) para más detalles.
-
 Debido a que `vite.config.ts` es simplemente JavaScript, puedes elegir poner toda tu configuración en este archivo o componerla utilizando importaciones regulares de JavaScript. Aún puedes tener archivos `vite.config.ts` separados en cada paquete para la configuración de Vite, Vitest, el framework o el runtime.
 
 ## Configuración de Raíz con Overrides
+
+Ejecuta `vp lint`, `vp fmt` y `vp check` desde la raíz del workspace para aplicar la configuración de lint y formato de la raíz a todos los paquetes. Estos comandos no aplican configuraciones anidadas a archivos individuales. Define configuraciones específicas de archivos o paquetes con overrides en el `vite.config.ts` raíz.
+
+Cuando se ejecutan desde el directorio de un paquete, `vp lint`, `vp fmt` y `vp check` siguen utilizando los bloques `lint` y `fmt` de la raíz. Las configuraciones de paquetes no pueden reemplazar los ajustes de formato, reglas de lint u opciones de comprobación de tipos de la raíz. Los argumentos de archivos siguen siendo relativos al directorio de trabajo del paquete.
+
+Usa `-c <ruta>` o `--config <ruta>` con `vp lint` o `vp fmt` para seleccionar otra configuración. Si la configuración raíz no tiene un bloque para esa herramienta, la herramienta utiliza la detección nativa desde el directorio de trabajo.
+
 Utiliza `lint.overrides` para reglas de Oxlint que solo se apliquen a algunos paquetes:
 
 ```ts [vite.config.ts]

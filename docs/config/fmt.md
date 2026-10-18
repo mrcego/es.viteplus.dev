@@ -1,8 +1,6 @@
-# Configuración de Formato (Format)
+# Configuración de Formato
 
-`vp fmt` y `vp check` leen la configuración de Oxfmt desde el bloque `fmt` en `vite.config.ts`. Consulta la [configuración de Oxfmt](https://oxc.rs/docs/guide/usage/formatter/config.html) para más detalles.
-
-`vp fmt` lee la configuración únicamente desde el `vite.config.ts` raíz. Los archivos `vite.config.ts` o `.oxfmtrc.json` anidados no se leen. Usa [`fmt.overrides`](#overrides) para configurar diferentes ajustes para directorios específicos. Consulta [Solución de problemas](/guide/troubleshooting#configuraciones-anidadas-de-lint-o-formato-no-admitidas) para más detalles.
+`vp fmt` y `vp check` utilizan el bloque `fmt` de la raíz del workspace, incluso cuando se ejecutan desde el directorio de un paquete. Las configuraciones de paquetes no reemplazan estos ajustes de formato. Usa `vp fmt -c <ruta>` o `vp fmt --config <ruta>` para seleccionar otra configuración. Si la configuración raíz no tiene un bloque `fmt`, Oxfmt utiliza la [detección nativa](/guide/fmt#configuracion). Consulta la [configuración de Oxfmt](https://oxc.rs/docs/guide/usage/formatter/config.html) para más detalles.
 
 ## Ejemplo
 
@@ -19,7 +17,6 @@ export default defineConfig({
 });
 ```
 
-## Overrides
+Para ajustes de formato específicos de un archivo o paquete, usa [`fmt.overrides`](/guide/monorepo#overrides-de-formato) desde el `vite.config.ts` raíz.
 
-Para opciones del formateador específicas de paquetes en un monorepo, consulta la [guía de Monorepo](/guide/monorepo#overrides-de-formato).
-
+Oxfmt deshabilita las configuraciones anidadas en modo Vite+, por lo que las configuraciones de formato anidadas no anulan los ajustes para archivos individuales. Consulta la [solución de problemas](/guide/troubleshooting#nested-lint-or-format-config-is-not-applied) para más detalles.

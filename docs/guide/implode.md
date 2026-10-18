@@ -22,3 +22,16 @@ Omite el aviso de confirmación con:
 vp implode --yes
 ```
 
+
+## Homebrew
+
+Ejecuta `vp implode` primero para eliminar los entornos de ejecución administrados por Vite+, los paquetes globales, la configuración, los shims y las entradas del shell. Luego elimina el paquete de Homebrew:
+
+```bash
+vp implode
+brew uninstall vite-plus
+```
+
+El aviso de confirmación explica que el paquete de Homebrew permanecerá instalado. Tras la limpieza, `vp implode` te dirigirá a ejecutar `brew uninstall vite-plus`.
+
+Reinicia tu terminal antes de volver a ejecutar `vp`. En Bash, puedes ejecutar `hash -r` en su lugar para limpiar las rutas de comandos cacheadas. Si el paquete de Homebrew sigue instalado, el siguiente comando `vp` iniciará la configuración inicial de nuevo.

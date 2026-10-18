@@ -5,7 +5,22 @@ import { extendConfig } from '@voidzero-dev/vitepress-theme/config';
 import { defineConfig, type HeadConfig } from 'vitepress';
 import { withMermaid } from 'vitepress-plugin-mermaid';
 import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
-import llmstxt from 'vitepress-plugin-llms'
+import llmstxt from 'vitepress-plugin-llms';
+import { resolveDocsSiteOrigin } from './site-origin.ts';
+
+const siteOrigin = resolveDocsSiteOrigin();
+const docsOrigin = siteOrigin || 'https://es.viteplus.dev';
+const installShUrl = siteOrigin ? `${siteOrigin}/install.sh` : 'https://vite.plus';
+const installPs1Url = siteOrigin ? `${siteOrigin}/install.ps1` : 'https://vite.plus/ps1';
+
+function rewriteInstallUrls(text: string): string {
+  if (!siteOrigin) {
+    return text;
+  }
+  return text
+    .replaceAll('https://vite.plus/ps1', installPs1Url)
+    .replaceAll('https://vite.plus', installShUrl);
+}
 
 const taskRunnerGuideItems = [
   {
@@ -31,15 +46,20 @@ const guideSidebar = [
     text: 'Introducción',
     items: [
       { text: 'Primeros Pasos', link: '/guide/' },
+      { text: 'CLI Global', link: '/guide/global-cli' },
+      { text: 'CLI Local del Proyecto', link: '/guide/local-cli' },
       { text: 'Crear un Proyecto', link: '/guide/create' },
       {
         text: 'Migrar a Vite+',
         link: '/guide/migrate',
-        items: [{ text: 'Reglas de Migración', link: '/guide/migrate-rules' }],
+        items: [
+          { text: 'Reglas de Migración', link: '/guide/migrate-rules' },
+          { text: 'Actualizar a Vitest 5', link: '/guide/vitest-v5' },
+        ],
       },
+      { text: 'Actualizar Proyecto Vite+', link: '/guide/upgrade-project' },
       { text: 'Instalar Dependencias', link: '/guide/install' },
       { text: 'Entorno', link: '/guide/env' },
-      { text: 'Variables de Entorno del Instalador', link: '/guide/installer-env-vars' },
       { text: '¿Por qué Vite+?', link: '/guide/why' },
     ],
   },
@@ -113,13 +133,18 @@ export default extendConfig(
         ['meta', { name: 'twitter:site', content: '@voidzerodev' }],
       ],
       vite: {
+        define: {
+          __DOCS_ORIGIN__: JSON.stringify(docsOrigin),
+          __DOCS_INSTALL_SH_URL__: JSON.stringify(installShUrl),
+          __DOCS_INSTALL_PS1_URL__: JSON.stringify(installPs1Url),
+        },
         optimizeDeps: {
           include: ['mermaid > @braintree/sanitize-url'],
         },
         resolve: {
           alias: [
-            { find: '@local-assets', replacement: resolve(__dirname, 'theme/assets') },
-            { find: '@layouts', replacement: resolve(__dirname, 'theme/layouts') },
+            { find: '@local-assets', replacement: resolve(import.meta.dirname, 'theme/assets') },
+            { find: '@layouts', replacement: resolve(import.meta.dirname, 'theme/layouts') },
             // dayjs ships CJS by default; redirect to its ESM build so
             // mermaid (imported via vitepress-plugin-mermaid) works in dev
             { find: /^dayjs$/, replacement: 'dayjs/esm' },
@@ -277,7 +302,32 @@ export default extendConfig(
       },
       markdown: {
         config(md) {
-          md.use(groupIconMdPlugin)
+          md.use(groupIconMdPlugin);
+          if (siteOrigin) {
+            md.core.ruler.push('rewrite-install-urls', (state) => {
+              const walk = (tokens: typeof state.tokens) => {
+                for (const token of tokens) {
+                  if (
+                    token.type === 'fence' ||
+                    token.type === 'code_inline' ||
+                    token.type === 'text'
+                  ) {
+                    token.content = rewriteInstallUrls(token.content);
+                  }
+                  if (token.type === 'link_open') {
+                    const href = token.attrGet('href');
+                    if (href) {
+                      token.attrSet('href', rewriteInstallUrls(href));
+                    }
+                  }
+                  if (token.children) {
+                    walk(token.children);
+                  }
+                }
+              };
+              walk(state.tokens);
+            });
+          }
         },
       },
     }),

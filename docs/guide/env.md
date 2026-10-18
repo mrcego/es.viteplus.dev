@@ -16,11 +16,13 @@ La versión de Node.js del proyecto se resuelve a partir de estas fuentes, en or
 
 `devEngines.runtime` tiene mayor prioridad que `engines.node` porque declara el requisito del entorno de desarrollo, mientras que `engines.node` es un rango de soporte orientado al consumidor. `vp env doctor` advierte cuando las fuentes declaradas entran en conflicto.
 
-Cuando un proyecto declara `packageManager` (o `devEngines.packageManager`) en `package.json`, los shims de los gestores de paquetes correspondientes también utilizan esa versión. Por ejemplo, `packageManager: "npm@10.9.4"` hace que tanto `npm` como `npx` se ejecuten mediante npm 10.9.4. Los pares de alias siguen los shims de gestores de paquetes instalados: `npm`/`npx`, `pnpm`/`pnpx`, `yarn`/`yarnpkg` y `bun`/`bunx`. Sin una declaración de gestor de paquetes, invocar `pnpm`, `yarn` o `bun` utiliza la última versión sin solicitar confirmación. La versión resuelta se almacena en caché durante una hora y una caché expirada permanece disponible cuando no se puede acceder al registro. Vite+ no traduce comandos que no coincidan, por lo que un proyecto fijado a `pnpm` todavía permite que `npm` recurra al npm que viene con el runtime de Node.js resuelto.
+Cuando un proyecto declara `packageManager` (o `devEngines.packageManager`) en `package.json`, los shims de los gestores de paquetes correspondientes también utilizan esa versión. Por ejemplo, `packageManager: "npm@10.9.4"` hace que tanto `npm` como `npx` se ejecuten mediante npm 10.9.4. Por ejemplo, pnpm controla `pnpm`, `pnpx`, `pn` y `pnx`; invocar `npm` aún resuelve npm de forma independiente. Sin una selección de proyecto coincidente, un shim nombrado usa su versión predeterminada configurada y, de lo contrario, usa la última versión sin preguntar. El shim de npm recurre al npm incluido con Node. `vp env use npm` selecciona la última versión de npm independiente para la shell actual cuando no se ha configurado ninguna versión de proyecto ni valor predeterminado global.
+
+`pn` ejecuta el mismo binario gestionado que `pnpm`, y `pnx` ejecuta el mismo binario gestionado que `pnpx` (`pnpm dlx`). Estos alias también funcionan con versiones gestionadas de pnpm anteriores a v11.
 
 Una instalación nueva utiliza el diseño de plataforma dividido por defecto. En Unix, Vite+ almacena los runtimes administrados y los archivos relacionados en `~/.local/share/vite-plus`. Almacena los scripts de configuración en `~/.config/vite-plus` y los enlaces binarios (shims) en `~/.local/bin`. En Windows, estos van en `%LOCALAPPDATA%\vite-plus\data`, `%LOCALAPPDATA%\vite-plus\config` y `%LOCALAPPDATA%\vite-plus\bin`.
 
-Configura `VP_HOME` para anular la raíz de datos (por ejemplo, en entornos CI o compartidos). Consulta las [Variables de Entorno del Instalador](/guide/installer-env-vars) para ver el diseño del directorio y todas las opciones de ruta.
+Configura `VP_HOME` para anular la raíz de datos (por ejemplo, en entornos CI o compartidos). Consulta el [CLI Global](/guide/global-cli#variables-de-instalacion) para ver el diseño del directorio y todas las opciones de ruta.
 
 Vite+ respeta los estándares `XDG_DATA_HOME` y `XDG_CONFIG_HOME` en Unix.
 
@@ -46,16 +48,20 @@ Los shims buscan en tu `PATH` un ejecutable del sistema fuera del directorio de 
 vp env off
 ```
 
-Esto cambia al modo primero el sistema, donde los shims prefieren el Node.js de tu sistema y solo usan las versiones de Vite+ cuando no se encuentra ningún binario en el sistema.
+Esto cambia ambos componentes al modo primero el sistema. Vite+ prefiere las herramientas del sistema y recurre a instalaciones gestionadas como alternativa. Las configuraciones mixtas se componen: los lanzadores de gestores de paquetes que buscan Node.js a través de PATH reciben el runtime seleccionado por el modo de Node.
+
+El uso de `pm` registra el modo seleccionado para todos los gestores de paquetes actualmente compatibles y reemplaza sus elecciones individuales. Un `on` o `off` sin alcance hace lo mismo a la vez que cambia Node.js.
 
 ## Comandos
 
 ### Configuración
 
-- `vp env setup` crea o actualiza los shims `node`, `npm`, `npx`, `pnpm`, `pnpx`, `yarn`, `yarnpkg`, `bun`, `bunx`, `vpx` y `vpr` en el directorio bin resuelto. Escribe scripts de configuración de shell en el directorio de configuración.
-- `vp env on` habilita el modo gestionado para que los shims siempre usen Node.js y gestores de paquetes gestionados por Vite+.
-- `vp env off` habilita el modo primero el sistema para que los shims prefieran primero las herramientas del sistema.
-- `vp env print` imprime el fragmento de shell para la sesión actual.
+- `vp env setup` crea los shims de herramientas y escribe scripts de configuración de shell.
+- `vp env setup --refresh` recrea los shims de Vite+ y regenera los scripts de configuración de shell utilizando tus preferencias guardadas.
+- `vp env on` / `vp env off` cambia entre el modo gestionado por Vite+ y el modo primero el sistema; añade `node`, `pm`, `npm`, `pnpm`, `yarn` o `bun` para acotar el cambio.
+- `vp env print` imprime la configuración de PATH para ambos componentes; añade un selector para imprimir uno.
+
+Las actualizaciones actualizan la configuración automáticamente. Abre una nueva terminal o recarga tu script de configuración de shell después.
 
 ### Gestión de Versiones
 

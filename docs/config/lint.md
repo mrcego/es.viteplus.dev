@@ -1,8 +1,6 @@
 # Configuración de Lint
 
-`vp lint` y `vp check` leen la configuración de Oxlint desde el bloque `lint` en `vite.config.ts`. Consulta la [configuración de Oxlint](https://oxc.rs/docs/guide/usage/linter/config.html) para más detalles.
-
-`vp lint` lee la configuración únicamente desde el `vite.config.ts` raíz. Los archivos `vite.config.ts` o `.oxlintrc.json` anidados no se leen. Usa [`lint.overrides`](#overrides) para configurar diferentes reglas para directorios específicos. Consulta [Solución de problemas](/guide/troubleshooting#configuraciones-anidadas-de-lint-o-formato-no-admitidas) para más detalles.
+`vp lint` y `vp check` utilizan el bloque `lint` de la raíz del workspace, incluso cuando se ejecutan desde el directorio de un paquete. Las configuraciones de paquetes no reemplazan estos ajustes de lint. Usa `vp lint -c <ruta>` o `vp lint --config <ruta>` para seleccionar otra configuración. Si la configuración raíz no tiene un bloque `lint`, Oxlint utiliza la [detección nativa](/guide/lint#configuracion). Consulta la [configuración de Oxlint](https://oxc.rs/docs/guide/usage/linter/config.html) para más detalles.
 
 ## Ejemplo
 
@@ -25,7 +23,6 @@ export default defineConfig({
 
 Recomendamos habilitar tanto `options.typeAware` como `options.typeCheck` para que `vp lint` y `vp check` puedan utilizar el motor completo con conocimiento de tipos (type-aware).
 
-## Overrides
+Para reglas de lint específicas de un archivo o paquete, usa [`lint.overrides`](/guide/monorepo#configuracion-de-raiz-con-overrides) desde el `vite.config.ts` raíz.
 
-Para configuraciones de lint específicas de paquetes en un monorepo, consulta la [guía de Monorepo](/guide/monorepo#configuracion-de-raiz-con-overrides).
-
+Oxlint deshabilita las configuraciones anidadas en modo Vite+, por lo que las configuraciones de lint anidadas no anulan los ajustes para archivos individuales. Consulta la [solución de problemas](/guide/troubleshooting#nested-lint-or-format-config-is-not-applied) para más detalles.
