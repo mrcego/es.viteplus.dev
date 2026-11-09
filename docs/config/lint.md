@@ -1,6 +1,8 @@
 # Configuración de Lint
 
-`vp lint` y `vp check` utilizan el bloque `lint` de la raíz del workspace, incluso cuando se ejecutan desde el directorio de un paquete. Las configuraciones de paquetes no reemplazan estos ajustes de lint. Usa `vp lint -c <ruta>` o `vp lint --config <ruta>` para seleccionar otra configuración. Si la configuración raíz no tiene un bloque `lint`, Oxlint utiliza la [detección nativa](/guide/lint#configuracion). Consulta la [configuración de Oxlint](https://oxc.rs/docs/guide/usage/linter/config.html) para más detalles.
+`vp lint` utiliza la [detección nativa de configuración](/guide/lint#configuracion) de Oxlint desde el directorio de trabajo. Usa `vp lint -c <ruta>` o `vp lint --config <ruta>` para seleccionar otra configuración. Consulta la [configuración de Oxlint](https://oxc.rs/docs/guide/usage/linter/config.html) para más detalles.
+
+`vp check` utiliza el bloque `lint` de la raíz del workspace cuando existe, incluso desde el directorio de un paquete. Las configuraciones de paquetes no reemplazan estos ajustes de lint en `vp check`.
 
 ## Ejemplo
 

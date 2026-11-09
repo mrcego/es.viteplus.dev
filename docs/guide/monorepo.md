@@ -8,9 +8,11 @@ Debido a que `vite.config.ts` es simplemente JavaScript, puedes elegir poner tod
 
 Ejecuta `vp lint`, `vp fmt` y `vp check` desde la raíz del workspace para aplicar la configuración de lint y formato de la raíz a todos los paquetes. Estos comandos no aplican configuraciones anidadas a archivos individuales. Define configuraciones específicas de archivos o paquetes con overrides en el `vite.config.ts` raíz.
 
-Cuando se ejecutan desde el directorio de un paquete, `vp lint`, `vp fmt` y `vp check` siguen utilizando los bloques `lint` y `fmt` de la raíz. Las configuraciones de paquetes no pueden reemplazar los ajustes de formato, reglas de lint u opciones de comprobación de tipos de la raíz. Los argumentos de archivos siguen siendo relativos al directorio de trabajo del paquete.
+Cuando se ejecutan desde el directorio de un paquete, `vp lint` y `vp fmt` siguen utilizando los ajustes de la raíz a menos que la configuración del paquete defina su propio bloque `lint` o `fmt`. No recomendamos bloques a nivel de paquete; usa overrides en la configuración raíz en su lugar. Los argumentos de archivos siguen siendo relativos al directorio de trabajo del paquete.
 
-Usa `-c <ruta>` o `--config <ruta>` con `vp lint` o `vp fmt` para seleccionar otra configuración. Si la configuración raíz no tiene un bloque para esa herramienta, la herramienta utiliza la detección nativa desde el directorio de trabajo.
+`vp check` utiliza los bloques `lint` y `fmt` de la raíz cuando existen. Las configuraciones de paquetes no pueden reemplazar los ajustes de formato, reglas de lint u opciones de comprobación de tipos de la raíz en `vp check`.
+
+Usa `-c <ruta>` o `--config <ruta>` con `vp lint` o `vp fmt` para seleccionar otra configuración explícitamente.
 
 Utiliza `lint.overrides` para reglas de Oxlint que solo se apliquen a algunos paquetes:
 

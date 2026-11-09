@@ -20,9 +20,11 @@ vp fmt . --write
 
 Coloca la configuración de formateo directamente en el bloque `fmt` en el `vite.config.ts` raíz para que toda tu configuración permanezca en un solo lugar. No recomendamos usar `.oxfmtrc.json` con Vite+.
 
-Cuando la configuración de la raíz del workspace tiene un bloque `fmt`, `vp fmt` y `vp check` lo usan incluso cuando se ejecutan desde el directorio de un paquete. Las configuraciones de paquetes no pueden reemplazar los ajustes de formato de la raíz. Los comandos conservan el directorio de trabajo del paquete, por lo que los argumentos de archivos relativos mantienen su significado. Usa [`fmt.overrides`](/guide/monorepo#overrides-de-formato) para opciones específicas de archivos o paquetes.
+`vp fmt` encuentra su configuración desde el directorio de trabajo, por lo que los directorios de paquetes sin su propio bloque `fmt` usan la configuración raíz. Los argumentos de archivos relativos mantienen su significado. Usa [`fmt.overrides`](/guide/monorepo#overrides-de-formato) para opciones específicas de archivos o paquetes en lugar de agregar bloques `fmt` a las configuraciones de paquetes.
 
-Un `vp fmt -c <ruta>` o `vp fmt --config <ruta>` explícito selecciona otra configuración. De lo contrario, cuando se ejecuta desde la raíz del workspace o cuando la configuración raíz no tiene un bloque `fmt`, Oxfmt detecta el archivo `vite.config.*` más cercano con un bloque `fmt`. Las extensiones soportadas son `.js`, `.mjs`, `.ts`, `.cjs`, `.mts` y `.cts`. Las configuraciones anidadas no anulan los ajustes para archivos individuales.
+`vp check` utiliza el bloque `fmt` de la raíz del workspace cuando existe, incluso desde el directorio de un paquete. Las configuraciones de paquetes no pueden reemplazar esos ajustes de formato en `vp check`.
+
+Un `vp fmt -c <ruta>` o `vp fmt --config <ruta>` explícito selecciona otra configuración. De lo contrario, Oxfmt detecta el archivo `vite.config.*` más cercano con un bloque `fmt`. Las extensiones soportadas son `.js`, `.mjs`, `.ts`, `.cjs`, `.mts` y `.cts`. Las configuraciones anidadas no anulan los ajustes para archivos individuales.
 
 Para los editores, deshabilita las configuraciones de formateador anidadas para evitar anulaciones por archivo:
 

@@ -20,9 +20,11 @@ vp lint --type-aware
 
 Coloca la configuración de lint directamente en el bloque `lint` en el `vite.config.ts` raíz para que toda tu configuración permanezca en un solo lugar. No recomendamos usar `oxlint.config.ts` o `.oxlintrc.json` con Vite+.
 
-Cuando la configuración de la raíz del workspace tiene un bloque `lint`, `vp lint` y `vp check` lo usan incluso cuando se ejecutan desde el directorio de un paquete. Las configuraciones de paquetes no pueden reemplazar las reglas de la raíz ni deshabilitar sus opciones `typeAware` y `typeCheck`. Los comandos conservan el directorio de trabajo del paquete, por lo que los argumentos de archivos relativos mantienen su significado. Usa [`lint.overrides`](/guide/monorepo#configuracion-de-raiz-con-overrides) para reglas específicas de archivos o paquetes.
+`vp lint` encuentra su configuración desde el directorio de trabajo, por lo que los directorios de paquetes sin su propio bloque `lint` usan la configuración raíz. Los argumentos de archivos relativos mantienen su significado. Usa [`lint.overrides`](/guide/monorepo#configuracion-de-raiz-con-overrides) para reglas específicas de archivos o paquetes en lugar de agregar bloques `lint` a las configuraciones de paquetes.
 
-Un `vp lint -c <ruta>` o `vp lint --config <ruta>` explícito selecciona otra configuración. De lo contrario, cuando se ejecuta desde la raíz del workspace o cuando la configuración raíz no tiene un bloque `lint`, Oxlint detecta el archivo `vite.config.*` más cercano con un bloque `lint`. Las extensiones soportadas son `.js`, `.mjs`, `.ts`, `.cjs`, `.mts` y `.cts`. Las configuraciones anidadas no anulan los ajustes para archivos individuales.
+`vp check` utiliza el bloque `lint` de la raíz del workspace cuando existe, incluso desde el directorio de un paquete. Las configuraciones de paquetes no pueden reemplazar esos ajustes de lint en `vp check`.
+
+Un `vp lint -c <ruta>` o `vp lint --config <ruta>` explícito selecciona otra configuración. De lo contrario, Oxlint detecta el archivo `vite.config.*` más cercano con un bloque `lint`. Las extensiones soportadas son `.js`, `.mjs`, `.ts`, `.cjs`, `.mts` y `.cts`. Las configuraciones anidadas no anulan los ajustes para archivos individuales.
 
 Para ver el conjunto de reglas original, las opciones y detalles de compatibilidad, consulta la [documentación de Oxlint](https://oxc.rs/docs/guide/usage/linter.html).
 

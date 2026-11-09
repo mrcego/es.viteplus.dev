@@ -4,7 +4,7 @@ El rastreo automático de datos es el mecanismo por el cual Vite Task aprende qu
 
 Cuando ejecutas una tarea que tiene habilitada la caché, Vite Task observa la ejecución de la tarea y registra qué archivos se leyeron y escribieron, así como cualquier metadato informado por la tarea. En la siguiente ejecución, Vite Task utiliza la huella digital registrada para decidir si reproduce la caché o ejecuta la tarea.
 
-Usa esta página cuando necesites entender por qué una tarea acierta o falla en la caché, o cuando necesites decidir si agregar configuración de `input`, `output`, `env` o `untrackedEnv`.
+Usa esta página cuando necesites entender por qué una tarea acierta o falla en la caché, o cuando necesites decidir si agregar configuración de `cache.input`, `cache.output`, `cache.env` o `cache.untrackedEnv`.
 
 ## Niveles de Rastreo
 
@@ -19,7 +19,7 @@ Vite Task comienza con el rastreo del sistema de archivos para cualquier comando
 
 ## Rastreo del Sistema de Archivos
 
-El rastreo del sistema de archivos se aplica a cada tarea que tiene habilitada la caché. Si omites [`input`](/config/run#input), Vite Task rastrea los archivos que lee un comando mientras se ejecuta:
+El rastreo del sistema de archivos se aplica a cada tarea que tiene habilitada la caché. Si omites [`cache.input`](/config/run#cache-input), Vite Task rastrea los archivos que lee un comando mientras se ejecuta:
 
 ```ts [vite.config.ts]
 import { defineConfig } from 'vite-plus';
@@ -37,7 +37,7 @@ export default defineConfig({
 
 Para esta tarea, Vite Task registra los archivos fuente, archivos de configuración, archivos faltantes que el comando verificó y directorios que el comando escaneó. Las ejecuciones posteriores vuelven a ejecutar la tarea cuando cambia una de esas entradas rastreadas.
 
-El rastreo del sistema de archivos también rastrea las salidas. Si omites [`output`](/config/run#output), Vite Task archiva los archivos que el comando escribe después de una ejecución exitosa y los restaura en un acierto de caché.
+El rastreo del sistema de archivos también rastrea las salidas. Si omites [`cache.output`](/config/run#cache-output), Vite Task archiva los archivos que el comando escribe después de una ejecución exitosa y los restaura en un acierto de caché.
 
 ### Limitaciones
 
@@ -45,13 +45,13 @@ Vite Task no puede rastrear las lecturas de variables de entorno, y no siempre p
 
 Usa [Sobrescribir Entradas y Salidas](#sobrescribir-entradas-y-salidas) cuando el rastreo del sistema de archivos incluya archivos que no deberían afectar a la caché, pase por alto archivos que sí deberían hacerlo, o restaure las salidas incorrectas.
 
-Usa [`env`](/config/run#env) cuando un comando necesite una variable de entorno y su valor deba afectar a la caché, o [`untrackedEnv`](/config/run#untrackedenv) cuando el valor no deba afectar a la caché.
+Usa [`cache.env`](/config/run#cache-env) cuando un comando necesite una variable de entorno y su valor deba afectar a la caché, o [`cache.untrackedEnv`](/config/run#cache-untrackedenv) cuando el valor no deba afectar a la caché.
 
 Estas limitaciones no se aplican a `vp build`: Vite informa automáticamente los metadatos de [Rastreo Cooperativo](#rastreo-cooperativo), incluyendo `VITE_*`, `NODE_ENV` y rutas de caché gestionadas por Vite que no deberían convertirse en entradas o salidas. Una tarea `vp build` estándar no necesita configuración manual de `input`, `output` o `env`.
 
 ### Sobrescribir Entradas y Salidas
 
-[`input`](/config/run#input) controla qué invalida la caché. [`output`](/config/run#output) controla qué archivos restaura Vite Task en caso de un acierto de caché.
+[`cache.input`](/config/run#cache-input) controla qué invalida la caché. [`cache.output`](/config/run#cache-output) controla qué archivos restaura Vite Task en caso de un acierto de caché.
 
 Ambas opciones utilizan la misma sintaxis y se pueden configurar por separado.
 
@@ -93,7 +93,9 @@ Establece `input: []` when no files should affect the cache fingerprint. Esto es
 tasks: {
   downloadSchema: {
     command: 'curl -O https://example.com/schema.json',
-    input: [],
+    cache: {
+      input: [],
+    },
   },
 }
 ```
@@ -128,7 +130,7 @@ export default defineConfig({
 
 Ejecuta esta tarea con `vpr frontendBuild` o `vp run frontendBuild`.
 
-La configuración manual sobrescribe los metadatos informados. Agrega `input`, `output`, `env` o `untrackedEnv` cuando tu proyecto tenga un comportamiento que Vite no pueda informar.
+La configuración manual sobrescribe los metadatos informados. Agrega `cache.input`, `cache.output`, `cache.env` o `cache.untrackedEnv` cuando tu proyecto tenga un comportamiento que Vite no pueda informar.
 
 Vite+ admite el rastreo cooperativo para `vp build` hoy en día. Ampliará este soporte a más herramientas propias en el futuro. Las herramientas de terceros pueden informar metadatos de caché con [`@voidzero-dev/vite-task-client`](https://npmx.dev/package/@voidzero-dev/vite-task-client).
 

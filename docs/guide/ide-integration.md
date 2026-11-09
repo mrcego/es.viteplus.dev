@@ -112,3 +112,61 @@ También puedes configurar manualmente la configuración de Zed:
 
 Establecer `oxfmt.fmt.configPath` a `./vite.config.ts` mantiene el formateo al guardar del editor alineado con el bloque `fmt` de tu configuración de Vite+. La configuración generada completa cubre lenguajes adicionales (CSS, HTML, JSON, Markdown, etc.) — ejecuta `vp create` o `vp migrate` para que el archivo completo se escriba automáticamente.
 
+## JetBrains (IntelliJ, WebStorm, etc...)
+
+Para la mejor experiencia con Vite+ en IDEs de JetBrains como IntelliJ y WebStorm, instala el plugin [Oxc](https://plugins.jetbrains.com/plugin/27061-oxc) desde el marketplace de JetBrains.
+
+Cuando creas o migras un proyecto, Vite+ te pregunta si deseas que la configuración del editor se escriba para IDEs de JetBrains.
+
+::: tip Vite+ no fusiona con archivos de configuración existentes
+Debido a algunas complejidades al fusionar archivos XML, Vite+ actualmente no fusiona tus archivos actuales si los archivos ya existen. Se te dará la oportunidad de reemplazar cualquier archivo existente, en lugar de fusionarlo.
+:::
+
+También puedes configurar manualmente la configuración del IDE para que coincida con tu configuración de Vite+:
+
+```xml [.idea/externalDependencies.xml]
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalDependencies">
+    <plugin id="com.github.oxc.project.oxcintellijplugin" />
+  </component>
+</project>
+```
+
+```xml [.idea/workspace.xml]
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <!-- otros ajustes... -->
+  <component name="PropertiesComponent">
+    <![CDATA[{
+      "keyToString": {
+        // otros ajustes
+        "javascript.nodejs.core.library.configured.version": "24.18.0", // Reemplaza con tu versión de Node.js seleccionada
+        "javascript.nodejs.core.library.typings.version": "24.13.3", // Reemplaza con la versión de @types/node que corresponda a tu runtime (u omítelo si no lo deseas)
+        "javascript.preferred.runtime.type.id": "node",
+        "nodejs_interpreter_path": "$USER_HOME$/.local/share/vite-plus/bin/node",
+        "nodejs_package_manager_path": "pnpm" // Reemplaza con tu gestor de paquetes preferido
+      }
+    }]]>
+  </component>
+</project>
+```
+
+Esta ruta asume una instalación Unix nueva usando los directorios XDG por defecto. En Windows, usa `%LOCALAPPDATA%\vite-plus\bin\node.exe`. Ejecuta `vp env current node` para verificar la versión de Node.js resuelta y la ruta del binario. Si usas un `VP_HOME` o directorios XDG personalizados, o una instalación anterior de Vite+, actualiza `nodejs_interpreter_path` a la ruta de tu shim de Node.js.
+
+```xml [.idea/OxfmtSettings.xml]
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="OxfmtSettings">
+    <option name="preferOxfmtCodeStyleSettings" value="true" />
+  </component>
+</project>
+```
+
+A menudo, las carpetas `.idea` se incluyen en el gitignore de un proyecto, incluso el archivo `externalDependencies.xml`, que se utiliza para indicar a tu IDE qué plugins deben usarse para el workspace.
+
+Asegúrate de agregar esta línea a tu archivo principal `.gitignore`, para garantizar que el archivo se incluya:
+
+```gitignore [.gitignore]
+!.idea/externalDependencies.xml
+```

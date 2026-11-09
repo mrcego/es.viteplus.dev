@@ -1,6 +1,6 @@
 # Actualizar a Vitest 5
 
-Vite+ incluye Vitest `5.0.4`. Usa Node `^22.18.0 || ^24.11.0 || >=26.0.0` para la CLI y las pruebas.
+Vite+ incluye Vitest `5.0.3`. Usa Node `^22.18.0 || ^24.11.0 || >=26.0.0` para la CLI y las pruebas.
 
 ## Antes de migrar
 
@@ -120,9 +120,20 @@ Mantén los archivos de benchmark que coincidan con `benchmark.include`. Los com
 
 ## Puntos de entrada y paquetes
 
-Vite+ reexporta las utilidades del ejecutor de pruebas a través de `vite-plus/test`. Los paquetes originales de Vitest continúan funcionando; la migración conserva las importaciones directas de paquetes mientras existan declaraciones en `package.json`.
+Usa `vite-plus/test` para aserciones y APIs compatibles del ejecutor. Mantén los proveedores de cobertura y `@vitest/ui` en la versión exacta del ejecutor integrado, `5.0.3`. Mantén `@vitest/web-worker` alineado cuando tu proyecto lo utilice.
 
-`vite-plus/test` incluye la API completa de Vitest, los tipos de aserción y los tipos de configuración. Utilízalo para mantener tus pruebas alineadas con el ejecutor incluido en Vite+.
+| Importación v4 | Importación v5 o acción |
+| --- | --- |
+| `vitest/coverage`, `vitest/reporters` | `vite-plus/test/node` |
+| `vitest/environments`, `vitest/snapshot` | `vite-plus/test/runtime` |
+| `vitest/mocker` | `vite-plus/test/mocker` |
+| `vitest/runners`, `vitest/suite` | Revisa `TestRunner` y sus métodos estáticos desde `vite-plus/test`. |
+| Símbolos compatibles con la raíz de `@vitest/expect` | `vite-plus/test`; revisa los helpers no compatibles. |
+| `@vitest/runner` | Migra los símbolos compatibles a la API raíz y revisa las importaciones restantes. |
+| `vitest/internal/module-runner` | Rediseña la integración; no existe un reemplazo público. |
+| `@vitest/ws-client` | Consérvalo si es necesario; upstream ya no agrega funciones de v5. |
+
+Vite+ 1.0 elimina `vite-plus/test/coverage`, `/reporters`, `/environments` y `/snapshot`. Ejecuta `vp migrate` para reescribir estas importaciones existentes de Vite+ a las mismas entradas `node` o `runtime` mostradas arriba. Vite+ conserva `vite-plus/test/mocker` para la API independiente de `@vitest/mocker`. No proporciona shims parciales para el ejecutor o plugins de expect.
 
 ## Proveedor comunitario de WebDriverIO {#proveedor-comunitario-de-webdriverio}
 

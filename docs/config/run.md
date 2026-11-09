@@ -21,7 +21,7 @@ export default defineConfig({
 
 ## `run.enablePrePostScripts`
 
-- **Tipo:** `boolean`
+- **Tipo:** `boolean | { env?: string[], untrackedEnv?: string[], input?: Array<...>, output?: Array<...> }`
 - **Por defecto:** `true`
 
 Indica si se deben ejecutar automáticamente los scripts `preX`/`postX` de `package.json` como hooks de ciclo de vida cuando se ejecuta el script `X`.
@@ -139,7 +139,7 @@ tasks: {
 }
 ```
 
-### `env`
+### `cache.env`
 
 - **Tipo:** `string[]`
 - **Por defecto:** `[]`
@@ -164,7 +164,7 @@ $ NODE_ENV=development vp run build    # primera ejecución
 $ NODE_ENV=production vp run build     # fallo de caché: env 'NODE_ENV' cambió
 ```
 
-### `untrackedEnv`
+### `cache.untrackedEnv`
 
 - **Tipo:** `string[]`
 - **Por defecto:** ver abajo
@@ -191,7 +191,7 @@ Vite Task pasa un conjunto de variables de entorno comunes a todas las tareas:
 - **CI/CD:** `CI`, `VERCEL_*`, `NEXT_*`, `GITHUB_*`, `RUNNER_*`, `ACTIONS_ID_TOKEN_REQUEST_URL`, `ACTIONS_ID_TOKEN_REQUEST_TOKEN`
 - **Terminal:** Las variables de color (`FORCE_COLOR`, `NO_COLOR`, `COLORTERM`, `TERM`, `TERM_PROGRAM`) no se pasan a las tareas a menos que las incluyas en `env` (el valor se incluye en la huella digital, por lo que cambiarlo invalida el caché) o en `untrackedEnv` (se pasan sin incluirse en la huella digital). Si `FORCE_COLOR` no está en ninguna de las listas, el proceso hijo recibe `FORCE_COLOR=1` para que los registros almacenados en caché mantengan el color. Los colores se eliminan al mostrarse cuando la terminal no puede renderizarlos.
 
-### `input`
+### `cache.input`
 
 - **Tipo:** `Array<string | { auto: boolean } | { pattern: string, base: "workspace" | "package" }>`
 - **Por defecto:** `[{ auto: true }]` (inferido automáticamente)
@@ -254,7 +254,7 @@ tasks: {
 Por defecto, los patrones glob de cadenas se resuelven de forma relativa al directorio del paquete. Usa la forma de objeto con `base: "workspace"` para resolverlos de forma relativa a la raíz del workspace.
 :::
 
-### `output`
+### `cache.output`
 
 - **Tipo:** `Array<string | { auto: boolean } | { pattern: string, base: "workspace" | "package" }>`
 - **Por defecto:** rastreo automático de escritura

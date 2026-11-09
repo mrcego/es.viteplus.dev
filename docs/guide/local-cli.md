@@ -45,27 +45,27 @@ Si estás migrando manualmente un proyecto a Vite+, instala estas dependencias d
 vp install -D vite-plus
 ```
 
-Debes agregar sobrescrituras (overrides) a tu gestor de paquetes para que otros paquetes resuelvan las versiones de Vite+: crea un alias de `vite` a `@voidzero-dev/vite-plus-core` y fija `vitest` a la versión que incluye Vite+ (ejecuta `vp --version`) para que todo el proyecto comparta una única copia de Vitest con `vp test`. Sin fijar `vitest`, una dependencia o paquete del espacio de trabajo puede obtener un Vitest diferente al ejecutor integrado, dividiendo los elementos internos de Vitest (mocks, `expect`, estado del ejecutor):
+Agrega sobrescrituras (overrides) a tu gestor de paquetes para que otros paquetes resuelvan las versiones de Vite+. Crea un alias de `vite` a `@voidzero-dev/vite-plus-core`, estableciendo `<vite-plus-version>` a la versión de `vite-plus` instalada. Fija `vitest` a `<vitest-version>`, usando la versión integrada mostrada por `vp toolchain vitest` para que todo el proyecto comparta una única copia de Vitest con `vp test`. Sin fijar `vitest`, una dependencia o paquete del espacio de trabajo puede obtener un Vitest diferente al ejecutor integrado, dividiendo los elementos internos de Vitest (mocks, `expect`, estado del ejecutor):
 
 ::: code-group
 
 ```yaml [pnpm-workspace.yaml]
 overrides:
-  vite: npm:@voidzero-dev/vite-plus-core@latest
-  vitest: 5.0.1
+  vite@*: npm:@voidzero-dev/vite-plus-core@<vite-plus-version> # Coincide con la versión de vite-plus instalada
+  vitest@*: <vitest-version> # Coincide con la versión de vp toolchain vitest
 ```
 
 ```json [npm / Bun package.json]
 "overrides": {
-  "vite": "npm:@voidzero-dev/vite-plus-core@latest",
-  "vitest": "5.0.1"
+  "vite": "npm:@voidzero-dev/vite-plus-core@<vite-plus-version>",
+  "vitest": "<vitest-version>"
 }
 ```
 
 ```json [Yarn package.json]
 "resolutions": {
-  "vite": "npm:@voidzero-dev/vite-plus-core@latest",
-  "vitest": "5.0.1"
+  "vite": "npm:@voidzero-dev/vite-plus-core@<vite-plus-version>",
+  "vitest": "<vitest-version>"
 }
 ```
 
