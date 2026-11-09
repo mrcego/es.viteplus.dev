@@ -20,7 +20,7 @@ Si estás migrando un proyecto existente que aún depende de versiones anteriore
 - Confirma que `lint.options.typeAware` y `lint.options.typeCheck` están habilitados en `vite.config.ts`.
 - Comprueba si tu `tsconfig.json` aún utiliza `compilerOptions.baseUrl`.
 
-El motor de comprobación de tipos de Oxlint, impulsado por `tsgolint`, no soporta `baseUrl`. `vp migrate` y `vp lint --init` intentan ejecutar el comando `vp dlx @andrewbranch/ts5to6 --fixBaseUrl .` para solucionarlo antes de habilitar el linting con conocimiento de tipos. Si esa solución falla o es rechazada, Vite+ omite `typeAware` y `typeCheck`.
+El motor de comprobación de tipos de Oxlint, impulsado por `tsgolint`, no soporta `baseUrl`. `vp migrate` y `vp lint --init` intentan ejecutar el comando `vp dlx @andrewbranch/ts5to6 --fixBaseUrl <ruta a tsconfig>` para solucionarlo antes de habilitar el linting con conocimiento de tipos. Si esa solución falla o es rechazada, Vite+ omite `typeAware` y `typeCheck`.
 
 ## La configuración anidada de lint o formato no se aplica {#nested-lint-or-format-config-is-not-applied}
 
@@ -28,7 +28,7 @@ Al ejecutar `vp lint`, `vp fmt` o `vp check`, las configuraciones en subdirector
 
 Mantén los ajustes de lint y formato en el `vite.config.ts` de la raíz. Usa [`lint.overrides`](/guide/monorepo#configuracion-de-raiz-con-overrides) y [`fmt.overrides`](/guide/monorepo#overrides-de-formato) para ajustes específicos de archivos o paquetes. También puedes [importar objetos de configuración](/guide/monorepo#composicion-de-archivos-de-configuracion) en la configuración raíz para mantener los ajustes en archivos separados.
 
-Para la integración con IDE, `disableNestedConfig` y `fmt.disableNestedConfig` deshabilitan las configuraciones anidadas de lint y formato por archivo. Consulta [Integración con IDE](/guide/ide-integration) para obtener instrucciones de configuración para tu editor.
+Configura el linting y formateo de tu editor para usar el `vite.config.ts` de la raíz del workspace. Consulta [Integración con IDE](/guide/ide-integration) para ver las instrucciones de configuración específicas de cada editor.
 
 Por ahora estamos posponiendo la aplicación de configuraciones anidadas a archivos individuales. Algunos de los factores que estamos considerando son cómo la detección implícita de configuraciones afecta la previsibilidad del linting y formateo, qué contexto necesitan los agentes de IA para comprender los ajustes aplicables y el costo potencial de rendimiento de buscar y cargar múltiples configuraciones. Al mismo tiempo, reconocemos que mantener el contexto específico del paquete cerca del código puede tener beneficios. Los casos de uso que hemos escuchado hasta ahora no nos han dado una razón suficiente para comprometernos con esa semántica. Esperar deja espacio para agregar soporte más adelante, y nos gustaría escuchar por qué tu proyecto necesita configuraciones anidadas, especialmente dónde los overrides a nivel raíz se quedan cortos.
 

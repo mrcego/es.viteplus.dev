@@ -111,8 +111,9 @@ El rastreo del sistema de archivos registra el acceso. No puede saber por qué u
 Para una compilación de Vite estándar, no necesitas agregar estas entradas tú mismo porque Vite las informa automáticamente en tiempo de ejecución:
 
 - `env: ['VITE_*']` o `env: ['NODE_ENV']`
-- `output: ['dist/**']`
 - exclusiones de entrada o salida para rutas temporales como `node_modules/.vite-temp`
+
+Las salidas de compilación como `dist` son capturadas por el seguimiento automático de escritura de archivos y se restauran en aciertos de caché.
 
 Solo necesitas definir la tarea con `vp build`:
 

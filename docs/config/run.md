@@ -184,12 +184,16 @@ tasks: {
 
 No coloques una variable en `untrackedEnv` si su valor cambia el resultado de la tarea. Si una herramienta que informa a la caché cubre la variable a través del [rastreo automático](/guide/automatic-data-tracking#rastreo-cooperativo), déjala fuera tanto de `env` como de `untrackedEnv`.
 
-Vite Task pasa un conjunto de variables de entorno comunes a todas las tareas:
+Vite Task incluye patrones no rastreados por defecto para variables del sistema y herramientas comunes. Los ejemplos incluyen:
 
-- **Sistema:** `HOME`, `USER`, `PATH`, `SHELL`, `LANG`, `TZ`
-- **Node.js:** `NODE_OPTIONS`, `COREPACK_HOME`, `PNPM_HOME`
-- **CI/CD:** `CI`, `VERCEL_*`, `NEXT_*`, `GITHUB_*`, `RUNNER_*`, `ACTIONS_ID_TOKEN_REQUEST_URL`, `ACTIONS_ID_TOKEN_REQUEST_TOKEN`
-- **Terminal:** Las variables de color (`FORCE_COLOR`, `NO_COLOR`, `COLORTERM`, `TERM`, `TERM_PROGRAM`) no se pasan a las tareas a menos que las incluyas en `env` (el valor se incluye en la huella digital, por lo que cambiarlo invalida el caché) o en `untrackedEnv` (se pasan sin incluirse en la huella digital). Si `FORCE_COLOR` no está en ninguna de las listas, el proceso hijo recibe `FORCE_COLOR=1` para que los registros almacenados en caché mantengan el color. Los colores se eliminan al mostrarse cuando la terminal no puede renderizarlos.
+- **Sistema:** `HOME`, `USER`, `PATH`, `SHELL`, `LANG`, `TZ`, `TMP`, `TEMP`
+- **Node.js y gestores de paquetes:** `NODE_OPTIONS`, `NPM_CONFIG_STORE_DIR`, `PNPM_HOME`
+- **CI:** `CI`, `VERCEL_*`, `NEXT_*`, `GITHUB_*`, `RUNNER_*`, `ACTIONS_ID_TOKEN_REQUEST_URL`
+- **Windows:** `APPDATA`, `LOCALAPPDATA`, `SYSTEMROOT`, `USERPROFILE`
+- **Herramientas de desarrollo:** `VSCODE_*`, `JB_IDE_*`, `DOCKER_*`, `BUILDKIT_*`, `COMPOSE_*`, `PLAYWRIGHT_*`
+- **Tokens:** `*_TOKEN`, incluyendo `ACTIONS_ID_TOKEN_REQUEST_TOKEN`
+
+Las variables de color como `FORCE_COLOR`, `NO_COLOR`, `COLORTERM`, `TERM` y `TERM_PROGRAM` requieren una entrada explícita en `env` o `untrackedEnv`. Si `FORCE_COLOR` no aparece en la lista, Vite Task establece `FORCE_COLOR=1` para mantener los logs almacenados en caché a color. Los colores se eliminan al mostrarlos cuando la terminal no puede renderizarlos.
 
 ### `cache.input`
 

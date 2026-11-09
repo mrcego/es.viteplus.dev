@@ -32,11 +32,13 @@ building legacy app for production...
 Usa `vp run` sin un nombre de tarea para usar el ejecutor interactivo de tareas:
 
 ```
-Select a task (↑/↓, Enter to run, Esc to clear):
+Select a task (↑/↓, Enter to run, type to search):
 
   › build: node compile-legacy-app.js
     test: jest
 ```
+
+Con el [completado de shell](/guide/env#completado-de-shell) habilitado, presiona Tab después de `vp run ` o `vpr ` para completar los nombres de tareas de tu proyecto.
 
 ## Comandos Integrados frente a Scripts
 
@@ -62,7 +64,7 @@ $ node compile-legacy-app.js
 Si nada cambia, la salida se reproduce desde el caché en la siguiente ejecución:
 
 ```
-$ node compile-legacy-app.js ✓ cache hit, replaying
+$ node compile-legacy-app.js ◉ cache hit, replaying
 ✓ built in 69s
 
 ---
@@ -72,7 +74,7 @@ vp run: cache hit, 69s saved.
 Si un archivo de entrada cambia, la tarea se ejecuta de nuevo:
 
 ```
-$ node compile-legacy-app.js ✗ cache miss: 'legacy/index.js' modified, executing
+$ node compile-legacy-app.js ○ cache miss: 'legacy/index.js' modified, executing
 ```
 
 ## Definiciones de Tareas
@@ -243,18 +245,18 @@ $ vp build
 ✓ built in 28ms
 
 ---
-vp run: 0/2 cache hit (0%).
+vp run: 0/2 cache hit (0%), 2/2 successful.
 ```
 
 Cada subtarea tiene su propia entrada de caché. Si solo cambiaron los archivos `.ts` pero lint aún pasa, solo `vp build` se ejecutará de nuevo la próxima vez que se llame a `vp run --cache check`:
 
 ```
-$ vp lint ✓ cache hit, replaying
-$ vp build ✗ cache miss: 'src/index.ts' modified, executing
+$ vp lint ◉ cache hit, replaying
+$ vp build ○ cache miss: 'index.html' modified, executing
 ✓ built in 30ms
 
 ---
-vp run: 1/2 cache hit (50%), 120ms saved.
+vp run: 1/2 cache hit (50%), 2/2 successful, 120ms saved.
 ```
 
 ### `vp run` Anidado

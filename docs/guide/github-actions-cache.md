@@ -56,7 +56,7 @@ Ejecuta cada tarea dos veces:
 vp run build
 vp run build # debería imprimir "cache hit"
 vp run lint
-vp run lint # debería imprimir "cache hit"
+vp run lint  # debería imprimir "cache hit"
 ```
 
 ## 2. Restaurar la Caché Después de Instalar

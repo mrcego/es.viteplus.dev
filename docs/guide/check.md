@@ -6,9 +6,9 @@
 
 `vp check` es el comando predeterminado para verificaciones estáticas rápidas en Vite+. Reúne el formateo a través de [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html), el linting a través de [Oxlint](https://oxc.rs/docs/guide/usage/linter.html) y las verificaciones de tipos de TypeScript a través de [tsgolint](https://github.com/oxc-project/tsgolint). Al fusionar todas estas tareas en un único comando, `vp check` es más rápido que ejecutar el formateo, linting y verificación de tipos como herramientas separadas en comandos distintos.
 
-Cuando `typeCheck` está habilitado en el bloque `lint.options` en `vite.config.ts`, `vp check` también ejecuta verificaciones de tipos de TypeScript a través de la ruta consciente del tipo (type-aware) de Oxlint impulsada por el toolchain de TypeScript en Go y [tsgolint](https://github.com/oxc-project/tsgolint). `vp create` y `vp migrate` habilitan tanto `typeAware` como `typeCheck` por defecto.
+Cuando tanto `typeAware` como `typeCheck` están habilitados en el bloque `lint.options` en `vite.config.ts`, `vp check` también ejecuta comprobaciones de tipos de TypeScript a través de la ruta consciente del tipo (type-aware) de Oxlint impulsada por el toolchain de TypeScript en Go y [tsgolint](https://github.com/oxc-project/tsgolint). `vp create` y `vp migrate` habilitan tanto `typeAware` como `typeCheck` por defecto.
 
-Recomendamos activar `typeCheck` para que `vp check` se convierta en el comando único para las verificaciones estáticas durante el desarrollo.
+Recomendamos activar tanto `typeAware` como `typeCheck` para que `vp check` se convierta en el comando único para comprobaciones estáticas durante el desarrollo.
 
 ## Uso
 
@@ -18,7 +18,7 @@ vp check --fix             # Formatear y ejecutar autocorrectores.
 vp check --quiet           # Ocultar advertencias de lint; aún reportar y fallar en caso de errores.
 vp check --no-fmt          # Omitir el formato; ejecutar lint (y verificación de tipos si está habilitado).
 vp check --no-lint         # Omitir reglas de lint; mantener la verificación de tipos cuando esté habilitada.
-vp check --no-fmt --no-lint # Solo verificación de tipos (requiere que `typeCheck` esté habilitado).
+vp check --no-fmt --no-lint # Solo comprobación de tipos (requiere que tanto `typeAware` como `typeCheck` estén habilitados).
 ```
 
 ## Configuración

@@ -15,9 +15,9 @@ Cuando todas las comprobaciones coinciden, Vite Task reproduce la salida de term
 Cuando ocurre un fallo de caché (cache miss), Vite Task te indica exactamente por qué:
 
 ```
-$ vp lint ✗ cache miss: 'src/utils.ts' modified, executing
-$ vp build ✗ cache miss: env 'VITE_GREETING' changed, executing
-$ vp test ✗ cache miss: args changed, executing
+$ vp lint ○ cache miss: 'src/utils.ts' modified, executing
+$ vp build ○ cache miss: env 'VITE_GREETING' changed, executing
+$ vp test ○ cache miss: args changed, executing
 ```
 
 ## ¿Cuándo se habilita el caché?

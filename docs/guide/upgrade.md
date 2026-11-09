@@ -20,6 +20,12 @@ vp upgrade <versión>              # instalar una versión específica
 vp upgrade --registry <registro>  # usar un registro de npm personalizado
 ```
 
+### Comprobaciones automáticas de actualización
+
+La CLI global busca actualizaciones en segundo plano durante el uso normal de la terminal, almacenando en caché los resultados durante 24 horas. Cuando hay una versión más reciente disponible, imprime un aviso en stderr sin instalarla.
+
+Establece `VP_NO_UPDATE_CHECK=1` para deshabilitar estas comprobaciones y avisos. También están deshabilitadas en CI y para instalaciones de Homebrew.
+
 ### Reversión (Rollback)
 
 Vite+ mantiene instaladas las **3 versiones más recientes** para que puedas revertir rápidamente:

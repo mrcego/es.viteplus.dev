@@ -6,11 +6,7 @@ Actualización de `vite-plus` y sus dependencias de proyecto relacionadas. Para 
 
 La forma recomendada de actualizar un proyecto es usar `vp migrate`, lo que mantiene alineadas las dependencias del conjunto de herramientas.
 
-Después de actualizar la dependencia `vite-plus` del proyecto, ejecuta la CLI local para alinear las versiones del conjunto de herramientas:
-
-```bash
-./node_modules/.bin/vp migrate
-```
+Antes de actualizar las dependencias del proyecto, [ejecuta el migrador objetivo a través de tu gestor de paquetes](./migrate.md#sin-la-cli-global).
 
 Si tu CLI global es más reciente que la versión del proyecto, ejecutar `vp migrate` actualiza el proyecto a esa versión global:
 

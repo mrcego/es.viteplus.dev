@@ -1,4 +1,4 @@
-# Instalar Dependencias
+# Gestión de Paquetes
 
 `vp install` instala las dependencias usando el gestor de paquetes del espacio de trabajo (workspace) actual.
 
@@ -109,7 +109,11 @@ Usa `vp install` cuando quieras instalar exactamente lo que describen el `packag
 - `vp install --prefer-offline` y `vp install --offline` prefieren o requieren paquetes en caché.
 - `vp install --ignore-scripts` omite los scripts del ciclo de vida.
 - `vp install --filter <patrón>` limita el trabajo de instalación en monorepos.
-- `vp install -w` instala en la raíz del workspace.
+- `vp install -w` instala en la raíz del workspace
+
+::: info INFORMACIÓN
+El soporte de opciones depende del gestor de paquetes detectado y su versión. Las opciones no admitidas hacen que `vp` salga con un error antes de ejecutar el comando del gestor de paquetes.
+:::.
 
 #### Instalación Global
 
@@ -172,7 +176,16 @@ Usa estos comandos cuando necesites un comportamiento de nivel más bajo del ges
 
 - `vp link` y `vp unlink` gestionan enlaces de desarrollo locales.
 - `vp dlx create-vite` ejecuta el binario de un paquete sin guardarlo como dependencia.
-- `vp pm <comando>` reenvía directamente al gestor de paquetes resuelto.
+- `vp pm <comando>` proporciona comandos adicionales de gestión de paquetes adaptados al gestor de paquetes detectado.
+
+  - **Dependencias**: `ci`, `prune`, `list`, `rebuild`, `approve-builds`
+  - **Parches**: `patch`, `patch-commit`
+  - **Empaquetado y publicación**: `pack`, `version`, `publish`, `stage`, `dist-tag`, `deprecate`
+  - **Inspección**: `view`, `search`, `audit`, `fund`, `ping`
+  - **Autenticación y acceso**: `login`, `logout`, `whoami`, `token`, `owner`
+  - **Configuración**: `config`, `cache`
+
+  El soporte de comandos depende del gestor de paquetes y su versión. Ejecuta `vp pm --help` para listar comandos o `vp pm <comando> --help` para ver las opciones disponibles..
 
 Ejemplos:
 
