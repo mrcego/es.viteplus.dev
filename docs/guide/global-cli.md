@@ -350,6 +350,10 @@ vp run build
 
 Sin embargo, para herramientas específicas del proyecto como `vp dev`, `vp check` y `vp test`, necesitas agregar el paquete local `vite-plus` a tu proyecto.
 
+## Ejecutar un comando en otro directorio
+
+Usa `vp -C <dir> <comando>` para ejecutar cualquier comando `vp` desde otro directorio de trabajo. Consulta [Apuntar a un paquete con `-C`](/guide/monorepo#apuntar-a-un-paquete-con-c) para ver ejemplos y detalles.
+
 ## Usar Ambas CLIs Juntas
 
 Cuando ejecutas `vp` dentro de un proyecto que tiene `vite-plus` instalado localmente:

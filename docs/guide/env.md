@@ -63,6 +63,13 @@ El uso de `pm` registra el modo seleccionado para todos los gestores de paquetes
 
 Las actualizaciones actualizan la configuración automáticamente. Abre una nueva terminal o recarga tu script de configuración de shell después.
 
+#### Completado de shell
+
+La CLI global admite completado con Tab en Bash, Zsh, Fish, Nushell y PowerShell. Ejecuta `vp env setup` y sigue las instrucciones de configuración del shell que imprime para habilitarlo. Presiona Tab para completar comandos, o nombres de tareas del proyecto después de `vp run` y `vpr`.
+
+- **Zsh**: Ejecuta `autoload -Uz compinit; compinit` antes de cargar el script de configuración si tu shell no ha inicializado el completado.
+- **Nushell**: El completado requiere `fish` en `PATH`.
+
 ### Gestión de Versiones
 
 - `vp env pin` fija una versión para el proyecto actual escribiendo `.node-version` o `packageManager` en `package.json`.
@@ -70,7 +77,7 @@ Las actualizaciones actualizan la configuración automáticamente. Abre una nuev
 - `vp env default` establece la versión predeterminada global para Node.js o para un gestor de paquetes.
 - `vp env use` establece una versión para la sesión de shell actual.
 - `vp env install` instala una versión de Node.js o gestor de paquetes.
-- `vp env uninstall` elimina una versión instalada.
+- `vp env uninstall` elimina la versión de Node.js resuelta a partir de una versión o selector explícito, como `22` o `lts`. Los gestores de paquetes requieren una versión exacta calificada, como `pnpm@10.18.0`.
 - `vp env clean` elimina los runtimes de Node.js no utilizados y todos los gestores de paquetes descargados.
 - `vp env exec` ejecuta un comando con una versión específica de Node.js o del gestor de paquetes.
 - `vp node` ejecuta un script de Node.js — atajo para `vp env exec node`.
@@ -81,7 +88,7 @@ Las actualizaciones actualizan la configuración automáticamente. Abre una nuev
 - `vp env which` muestra la ruta del binario resuelto.
 - `vp env list` lista las versiones instaladas localmente.
 - `vp env list-remote` lista las versiones remotas disponibles.
-- `vp env doctor` verifica la configuración del entorno y advierte sobre problemas.
+- `vp env doctor` ejecuta diagnósticos del entorno. Agrega `node` para enfocarte en Node.js, `pm` para todos los gestores de paquetes, o `npm`, `pnpm`, `yarn` o `bun` para un gestor de paquetes específico.
 
 ## Fijar Versiones del Proyecto
 

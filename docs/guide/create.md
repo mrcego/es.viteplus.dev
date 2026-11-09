@@ -42,7 +42,7 @@ Ejecuta `vp create --list` para ver las plantillas integradas y los atajos comun
 
 ## Opciones
 
-- `--directory <dir>` escribe el proyecto generado en un directorio de destino específico.
+- `--directory <dir>` escribe el proyecto generado en un directorio de destino específico. Solo las plantillas integradas y las plantillas `@org` empaquetadas admiten esta opción..
 - `--agent <nombre>` crea archivos de instrucciones para agentes durante la creación.
 - `--no-agent` omite la configuración de instrucciones del agente.
 - `--editor <nombre>` escribe archivos de configuración del editor.
@@ -50,7 +50,11 @@ Ejecuta `vp create --list` para ver las plantillas integradas y los atajos comun
 - `--git` inicializa un repositorio git.
 - `--no-git` omite la inicialización del repositorio git.
 - `--hooks` habilita la configuración de hooks de pre-commit.
-- `--no-hooks` omite la configuración de hooks.
+- `--no-hooks` omite la configuración de hooks
+
+::: info INFORMACIÓN
+`--git` y `--no-git` no están disponibles al agregar un paquete a un monorepo existente.
+:::`.
 - `--package-manager <nombre>` utiliza el gestor de paquetes especificado (`pnpm`, `npm`, `yarn` o `bun`).
 - `--approve-builds` aprueba y ejecuta scripts de construcción de dependencias restringidos sin preguntar.
 - `--no-interactive` se ejecuta sin preguntas.

@@ -1,6 +1,6 @@
 # Actualizar a Vitest 5
 
-Vite+ incluye Vitest `5.0.3`. Usa Node `^22.18.0 || ^24.11.0 || >=26.0.0` para la CLI y las pruebas.
+Vite+ incluye Vitest `5.0.4`. Usa Node `^22.18.0 || ^24.11.0 || >=26.0.0` para la CLI y las pruebas.
 
 ## Antes de migrar
 
@@ -120,7 +120,7 @@ Mantén los archivos de benchmark que coincidan con `benchmark.include`. Los com
 
 ## Puntos de entrada y paquetes
 
-Usa `vite-plus/test` para aserciones y APIs compatibles del ejecutor. Mantén los proveedores de cobertura y `@vitest/ui` en la versión exacta del ejecutor integrado, `5.0.3`. Mantén `@vitest/web-worker` alineado cuando tu proyecto lo utilice.
+Usa `vite-plus/test` para aserciones y APIs compatibles del ejecutor. Mantén los proveedores de cobertura y `@vitest/ui` en la versión exacta del ejecutor integrado, `5.0.4`. Mantén `@vitest/web-worker` alineado cuando tu proyecto lo utilice.
 
 | Importación v4 | Importación v5 o acción |
 | --- | --- |

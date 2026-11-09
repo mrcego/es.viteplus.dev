@@ -96,7 +96,7 @@ Vite+ puede manejar todo el ciclo de desarrollo frontend local, desde iniciar un
 - [`vp migrate`](/guide/migrate) mueve proyectos existentes a Vite+.
 - [`vp config`](/guide/commit-hooks) configura los hooks de commit y la integración con agentes.
 - [`vp staged`](/guide/commit-hooks) ejecuta verificaciones en archivos preparados (staged).
-- [`vp install`](/guide/install) instala dependencias con el gestor de paquetes correcto.
+- [`vp install`](/guide/package-management) instala dependencias con el gestor de paquetes correcto.
 - [`vp env`](/guide/env) gestiona entornos de Node.js y de gestores de paquetes.
 
 ### Desarrollar
@@ -122,9 +122,9 @@ Vite+ puede manejar todo el ciclo de desarrollo frontend local, desde iniciar un
 
 ### Gestionar Dependencias
 
-- [`vp add`](/guide/install), [`vp remove`](/guide/install), [`vp update`](/guide/install), [`vp dedupe`](/guide/install), [`vp outdated`](/guide/install), [`vp list`](/guide/install), [`vp why`](/guide/install) y [`vp info`](/guide/install) envuelven los flujos de trabajo del gestor de paquetes.
-- [`vp link`](/guide/install), [`vp unlink`](/guide/install) y [`vp rebuild`](/guide/install) cubren enlaces de paquetes locales y reconstrucciones de módulos nativos.
-- [`vp pm <comando>`](/guide/install) llama directamente a otros comandos del gestor de paquetes.
+- [`vp add`](/guide/package-management), [`vp remove`](/guide/package-management), [`vp update`](/guide/package-management), [`vp dedupe`](/guide/package-management), [`vp outdated`](/guide/package-management), [`vp list`](/guide/package-management), [`vp why`](/guide/package-management) y [`vp info`](/guide/package-management) envuelven los flujos de trabajo del gestor de paquetes.
+- [`vp link`](/guide/package-management), [`vp unlink`](/guide/package-management) y [`vp rebuild`](/guide/package-management) cubren enlaces de paquetes locales y reconstrucciones de módulos nativos.
+- [`vp pm <comando>`](/guide/package-management) llama directamente a otros comandos del gestor de paquetes.
 
 ### Mantener
 

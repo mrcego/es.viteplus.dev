@@ -58,7 +58,7 @@ const guideSidebar = [
         ],
       },
       { text: 'Actualizar Proyecto Vite+', link: '/guide/upgrade-project' },
-      { text: 'Instalar Dependencias', link: '/guide/install' },
+      { text: 'Gestión de paquetes', link: '/guide/package-management' },
       { text: 'Entorno', link: '/guide/env' },
       { text: '¿Por qué Vite+?', link: '/guide/why' },
     ],
