@@ -20,6 +20,40 @@ vp create <plantilla>
 vp create <plantilla> -- <opciones-de-la-plantilla>
 ```
 
+### Sin la CLI global
+
+Si aún no has instalado [la CLI global `vp`](/guide/global-cli), Vite+ proporciona el paquete `create-vite-plus` que ejecuta `vp create` a través de tu gestor de paquetes.
+
+::: code-group
+
+```bash [pnpm]
+pnpm create vite-plus
+```
+
+```bash [npm]
+npm create vite-plus@latest
+```
+
+```bash [Yarn]
+yarn create vite-plus
+```
+
+```bash [Bun]
+bun create vite-plus
+```
+
+:::
+
+El nuevo proyecto utiliza el gestor de paquetes que ejecutó el comando, a menos que pases `--package-manager` o lo crees dentro de un espacio de trabajo existente. Los argumentos se reenvían a `vp create` sin cambios, por lo que el primer argumento es la plantilla, no el directorio de destino:
+
+```bash
+pnpm create vite-plus vite:application --directory my-app
+```
+
+Si estás utilizando npm, se necesita un `--` antes de las opciones destinadas a `vp create`, por ejemplo `npm create vite-plus@latest -- vite:application --directory my-app`.
+
+Después de crear el proyecto, ejecuta `vp` a través de tu gestor de paquetes, por ejemplo `pnpm exec vp run`.
+
 ## Plantillas Integradas
 
 Vite+ incluye estas plantillas integradas:

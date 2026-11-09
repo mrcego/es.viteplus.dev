@@ -92,21 +92,21 @@ Actualiza la [CLI global](./upgrade.md#vp-global) a tu versión 1.0 objetivo, lu
 
 ### Sin la CLI Global
 
-Usa un entorno de ejecución de Node.js existente que cumpla con `^22.18.0 || ^24.11.0 || >=26.0.0`. Ejecuta el migrador objetivo a través de tu gestor de paquetes sin agregarlo al proyecto primero. Para la versión `1.2.0`:
+Usa un entorno de ejecución de Node.js existente que cumpla con `^22.18.0 || ^24.11.0 || >=26.0.0`. Ejecuta el migrador objetivo a través de tu gestor de paquetes sin agregarlo al proyecto primero. Para la versión `1.3.0`:
 
 ::: code-group
 
 ```bash [pnpm]
-pnpm dlx --package=vite-plus@1.2.0 vp migrate --no-interactive
+pnpm dlx --package=vite-plus@1.3.0 vp migrate --no-interactive
 ```
 
 ```bash [npm]
-npx --package=vite-plus@1.2.0 vp migrate --no-interactive
+npx --package=vite-plus@1.3.0 vp migrate --no-interactive
 ```
 
 :::
 
-Reemplaza `1.2.0` con tu versión de lanzamiento objetivo. Para una versión preliminar, usa la versión del PR y pasa `--registry=https://registry-bridge.viteplus.dev` a `pnpm` o `npx` antes del comando `vp`. Mantén la versión en `--package` explícita para que ejecutes el migrador objetivo en lugar de la CLI local antigua.
+Reemplaza `1.3.0` con tu versión de lanzamiento objetivo. Para una versión preliminar, usa la versión del PR y pasa `--registry=https://registry-bridge.viteplus.dev` a `pnpm` o `npx` antes del comando `vp`. Mantén la versión en `--package` explícita para que ejecutes el migrador objetivo en lugar de la CLI local antigua.
 
 Después de la migración, finaliza la instalación de dependencias y valida con la CLI local actualizada:
 
