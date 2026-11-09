@@ -52,7 +52,51 @@ Cuando `external` acompaña a cualquiera de las formas de `skipNodeModulesBundle
 
 La transformación no evalúa código de configuración. Los objetos con operadores spread, claves calculadas o duplicadas, y opciones antiguas y nuevas en conflicto requieren revisión manual. Los selectores booleanos dinámicos permanecen sin cambios. Las opciones no relacionadas de Vite y plugins se mantienen intactas. Ejecuta `vp pack` después de la migración para comprobar el resultado. Los requisitos de Node.js, la resolución de módulos de TypeScript y los valores de retorno programáticos de `build()` requieren una revisión independiente.
 
+## Configuración de Caché de Tareas
+
+`vp migrate` mueve `env`, `untrackedEnv`, `input` y `output` del nivel superior de cada tarea al objeto [`cache`](/config/run#cache) de la tarea. Actualiza objetos estáticos `run.tasks` en `vite.config.*`. Esto también se ejecuta en proyectos Vite+ existentes sin `--full`, incluyendo paquetes del workspace.
+
+| Configuración previa de tarea | Configuración actualizada de tarea                     |
+| ----------------------------- | ------------------------------------------------------ |
+| Sin `cache`                   | Agrega `cache` con los ajustes movidos                  |
+| `cache: true`                 | Reemplaza `true` con los ajustes movidos                |
+| `cache: { ... }`              | Agrega los ajustes movidos al objeto existente          |
+
+```ts
+// Antes
+build: {
+  command: 'vp build',
+  env: ['NODE_ENV'],
+  input: [{ auto: true }, '!dist/**'],
+},
+
+// Después
+build: {
+  command: 'vp build',
+  cache: {
+    env: ['NODE_ENV'],
+    input: [{ auto: true }, '!dist/**'],
+  },
+},
+```
+
+Los ajustes movidos mantienen su texto e indentación, y el paso de formateo descrito en [Después de la migración](#despues-de-la-migracion) los indenta dentro de `cache`. Los comentarios en su propia línea encima de un ajuste movido, y los comentarios `//` que le siguen en la misma línea, se mueven con él.
+
+La transformación no evalúa código de configuración. Deja una tarea sin cambios e imprime una advertencia de migración manual cuando la tarea tiene:
+
+- spreads, o claves computadas, escapadas o duplicadas;
+- un ajuste movido escrito como método, como `input() { ... }`;
+- un comentario entre un ajuste movido y su coma, o después del último ajuste en `cache`;
+- un ajuste movido que ya existe en `cache`;
+- un valor de `cache` distinto de `true` o un literal de objeto.
+
+También advierte sobre tareas en un objeto `vite.config.*` que no es la configuración exportada en sí, como una variable a la que la configuración hace referencia o un objeto pasado a `mergeConfig`. Las tareas creadas en otros módulos, por ejemplo por una función auxiliar compartida, no se detectan. Mueve sus ajustes manualmente; `vp run` lista cada tarea que aún lo necesita.
+
+Con `cache: false`, los ajustes movidos no tendrían efecto, así que decide si eliminarlos o habilitar el almacenamiento en caché. En un proyecto que por lo demás está actualizado, `vp migrate` imprime estas advertencias sin ejecutar el resto de la migración.
+
 ## Reglas de Dependencias
+
+La migración preserva la política de declaración del gestor de paquetes del proyecto. Un campo `packageManager` o `devEngines.packageManager` existente sigue siendo la fuente de la verdad, mientras que un proyecto que solo depende de su lockfile permanece sin fijar. En particular, la migración no convierte la versión del gestor de paquetes utilizada para su propia instalación en un nuevo requisito exacto para colaboradores o CI. Cuando la migración infiere un gestor de paquetes no declarado, imprime una advertencia y señala `vp env pin` para proyectos que deseen optar por una fijación explícita.
 
 Qué le sucede a cada dependencia del toolchain, de un vistazo:
 

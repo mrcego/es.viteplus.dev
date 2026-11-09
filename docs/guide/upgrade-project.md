@@ -58,4 +58,4 @@ vp migrate
 
 Migrate escribe el registro puente en `.npmrc`. Para Yarn Berry, escribe el registro en `.yarnrc.yml`. Fija `vite-plus` y el alias de `vite` a la versión `0.0.0-commit.<sha>` correspondiente. El alias de `vite` apunta a `@voidzero-dev/vite-plus-core`. Haz commit de la línea del registro si el CI del proyecto debe probar la vista previa.
 
-Después de la instalación, ejecuta `vp toolchain` para mostrar las versiones seleccionadas. Después de probar, establece `vite-plus` en `latest`. Elimina la línea `registry` del puente de `.npmrc` o `.yarnrc.yml`. Luego ejecuta `vp install`.
+Después de la instalación, ejecuta `vp toolchain` para mostrar las versiones seleccionadas. Después de probar, establece `vite-plus` en `latest` y el alias de `vite` en `npm:@voidzero-dev/vite-plus-core@latest` donde sea que estén declarados. Elimina la configuración del puente de vista previa de `.npmrc` o `.yarnrc.yml`, restaurando cualquier registro anterior. Luego ejecuta `vp install`.

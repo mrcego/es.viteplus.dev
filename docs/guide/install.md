@@ -63,7 +63,8 @@ vp install -w
 
 Usa el parámetro `-g` para instalar, actualizar o eliminar paquetes instalados globalmente:
 
-- `vp install -g <pkg>` instala un paquete globalmente.
+- `vp install -g <pkg>` instala un paquete globalmente
+- `vp install -g --node <version> <pkg>` instala un paquete globalmente con una versión específica de Node.js.
 - `vp uninstall -g <pkg>` elimina un paquete global.
 - `vp update -g [pkg]` acredita un paquete global o todos ellos.
 - `vp list -g [pkg]` enumera los paquetes globales.

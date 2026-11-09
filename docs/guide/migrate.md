@@ -92,21 +92,21 @@ Actualiza la [CLI global](./upgrade.md#vp-global) a tu versión 1.0 objetivo, lu
 
 ### Sin la CLI Global
 
-Usa un entorno de ejecución de Node.js existente que cumpla con `^22.18.0 || ^24.11.0 || >=26.0.0`. Ejecuta el migrador objetivo a través de tu gestor de paquetes sin agregarlo al proyecto primero. Para la versión `1.0.0-rc.0`:
+Usa un entorno de ejecución de Node.js existente que cumpla con `^22.18.0 || ^24.11.0 || >=26.0.0`. Ejecuta el migrador objetivo a través de tu gestor de paquetes sin agregarlo al proyecto primero. Para la versión `1.1.0`:
 
 ::: code-group
 
 ```bash [pnpm]
-pnpm dlx --package=vite-plus@1.0.0-rc.0 vp migrate --no-interactive
+pnpm dlx --package=vite-plus@1.1.0 vp migrate --no-interactive
 ```
 
 ```bash [npm]
-npx --package=vite-plus@1.0.0-rc.0 vp migrate --no-interactive
+npx --package=vite-plus@1.1.0 vp migrate --no-interactive
 ```
 
 :::
 
-Reemplaza `1.0.0-rc.0` con tu versión de lanzamiento objetivo. Para una versión preliminar, usa la versión del PR y pasa `--registry=https://registry-bridge.viteplus.dev` a `pnpm` o `npx` antes del comando `vp`. Mantén la versión en `--package` explícita para que ejecutes el migrador objetivo en lugar de la CLI local antigua.
+Reemplaza `1.1.0` con tu versión de lanzamiento objetivo. Para una versión preliminar, usa la versión del PR y pasa `--registry=https://registry-bridge.viteplus.dev` a `pnpm` o `npx` antes del comando `vp`. Mantén la versión en `--package` explícita para que ejecutes el migrador objetivo en lugar de la CLI local antigua.
 
 Después de la migración, finaliza la instalación de dependencias y valida con la CLI local actualizada:
 
@@ -148,7 +148,7 @@ Mira y copia este prompt en tu asistente de código con IA para actualizar un pr
 
 ### Vitest
 
-Vitest se migra automáticamente a través de `vp migrate`. `vite-plus` reexporta el `vitest@5.0.1` de upstream bajo `vite-plus/test*`, por lo que para pruebas en modo Node, una sola instalación de `vite-plus` es suficiente: ya no necesitas instalar `vitest` directamente.
+Vitest se migra automáticamente a través de `vp migrate`. `vite-plus` reexporta el `vitest@5.0.3` de upstream bajo `vite-plus/test*`, por lo que para pruebas en modo Node, una sola instalación de `vite-plus` es suficiente: ya no necesitas instalar `vitest` directamente.
 
 Para el modo navegador, puedes usar el entorno de ejecución del navegador base (`@vitest/browser`) y el proveedor de vista previa (`@vitest/browser-preview`) incluidos en `vite-plus`. Para usar Playwright o WebDriverIO, también necesitas el proveedor opcional (opt-in) (`@vitest/browser-playwright` o `@vitest/browser-webdriverio`) y su framework dependiente (`playwright` o `webdriverio`).
 

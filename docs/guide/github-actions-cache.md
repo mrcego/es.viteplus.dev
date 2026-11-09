@@ -61,7 +61,7 @@ vp run lint # debería imprimir "cache hit"
 
 ## 2. Restaurar la Caché Después de Instalar
 
-Restaura `node_modules/.vite/task-cache` después de `vp install`, porque la instalación de paquetes puede recrear o modificar `node_modules`.
+Restaura `node_modules/.vite/task-cache` después del paso `setup-vp`, porque la instalación de paquetes puede recrear o modificar `node_modules`.
 
 ```yaml [.github/workflows/ci.yml]
 name: CI
@@ -84,8 +84,6 @@ jobs:
         with:
           node-version: '24'
           cache: true
-
-      - run: vp install
 
       - name: Restaurar caché de Vite Task
         id: vite-task-cache

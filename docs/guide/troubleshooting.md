@@ -3,7 +3,7 @@
 Usa esta página cuando algo en Vite+ no se esté comportando de la manera que esperas.
 
 ::: info INFORMACIÓN
-Vite+ está en beta: estable, pero aún no completo. Estamos agregando funciones en el camino hacia la versión 1.0 y priorizamos los comentarios de la comunidad, así que por favor [contáctanos](#pedir-ayuda) si algo no funciona como se espera.
+Vite+ 1.0 está disponible. Seguimos mejorándolo y damos la bienvenida a los comentarios de la comunidad, así que por favor [contáctanos](#pedir-ayuda) si algo no funciona como se espera.
 :::
 
 ## Versiones de Herramientas Compatibles
@@ -24,7 +24,7 @@ El motor de comprobación de tipos de Oxlint, impulsado por `tsgolint`, no sopor
 
 ## La configuración anidada de lint o formato no se aplica {#nested-lint-or-format-config-is-not-applied}
 
-Al ejecutar `vp lint`, `vp fmt` o `vp check`, las configuraciones en subdirectorios no anulan los ajustes para archivos individuales. Los comandos ejecutados desde el directorio de un paquete siguen utilizando los bloques `lint` y `fmt` de la raíz del workspace cuando existen. Usa `-c <ruta>` o `--config <ruta>` con `vp lint` o `vp fmt` para seleccionar otra configuración. Si la configuración raíz no tiene un bloque para esa herramienta, la herramienta utiliza la detección nativa desde el directorio de trabajo.
+Al ejecutar `vp lint`, `vp fmt` o `vp check`, las configuraciones en subdirectorios no anulan los ajustes para archivos individuales. `vp lint` y `vp fmt` permiten que Oxlint y Oxfmt detecten la configuración desde el directorio de trabajo, por lo que un bloque `lint` o `fmt` en la configuración de un paquete surte efecto cuando se ejecuta desde ese paquete, lo cual no recomendamos. `vp check` selecciona los bloques `lint` y `fmt` de la raíz del workspace cuando existen. Usa `-c <ruta>` o `--config <ruta>` con `vp lint` o `vp fmt` para seleccionar otra configuración explícitamente.
 
 Mantén los ajustes de lint y formato en el `vite.config.ts` de la raíz. Usa [`lint.overrides`](/guide/monorepo#configuracion-de-raiz-con-overrides) y [`fmt.overrides`](/guide/monorepo#overrides-de-formato) para ajustes específicos de archivos o paquetes. También puedes [importar objetos de configuración](/guide/monorepo#composicion-de-archivos-de-configuracion) en la configuración raíz para mantener los ajustes en archivos separados.
 
@@ -84,8 +84,8 @@ Cuando `vite.config.ts` importa plugins en el nivel superior, se evalÃºan para
 Usa `lazyPlugins` para omitir la fábrica de plugins cuando vite-plus carga tu configuración solo para leer un bloque de metadatos (`lint`, `fmt`, `check`, `staged`, `pack`, `create`, la búsqueda de tareas de `run`/`cache` y herramientas de editor). Los plugins aún se cargan cuando Vite se ejecuta realmente, es decir, `dev`, `build`, `test`, `preview` y cualquier compilación que generen tus propios scripts (una tarea de `vp run`, `vp exec`):
 
 ```ts [vite.config.ts]
-import { defineConfig, lazyPlugins } from 'vite-plus';
 import myPlugin from 'vite-plugin-foo';
+import { defineConfig, lazyPlugins } from 'vite-plus';
 
 export default defineConfig({
   plugins: lazyPlugins(() => [myPlugin()]),

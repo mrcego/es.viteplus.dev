@@ -7,7 +7,7 @@ Vite Task puede rastrear automáticamente las dependencias y almacenar en caché
 Cuando una tarea se ejecuta con éxito (código de salida 0), se guarda su salida en la terminal (stdout/stderr) y todos los archivos escritos (archivos de salida). En la siguiente ejecución, Vite Task comprueba si algo ha cambiado:
 
 1. **Argumentos:** ¿Han cambiado los [argumentos adicionales](/guide/run#argumentos-adicionales) pasados a la tarea?
-2. **Variables de entorno:** ¿Ha cambiado alguna [variable de entorno registrada](/config/run#env)?
+2. **Variables de entorno:** ¿Ha cambiado alguna [variable de entorno registrada](/config/run#cache-env)?
 3. **Entradas:** ¿Ha cambiado algún archivo de entrada que el comando lee?
 
 Cuando todas las comprobaciones coinciden, Vite Task reproduce la salida de terminal almacenada en caché, restaura los archivos de salida guardados y omite el comando.
@@ -56,8 +56,10 @@ Usa [`input`](/config/run#input) u [`output`](/config/run#output) cuando una tar
 tasks: {
   build: {
     command: 'node build.mjs',
-    input: [{ auto: true }, '!dist/**'],
-    output: ['dist/**'],
+    cache: {
+      input: [{ auto: true }, '!dist/**'],
+      output: ['dist/**'],
+    },
   },
 }
 ```
@@ -66,18 +68,20 @@ tasks: {
 
 Por defecto, las tareas se ejecutan en un entorno limpio. Solo se pasan un pequeño conjunto de variables comunes, como `PATH`, `HOME` y `CI`. Otras variables de entorno no son visibles para la tarea ni se incluyen en la huella digital del caché.
 
-Para añadir una variable de entorno a la clave del caché, añádela a [`env`](/config/run#env). Cambiar su valor invalidará entonces el caché:
+Para añadir una variable de entorno a la clave del caché, añádela a [`cache.env`](/config/run#cache-env). Cambiar su valor invalidará entonces el caché:
 
 ```ts [vite.config.ts]
 tasks: {
   build: {
     command: 'webpack --mode production',
-    env: ['NODE_ENV'],
+    cache: {
+      env: ['NODE_ENV'],
+    },
   },
 }
 ```
 
-Para pasar una variable a la tarea **sin** afectar al comportamiento del caché, usa [`untrackedEnv`](/config/run#untrackedenv). Esto es útil para variables como `CI` o `GITHUB_ACTIONS` que deben estar disponibles en la tarea, pero que generalmente no afectan al comportamiento del caché.
+Para pasar una variable a la tarea **sin** afectar al comportamiento del caché, usa [`cache.untrackedEnv`](/config/run#cache-untrackedenv). Esto es útil para variables como `CI` o `GITHUB_ACTIONS` que deben estar disponibles en la tarea, pero que generalmente no afectan al comportamiento del caché.
 
 Consulta [Configuración de Ejecución](/config/run#env) para obtener detalles sobre patrones de comodines y la lista completa de variables que se pasan automáticamente.
 

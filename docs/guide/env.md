@@ -128,7 +128,12 @@ vp env install 22             # Instalar Node.js 22
 vp env default 22             # Establecer la versión global de Node.js
 vp env default pnpm@10        # Establecer la versión global de pnpm
 vp env use 20 pnpm@10         # Anular ambos componentes para esta shell
-vp env use --unset pm         # Eliminar solo la anulación de sesión del gestor de paquetes
+vp env use --unset pm         # Eliminar todas las versiones de gestores de paquetes de la sesión
+
+# Gestionar (global)
+vp env default lts            # Usar siempre la última LTS, incluyendo nuevos majors
+vp env default node@24        # Fijar el Node.js por defecto a una versión exacta
+vp env default pnpm@10        # Fijar el pnpm por defecto a una versión exacta         # Eliminar solo la anulación de sesión del gestor de paquetes
 vp env clean                  # Eliminar versiones no utilizadas
 
 # Inspección

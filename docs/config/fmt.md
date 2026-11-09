@@ -1,6 +1,8 @@
 # Configuración de Formato
 
-`vp fmt` y `vp check` utilizan el bloque `fmt` de la raíz del workspace, incluso cuando se ejecutan desde el directorio de un paquete. Las configuraciones de paquetes no reemplazan estos ajustes de formato. Usa `vp fmt -c <ruta>` o `vp fmt --config <ruta>` para seleccionar otra configuración. Si la configuración raíz no tiene un bloque `fmt`, Oxfmt utiliza la [detección nativa](/guide/fmt#configuracion). Consulta la [configuración de Oxfmt](https://oxc.rs/docs/guide/usage/formatter/config.html) para más detalles.
+`vp fmt` utiliza la [detección nativa de configuración](/guide/fmt#configuracion) de Oxfmt desde el directorio de trabajo. Usa `vp fmt -c <ruta>` o `vp fmt --config <ruta>` para seleccionar otra configuración. Consulta la [configuración de Oxfmt](https://oxc.rs/docs/guide/usage/formatter/config.html) para más detalles.
+
+`vp check` utiliza el bloque `fmt` de la raíz del workspace cuando existe, incluso desde el directorio de un paquete. Las configuraciones de paquetes no reemplazan estos ajustes de formato en `vp check`.
 
 ## Ejemplo
 
