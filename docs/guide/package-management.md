@@ -181,9 +181,10 @@ Usa estos comandos cuando necesites un comportamiento de nivel más bajo del ges
   - **Dependencias**: `ci`, `prune`, `list`, `rebuild`, `approve-builds`
   - **Parches**: `patch`, `patch-commit`
   - **Empaquetado y publicación**: `pack`, `version`, `publish`, `stage`, `dist-tag`, `deprecate`
-  - **Inspección**: `view`, `search`, `audit`, `fund`, `ping`
+  - **Inspección**: `view`, `search`, `licenses`, `audit`, `fund`, `ping`
   - **Autenticación y acceso**: `login`, `logout`, `whoami`, `token`, `owner`
   - **Configuración**: `config`, `cache`
+  - **Manifiesto del paquete**: `pkg get`, `pkg set`, `pkg delete`, `pkg fix`
 
   El soporte de comandos depende del gestor de paquetes y su versión. Ejecuta `vp pm --help` para listar comandos o `vp pm <comando> --help` para ver las opciones disponibles..
 
@@ -194,6 +195,22 @@ vp pm config get registry
 vp pm cache clean -- --force
 vp pm audit --json
 ```
+
+#### Manifiesto del paquete
+
+`vp pm pkg` lee y actualiza campos en `package.json` utilizando el gestor de paquetes detectado.
+
+```bash
+vp pm pkg get name
+vp pm pkg set scripts.build="vite build"
+vp pm pkg set private=true --json
+vp pm pkg delete scripts.build
+vp pm pkg fix
+```
+
+npm admite `get`, `set` y `delete` a partir de la versión 7.20.0 y `fix` a partir de la 9.8.0. pnpm admite los cuatro comandos a partir de la 11.3.0, y Bun los admite mediante `bun pm pkg` a partir de la 1.2.19. Yarn y las versiones no compatibles muestran una advertencia y finalizan con éxito sin modificar el manifiesto, igual que `vp pm patch`.
+
+El comportamiento nativo se conserva. Por ejemplo, npm devuelve JSON desde `get`, mientras que pnpm imprime un único valor de cadena sin comillas de forma predeterminada. Usa `--json` para solicitar una salida en JSON o para parsear los valores pasados a `set` como JSON. Las opciones nativas adicionales se pueden pasar después de `--`. Las correcciones realizadas por `fix` dependen del gestor de paquetes.
 
 #### Publicación por etapas (Staged publishing)
 

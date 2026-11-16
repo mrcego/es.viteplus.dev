@@ -11,19 +11,19 @@ Para la mayoría de los casos de uso, recomendamos usar la CLI de Vite+ para ins
 ::: code-group
 
 ```bash [pnpm]
-pnpm dlx --package=vite-plus vp create
+pnpm create vite-plus
 ```
 
 ```bash [npm]
-npx --package=vite-plus vp create
+npm create vite-plus@latest
 ```
 
 ```bash [Yarn]
-yarn dlx --package vite-plus vp create
+yarn create vite-plus
 ```
 
 ```bash [Bun]
-bunx --package vite-plus vp create
+bun create vite-plus
 ```
 
 :::
