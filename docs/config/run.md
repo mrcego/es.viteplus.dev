@@ -60,6 +60,10 @@ export default defineConfig({
 
 `cache: true` habilita tanto el caché de tareas como el de scripts, `cache: false` desactiva ambos.
 
+::: warning
+Esta opción solo se puede establecer en el `vite.config.ts` de la raíz del espacio de trabajo. Establecerla en la configuración de un paquete provocará un error.
+:::
+
 ## `run.tasks`
 
 - **Tipo:** `Record<string, TaskConfig>`

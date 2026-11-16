@@ -2,7 +2,7 @@
 
 `vp test` ejecuta pruebas con [Vitest](https://vitest.dev).
 
-Vite+ depende de Vitest `5.0.4`, que requiere Node `^22.18.0 || ^24.11.0 || >=26.0.0`. Para proyectos existentes, sigue [Actualizar a Vitest 5](./vitest-v5.md) antes de actualizar dependencias.
+Vite+ depende de Vitest `5.0.5`, que requiere Node `^22.18.0 || ^24.11.0 || >=26.0.0`. Para proyectos existentes, sigue [Actualizar a Vitest 5](./vitest-v5.md) antes de actualizar dependencias.
 
 `vp test` resuelve Vitest desde las dependencias de `vite-plus` primero, y luego desde tu proyecto.
 

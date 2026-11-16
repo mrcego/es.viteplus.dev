@@ -18,10 +18,16 @@ La migración es idempotente: ejecutarla nuevamente después de una migración e
 
 En un proyecto que ya depende de `vite-plus`, `vp migrate` realiza solo una actualización: actualiza las dependencias y la configuración del gestor de paquetes, y finaliza las importaciones. No toca la configuración del proyecto.
 
-- `--full` también ejecuta las acciones de configuración: hooks de git, configuración del editor, archivos del agente, migración de ESLint y Prettier, shims de framework, la corrección de `baseUrl` en tsconfig y la conversión de `.nvmrc`/Volta a `.node-version`.
+- `--full` también ejecuta las acciones de configuración: hooks de git, configuración del editor, archivos del agente, migración de ESLint y Prettier, shims de framework, la corrección de `baseUrl` en tsconfig y la conversión de Volta a `.node-version`.
 - `--hooks`, `--agent` y `--editor` optan por una sola acción de configuración sin `--full`.
 
 Cuando una actualización predeterminada omite acciones de configuración que se aplicarían, imprime una sugerencia para ejecutar `vp migrate --full`. Los proyectos nuevos (que no son de Vite+) siempre ejecutan la migración completa.
+
+## Herencia JSON de Oxlint
+
+Cuando `.oxlintrc.json` o `.oxlintrc.jsonc` utiliza `extends`, `vp migrate` resuelve la ruta de cada archivo de forma relativa a la configuración que la declara. Crea configuraciones de TypeScript compartidas y las importa a través de `lint.extends`, incluida la herencia anidada. Oxlint aplica el orden de fusión existente, las severidades de reglas y las sobrescrituras. Un simple `vp lint` utiliza las reglas migradas sin necesidad de la opción `-c`.
+
+La migración asume proyectos ESM. Las configuraciones compartidas se convierten en archivos hermanos `.ts`. Las importaciones desde configuraciones de JavaScript y TypeScript utilizan especificadores `.js`, que Vite y `vite-plus` resuelven al archivo `.ts` hermano. Para paquetes que comparten una única configuración base, la migración coloca la configuración compartida en la raíz del proyecto.
 
 ## Configuración de Pack
 
@@ -176,6 +182,8 @@ Las importaciones de `vite` y `vite/*` se reescriben a `vite-plus` **solo en los
 
 Los paquetes de plugins (un nombre sin ámbito que comienza con `vite-plugin-` o `unplugin-`, o `vite` en `peerDependencies`/`dependencies`) omiten la reescritura incluso en archivos de configuración. Solo el especificador `vite` está dentro del alcance de esta regla.
 
+`vite/rolldown` y `vite/rolldown/*` nunca se reescriben, ya que `vite-plus` no exporta esas subrutas; continúan resolviéndose a través del alias core.
+
 Las declaraciones de aumento de módulo `declare module 'vite'` siguen la misma regla y se conservan fuera de los archivos de configuración. A través del alias del core, alcanzan el mismo módulo `@voidzero-dev/vite-plus-core` cuyos tipos `UserConfig` utiliza `defineConfig` de `vite-plus`, por lo que siguen funcionando después de la migración; `vite-plus` en sí no exporta ningún símbolo `UserConfig`, por lo que una declaración de aumento `declare module 'vite-plus'` reescrita no se fusionaría con nada. Las extensiones dirigidas a la propia superficie de `vite-plus` se escriben contra `vite-plus` manualmente.
 
 ### Importaciones de `vitest` y Navegador
@@ -241,16 +249,36 @@ Para los comandos lanzados a través de `bunx`, la migración conserva `bunx` y 
 
 Los comandos de `bunx` no relacionados y otras formas de ejecutores de paquetes permanecen sin cambios.
 
+### tsx a `vpx`
+
+Cuando un script de `package.json`, una tarea de lint-staged o un shebang `#!/usr/bin/env tsx` ejecuta [tsx](https://tsx.is), la migración propone trasladarlo a [`vpx`](/guide/vpx), el ejecutor de scripts de TypeScript de Vite+. Reescribe scripts y tareas de lint-staged en `package.json` y archivos JSON de lint-staged, así como shebangs `#!/usr/bin/env tsx` en archivos de script:
+
+| Antes | Después |
+| --- | --- |
+| `tsx src/seed.ts --rows 10` | `vpx src/seed.ts --rows 10` |
+| `tsx watch --include "*.json" src/a.ts` | `vpx --watch --include "*.json" src/a.ts` |
+| `npx tsx a.ts`, `pnpm exec tsx a.ts`, `pnpm dlx tsx a.ts`, `bunx tsx a.ts` | `vpx a.ts` |
+| `node --import tsx ./a.ts` | `vpx ./a.ts` |
+| `cross-env NODE_ENV=dev tsx a.ts` | `cross-env NODE_ENV=dev vpx a.ts` |
+| `concurrently "tsx watch a.ts" "vp dev"` | `concurrently "vpx --watch a.ts" "vp dev"` |
+
+`tsx watch` se convierte en `vpx --watch`, nunca en `vpx watch`, que ejecutaría el paquete npm `watch`. Las opciones de Node.js y las opciones de watch de tsx conservan su orden, y `--no-cache` se elimina. Un comando entrecomillado solo se reescribe para programas que lo ejecutan, como `concurrently`, `nodemon --exec`, `sh -c` y `cross-env-shell`; un argumento entrecomillado de otros programas, como en `echo "tsx a.ts"`, se trata como datos. `vpx` requiere las mismas versiones de Node.js que el propio Vite+, y la migración ya actualiza las fijaciones incompatibles a ellas (consulta [Vitest 5](/guide/vitest-v5)).
+
+La migración conserva tsx, con una advertencia, ante cualquier comando que `vpx` no pueda ejecutar: `--eval`, `--print` o `--check`, el REPL, `--test` sin archivos o en modo watch, una entrada sin extensión de archivo, comandos que definan `TSX_TSCONFIG_PATH` (pasa `--tsconfig` a `vpx` en su lugar) o carguen tsx mediante `NODE_OPTIONS`, y comandos con tuberías (pipes), variables o subshells. También lee los scripts que ejecuta un comando, incluidos los módulos locales `--require` e `--import`, y conserva tsx cuando uno de ellos aún no existe (por ejemplo, si un comando anterior lo genera) o cuando `vpx` fallaría con él: un `require()` de `./a.js` que solo tsx resuelve a `a.ts`, y, dado que tsx compila la sintaxis de módulos ES a CommonJS, un archivo `.cts` con `import` o `export`, y un archivo que mezcle `import` con `__dirname`, `__filename`, `require()` o `module.exports` en un paquete sin `"type": "module"`. Esta comprobación omite globs y scripts tras un `cd` u otro cambio de estado del shell, y lee únicamente los archivos nombrados por el comando, no los módulos que estos importan. No comprueba otras diferencias de comportamiento de `vpx`, como decoradores estándar, `paths` de tsconfig en `require()` o un `module` de tsconfig establecido en `node16` o `nodenext`; `vpx` informa de ello cuando el script se ejecuta. Un paquete que incluya tsx en `dependencies`, `optionalDependencies` o `peerDependencies` también lo conserva, ya que `vpx` proviene de la devDependency de `vite-plus`.
+
+La migración elimina la devDependency `tsx` únicamente cuando ya nada utiliza tsx: ningún script conservado, ninguna importación de `tsx` o sus subrutas como `tsx/esm/api` (en código fuente, salida de compilación o un alias `imports` de `package.json`), ningún shebang, ninguna configuración de herramientas como `--import=tsx` en `package.json` o en una configuración JSON o JavaScript, y ningún comando tsx en flujos de trabajo de CI, hooks de git o scripts de shell. La dependencia de la raíz se mantiene mientras algún paquete del espacio de trabajo siga usando tsx, y la dependencia de un paquete se mantiene mientras lo haga un paquete anidado bajo él. Cuando tsx se conserva, la advertencia indica qué elemento lo sigue utilizando.
+
+Consulta [Venir desde tsx](/guide/vpx#venir-desde-tsx) para conocer las demás diferencias.
+
 ## Reglas de Integración Continua
 
 La migración reemplaza referencias exactas a `voidzero-dev/setup-vp@v1` en los flujos de trabajo de GitHub Actions y acciones compuestas bajo `.github` con la versión exacta más reciente de `setup-vp` conocida por esa versión de Vite+. La etiqueta congelada `v1` ya no recibe nuevas versiones. Las versiones exactas existentes y los SHAs de commit se mantienen sin cambios.
 
 ## Reglas de Versión de Node.js
 
-La migración convierte los archivos heredados del gestor de versiones de Node.js a `.node-version`, el formato que lee Vite+. En un proyecto de Vite+ existente, esta conversión es parte del grupo de configuración completa, por lo que se ejecuta con `vp migrate --full`; las migraciones nuevas la ejecutan de forma incondicional.
+La migración convierte la fijación de Volta `volta.node` a `.node-version`, ya que Vite+ no lee Volta. En un proyecto Vite+ existente, esta conversión forma parte del conjunto de configuración completa, por lo que se ejecuta con `vp migrate --full`; las migraciones nuevas la ejecutan incondicionalmente.
 
-- Los pines de `.nvmrc` y Volta `volta.node` se convierten a `.node-version`. Se mantiene un `.node-version` existente.
-- Cuando se elimina `.nvmrc`, cualquier referencia a `actions/setup-node` `node-version-file: .nvmrc` en `.github/workflows/*.{yml,yaml}` y acciones compuestas bajo `.github` (`.github/**/action.{yml,yaml}`) se redirige a `.node-version` para que la CI no falle con "node version file ... does not exist".
+- Cuando existe `.node-version` o `.nvmrc`, la migración lo conserva y omite la conversión de Volta. Vite+ lee ambos archivos directamente (consulta [Selección de Node.js](/guide/env#selección-de-node-js)).
 
 ## Reglas de Gestores de Paquetes
 
