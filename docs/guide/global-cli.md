@@ -75,6 +75,10 @@ irm https://vite.plus/ps1 | iex
 
 El `vp-setup.exe` aún no tiene firma de código. Es posible que tu navegador muestre una advertencia al descargarlo.
 
+El instalador utiliza la última versión LTS de Node.js para instalar sus dependencias de JavaScript. Las integraciones de CI pueden seleccionar otra versión compatible mediante [`VP_SETUP_NODE_VERSION`](#vp-setup-node-version).
+
+El instalador utiliza la última versión LTS de Node.js para instalar sus dependencias de JavaScript. Las integraciones de CI pueden seleccionar otra versión compatible mediante [`VP_SETUP_NODE_VERSION`](#vp-setup-node-version).
+
 Los scripts de instalación y `vp-setup.exe` leen [variables de entorno](/guide/global-cli#variables-de-instalacion) como `VP_VERSION` y `VP_HOME`.
 
 Si usas Nushell con directorios XDG personalizados, consulta los [requisitos de inicio de Nushell](/guide/global-cli#nushell-y-directorios-xdg) antes de instalar.
@@ -107,6 +111,88 @@ Estas variables controlan los scripts de instalación y el instalador independie
   ```bash
   vp-setup.exe --version 1.0.0
   ```
+
+#### `VP_SETUP_NODE_VERSION`
+
+- **Propósito**: Selecciona la versión de Node.js utilizada para instalar las dependencias de JavaScript de la CLI global. Las integraciones de CI como [`setup-vp`](/guide/ci#node-js-durante-la-instalacion) configuran esta variable para reutilizar el entorno de ejecución del proyecto.
+- **Valores**: Una versión exacta, un rango de versiones o un alias como `22.23.1`, `22`, `^22.18.0`, `lts` o `latest`. El instalador resuelve el valor una vez en una versión exacta.
+- **Predeterminado**: No establecido o vacío (usa la última versión LTS de Node.js). Los archivos del proyecto, `VP_NODE_VERSION`, las sobrescrituras de sesión y el valor predeterminado del usuario no modifican este valor por defecto.
+- **Compatibilidad**: La versión resuelta debe cumplir con los requisitos de Node.js tanto de la CLI global como de su versión fijada de `pnpm`. De lo contrario, el instalador utiliza LTS. Un valor no válido o que no se pueda resolver genera un error.
+- **Ámbito**: Solo instalación inicial de dependencias. Esta variable no establece una fijación de proyecto, una sobrescritura de sesión ni un valor predeterminado global. `vp upgrade` y los instaladores heredados continúan utilizando LTS.
+
+#### `VP_SETUP_NODE_VERSION_FILE`
+
+- **Propósito**: Archivo de salida opcional para integraciones que necesitan la versión exacta resuelta a partir de `VP_SETUP_NODE_VERSION`.
+- **Contenido**: La versión resuelta, como `22.23.1`, escrita tras una instalación exitosa de dependencias. Si la compatibilidad requiere LTS para la instalación, el archivo aún contiene la resolución de la versión solicitada.
+- **Predeterminado**: No establecido (no escribe ningún archivo). El instalador tampoco escribe ningún archivo cuando `VP_SETUP_NODE_VERSION` no está establecido o está vacío, o cuando se omite la instalación de dependencias.
+
+`setup-vp` gestiona este archivo automáticamente. Usa sus entradas de Node.js para configurar los trabajos de CI.
+
+#### `VP_SETUP_SKIP_INSTALL_LOCKFILE`
+
+Establece esta variable en `1` para recuperarte de un error relacionado con el lockfile durante la instalación global de la CLI o con `vp upgrade`. Todos los demás valores, incluidos los no establecidos o vacíos, mantienen habilitado el lockfile de instalación publicado.
+
+El instalador muestra una advertencia y resuelve dependencias sin leer ni recuperar el lockfile de instalación. La versión de la CLI solicitada permanece fijada, pero las versiones de sus dependencias pueden diferir del lockfile de la versión. Las configuraciones de registro, autenticación y proxy siguen vigentes. Esta opción no afecta a las instalaciones del proyecto como `vp install`.
+
+```bash
+# Reintentar la instalación sin el lockfile integrado.
+curl -fsSL https://vite.plus | VP_SETUP_SKIP_INSTALL_LOCKFILE=1 bash
+
+# O reintentar una actualización, incluida la versión actualmente instalada.
+VP_SETUP_SKIP_INSTALL_LOCKFILE=1 vp upgrade --force
+```
+
+```powershell
+$env:VP_SETUP_SKIP_INSTALL_LOCKFILE = "1"
+try {
+  irm https://vite.plus/ps1 | iex
+} finally {
+  Remove-Item Env:VP_SETUP_SKIP_INSTALL_LOCKFILE
+}
+```
+
+Mantén esta sobrescritura de forma temporal. Las instalaciones y actualizaciones posteriores volverán a utilizar el lockfile publicado cuando la variable no esté establecida. Para reinstalar una versión afectada con su lockfile, desactiva la variable y ejecuta `vp upgrade <version> --force`.
+
+#### `VP_SETUP_NODE_VERSION`
+
+- **Propósito**: Selecciona la versión de Node.js utilizada para instalar las dependencias de JavaScript de la CLI global. Las integraciones de CI como [`setup-vp`](/guide/ci#node-js-durante-la-instalacion) configuran esta variable para reutilizar el entorno de ejecución del proyecto.
+- **Valores**: Una versión exacta, un rango de versiones o un alias como `22.23.1`, `22`, `^22.18.0`, `lts` o `latest`. El instalador resuelve el valor una vez en una versión exacta.
+- **Predeterminado**: No establecido o vacío (usa la última versión LTS de Node.js). Los archivos del proyecto, `VP_NODE_VERSION`, las sobrescrituras de sesión y el valor predeterminado del usuario no modifican este valor por defecto.
+- **Compatibilidad**: La versión resuelta debe cumplir con los requisitos de Node.js tanto de la CLI global como de su versión fijada de `pnpm`. De lo contrario, el instalador utiliza LTS. Un valor no válido o que no se pueda resolver genera un error.
+- **Ámbito**: Solo instalación inicial de dependencias. Esta variable no establece una fijación de proyecto, una sobrescritura de sesión ni un valor predeterminado global. `vp upgrade` y los instaladores heredados continúan utilizando LTS.
+
+#### `VP_SETUP_NODE_VERSION_FILE`
+
+- **Propósito**: Archivo de salida opcional para integraciones que necesitan la versión exacta resuelta a partir de `VP_SETUP_NODE_VERSION`.
+- **Contenido**: La versión resuelta, como `22.23.1`, escrita tras una instalación exitosa de dependencias. Si la compatibilidad requiere LTS para la instalación, el archivo aún contiene la resolución de la versión solicitada.
+- **Predeterminado**: No establecido (no escribe ningún archivo). El instalador tampoco escribe ningún archivo cuando `VP_SETUP_NODE_VERSION` no está establecido o está vacío, o cuando se omite la instalación de dependencias.
+
+`setup-vp` gestiona este archivo automáticamente. Usa sus entradas de Node.js para configurar los trabajos de CI.
+
+#### `VP_SETUP_SKIP_INSTALL_LOCKFILE`
+
+Establece esta variable en `1` para recuperarte de un error relacionado con el lockfile durante la instalación global de la CLI o con `vp upgrade`. Todos los demás valores, incluidos los no establecidos o vacíos, mantienen habilitado el lockfile de instalación publicado.
+
+El instalador muestra una advertencia y resuelve dependencias sin leer ni recuperar el lockfile de instalación. La versión de la CLI solicitada permanece fijada, pero las versiones de sus dependencias pueden diferir del lockfile de la versión. Las configuraciones de registro, autenticación y proxy siguen vigentes. Esta opción no afecta a las instalaciones del proyecto como `vp install`.
+
+```bash
+# Reintentar la instalación sin el lockfile integrado.
+curl -fsSL https://vite.plus | VP_SETUP_SKIP_INSTALL_LOCKFILE=1 bash
+
+# O reintentar una actualización, incluida la versión actualmente instalada.
+VP_SETUP_SKIP_INSTALL_LOCKFILE=1 vp upgrade --force
+```
+
+```powershell
+$env:VP_SETUP_SKIP_INSTALL_LOCKFILE = "1"
+try {
+  irm https://vite.plus/ps1 | iex
+} finally {
+  Remove-Item Env:VP_SETUP_SKIP_INSTALL_LOCKFILE
+}
+```
+
+Mantén esta sobrescritura de forma temporal. Las instalaciones y actualizaciones posteriores volverán a utilizar el lockfile publicado cuando la variable no esté establecida. Para reinstalar una versión afectada con su lockfile, desactiva la variable y ejecuta `vp upgrade <version> --force`.
 
 #### `VP_HOME`
 
@@ -202,6 +288,7 @@ Estas variables afectan al comando `vp` y a los shims gestionados durante el uso
 #### `VP_NODE_VERSION`
 
 - **Propósito**: Sobrescribe la versión de Node.js para la sesión actual
+- **Ámbito**: Comandos en tiempo de ejecución. Para la instalación de dependencias del instalador, utiliza [`VP_SETUP_NODE_VERSION`](#vp-setup-node-version).
 - **Ejemplo**:
 
   ```bash
@@ -301,6 +388,14 @@ source ~/.config/vite-plus/env.nu
 ```
 
 Para un `XDG_CONFIG_HOME` personalizado, usa la ruta absoluta a `<XDG_CONFIG_HOME>/vite-plus/env.nu` tal como se resolvió durante la instalación. Para una instalación bajo `VP_HOME` o una instalación existente en `~/.vite-plus`, usa `<VP_HOME>/env.nu` o `~/.vite-plus/env.nu` en su lugar. Reemplaza los marcadores de posición con rutas reales y entrecomilla las rutas que contengan espacios. Abre una nueva sesión de Nushell y ejecuta `vp help` para verificar la configuración.
+
+#### Versión de Nushell
+
+Utiliza Nushell 0.112.1 o posterior. En Nushell, un comando personalizado o alias puede tener el mismo nombre que un comando integrado, por ejemplo `def update []`. Nushell lee el `env.nu` de Vite+ después de tu configuración. Por lo tanto, `env.nu` debe llamar a los comandos integrados con el [sigilo `%`](https://www.nushell.sh/lang-guide/chapters/custom_commands.html#calling-custom-commands), que se agregó en Nushell 0.112.1.
+
+`vp env setup` verifica el `nu` presente en el `PATH`. Con un Nushell anterior, escribe `env.nu` sin el sigilo. Ese `env.nu` sigue funcionando, pero un comando personalizado con el nombre de un comando integrado puede detener Nushell al inicio con `nu::parser::extra_positional` o un error de análisis sintáctico similar. Tras actualizar Nushell, vuelve a ejecutar `vp env setup`.
+
+Si tienes más de una instalación de Nushell, asegúrate de que el `nu` presente en el `PATH` durante `vp env setup` sea el Nushell que inicias. Un Nushell anterior a la 0.112.1 no puede analizar un `env.nu` que `vp env setup` escribió para una versión posterior.
 
 #### `CI`
 

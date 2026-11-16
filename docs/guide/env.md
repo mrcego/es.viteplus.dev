@@ -14,7 +14,24 @@ La versión de Node.js del proyecto se resuelve a partir de estas fuentes, en or
 4. `engines.node` en el `package.json`
 5. El valor predeterminado global (`vp env default node`), luego la última versión LTS
 
+Estas reglas seleccionan Node.js para los comandos del proyecto. El instalador utiliza la última versión LTS de forma predeterminada. Solo [`VP_SETUP_NODE_VERSION`](/guide/global-cli#vp-setup-node-version) modifica el entorno de ejecución de la instalación de sus dependencias; [`setup-vp`](/guide/ci#node-js-durante-la-instalacion) suministra esta sobrescritura desde las entradas de CI o las declaraciones del proyecto.
+
 `devEngines.runtime` tiene mayor prioridad que `engines.node` porque declara el requisito del entorno de desarrollo, mientras que `engines.node` es un rango de soporte orientado al consumidor. `vp env doctor` advierte cuando las fuentes declaradas entran en conflicto.
+
+::: tip Usar pnpm con la administración de entornos de ejecución de Vite+
+pnpm también puede administrar el entorno de ejecución declarado en `devEngines.runtime`. Cuando tanto pnpm como Vite+ administran Node.js, pueden descargar la misma versión por separado o seleccionar versiones diferentes, causando un comportamiento inconsistente entre comandos.
+
+Si tu proyecto utiliza Vite+ para administrar las versiones de Node.js y pnpm, añade estas configuraciones al `pnpm-workspace.yaml` del proyecto (pnpm 11+):
+
+```yaml
+runtimeOnFail: ignore
+pmOnFail: ignore
+```
+
+[`runtimeOnFail`](https://pnpm.io/settings/cli#runtimeonfail) desactiva la administración automática de entornos declarados por parte de pnpm. [`pmOnFail`](https://pnpm.io/settings/cli#pmonfail) evita que pnpm cambie a la versión del gestor de paquetes declarada en `package.json`. Haz commit de estas opciones para que el proyecto comparta la misma política.
+
+`runtimeOnFail: ignore` también afecta a otros entornos declarados, incluidos Bun y Deno. Si el proyecto depende de pnpm para administrarlos, tenlo en cuenta antes de habilitar esta opción. Cambiar un proyecto existente a esta política puede modificar entradas del runtime en `pnpm-lock.yaml` en la siguiente instalación; revisa y haz commit de esos cambios junto con la configuración.
+:::
 
 Cuando un proyecto declara `packageManager` (o `devEngines.packageManager`) en `package.json`, los shims de los gestores de paquetes correspondientes también utilizan esa versión. Por ejemplo, `packageManager: "npm@10.9.4"` hace que tanto `npm` como `npx` se ejecuten mediante npm 10.9.4. Por ejemplo, pnpm controla `pnpm`, `pnpx`, `pn` y `pnx`; invocar `npm` aún resuelve npm de forma independiente. Sin una selección de proyecto coincidente, un shim nombrado usa su versión predeterminada configurada y, de lo contrario, usa la última versión sin preguntar. El shim de npm recurre al npm incluido con Node. `vp env use npm` selecciona la última versión de npm independiente para la shell actual cuando no se ha configurado ninguna versión de proyecto ni valor predeterminado global.
 
@@ -68,19 +85,25 @@ Las actualizaciones actualizan la configuración automáticamente. Abre una nuev
 La CLI global admite completado con Tab en Bash, Zsh, Fish, Nushell y PowerShell. Ejecuta `vp env setup` y sigue las instrucciones de configuración del shell que imprime para habilitarlo. Presiona Tab para completar comandos, o nombres de tareas del proyecto después de `vp run` y `vpr`.
 
 - **Zsh**: Ejecuta `autoload -Uz compinit; compinit` antes de cargar el script de configuración si tu shell no ha inicializado el completado.
-- **Nushell**: El completado requiere `fish` en `PATH`.
+- **Nushell**: El completado requiere `fish` en `PATH`. Usa Nushell 0.112.1 o posterior; consulta [Versión de Nushell](/guide/global-cli#version-de-nushell).
 
 ### Gestión de Versiones
 
-- `vp env pin` fija una versión para el proyecto actual escribiendo `.node-version` o `packageManager` en `package.json`.
-- `vp env unpin` elimina la versión fijada para el proyecto actual.
-- `vp env default` establece la versión predeterminada global para Node.js o para un gestor de paquetes.
-- `vp env use` establece una versión para la sesión de shell actual.
-- `vp env install` instala una versión de Node.js o gestor de paquetes.
+- `vp env default` muestra el valor predeterminado global de Node.js y la versión de cada gestor de paquetes configurado. Las versiones solas configuran Node.js; las especificaciones calificadas como `pnpm@10.18.0` configuran el shim predeterminado de ese gestor de paquetes sin reemplazar los predeterminados de Bun, Yarn o npm. `--unset` borra todos los valores predeterminados a menos que se acote.
+- `vp env default <lts|latest>` y las etiquetas de distribución del gestor de paquetes como `pnpm@latest` o `pnpm@latest-10` se vuelven a resolver en cada uso, por lo que el valor predeterminado sigue a la etiqueta, incluyendo las nuevas versiones mayores para `latest`. Otras versiones y rangos, como `24` o `pnpm@10`, se resuelven a una versión exacta cuando se configuran.
+- `vp env pin` muestra o escribe fijaciones del proyecto. Las fijaciones de Node.js utilizan el directorio actual. Las fijaciones del gestor de paquetes utilizan el `package.json` de la raíz del workspace, o el `package.json` del proyecto actual fuera de un workspace. Fijar ambos componentes puede actualizar dos archivos diferentes.
+
+  Los campos existentes en `.node-version` y `packageManager` de nivel superior se siguen actualizando para mantener la compatibilidad. Un `.nvmrc` existente se actualiza cuando es la fuente efectiva de Node en el directorio actual. Sus comentarios y demás contenido que no sea la versión se conservan. De lo contrario, Vite+ escribe la entrada coincidente en `devEngines`.
+
+  Usa `--target node-version`, `--target nvmrc`, `--target dev-engines` o `--target package-manager` para elegir la fuente de fijación explícitamente. Esto no cambia el directorio del proyecto. La salida del gestor de paquetes muestra la ruta del archivo relativa al directorio de trabajo actual y el campo que se actualizó, o el objetivo antes de una confirmación de sobrescritura existente. Fijar en un directorio secundario no modifica un `.nvmrc` heredado.
+
+- `vp env unpin` (alias de `vp env pin --unpin`) elimina ambas fijaciones efectivas de forma predeterminada. Agrega un selector para eliminar una. La eliminación de Node.js utiliza el directorio actual. La eliminación del gestor de paquetes utiliza el manifiesto de la raíz del workspace, o el manifiesto del proyecto actual fuera de un workspace. `--target` selecciona la fuente de fijación dentro de ese ámbito. La salida identifica el campo del gestor de paquetes eliminado o los campos comprobados cuando no se encuentra ninguna fijación coincidente. Las declaraciones de menor prioridad no se eliminan.
+- `vp env use` activa el entorno completo del proyecto. Las especificaciones explícitas sobrescriben los componentes seleccionados; `--unset` borra ambos a menos que se acote.
+- `vp env install` instala el entorno resuelto completo, un componente seleccionado o especificaciones explícitas.
 - `vp env uninstall` elimina la versión de Node.js resuelta a partir de una versión o selector explícito, como `22` o `lts`. Los gestores de paquetes requieren una versión exacta calificada, como `pnpm@10.18.0`.
 - `vp env clean` elimina los runtimes de Node.js no utilizados y todos los gestores de paquetes descargados.
 - `vp env exec` ejecuta un comando con una versión específica de Node.js o del gestor de paquetes.
-- `vp node` ejecuta un script de Node.js — atajo para `vp env exec node`.
+- `vp node` utiliza el entorno de ejecución de Node.js resuelto y expone la ruta del gestor de paquetes seleccionado a los procesos secundarios. Ejecuta Node.js tal cual, por lo que los archivos TypeScript solo reciben el stripping de tipos de Node.js; [`vpx <archivo>`](/guide/vpx#ejecutar-scripts) los ejecuta en el mismo entorno de ejecución con soporte completo de TypeScript.
 
 ### Inspección
 

@@ -182,7 +182,7 @@ Usa estos comandos cuando necesites un comportamiento de nivel más bajo del ges
   - **Parches**: `patch`, `patch-commit`
   - **Empaquetado y publicación**: `pack`, `version`, `publish`, `stage`, `dist-tag`, `deprecate`
   - **Inspección**: `view`, `search`, `licenses`, `audit`, `fund`, `ping`
-  - **Autenticación y acceso**: `login`, `logout`, `whoami`, `token`, `owner`
+  - **Autenticación y acceso**: `login`, `logout`, `whoami`, `token`, `owner`, `team`
   - **Configuración**: `config`, `cache`
   - **Manifiesto del paquete**: `pkg get`, `pkg set`, `pkg delete`, `pkg fix`
 

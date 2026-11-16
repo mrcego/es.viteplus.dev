@@ -4,7 +4,7 @@ Puedes utilizar `voidzero-dev/setup-vp` para usar Vite+ en entornos de CI.
 
 ## Vista General
 
-[`voidzero-dev/setup-vp`](https://github.com/voidzero-dev/setup-vp) ofrece integraciones para GitHub Actions, GitLab CI/CD y Azure Pipelines. Las tres instalan Vite+ y pueden instalar dependencias del proyecto. La Action de GitHub y la plantilla de Azure Pipelines también pueden configurar Node.js y almacenar en caché los datos del gestor de paquetes de forma automática, mientras que la plantilla de GitLab CI/CD utiliza el entorno de ejecución de Node.js y la configuración de caché proporcionada por el job.
+[`voidzero-dev/setup-vp`](https://github.com/voidzero-dev/setup-vp) ofrece integraciones para GitHub Actions, GitLab CI/CD y Azure Pipelines. Las tres instalan Vite+, pueden seleccionar la versión de Node.js del proyecto y pueden instalar dependencias del proyecto. La Action de GitHub y la plantilla de Azure Pipelines también pueden almacenar en caché los datos del gestor de paquetes de forma automática. GitLab CI/CD utiliza la configuración de caché nativa del job y requiere Node.js para iniciar el entorno de ejecución de instalación.
 
 ## Versionado de setup-vp
 
@@ -36,6 +36,26 @@ Cuando uses un SHA de commit, añade la etiqueta de versión exacta en un coment
 ```
 
 Estas opciones solo se aplican a los flujos de trabajo de GitHub Actions. Para GitLab CI/CD y Azure Pipelines, actualiza ambos valores de versión juntos.
+
+## Node.js Durante la Instalación
+
+El instalador de Vite+ utiliza la última versión LTS de Node.js de forma predeterminada. En versiones que admiten [`VP_SETUP_NODE_VERSION`](/guide/global-cli#vp-setup-node-version), `setup-vp` también puede utilizar la versión del proyecto para la instalación. Esto evita una segunda descarga de Node.js cuando esa versión es compatible tanto con la CLI global como con su versión fijada de `pnpm`.
+
+`setup-vp` selecciona la versión antes de iniciar el instalador. Una versión explícita de Node.js tiene prioridad sobre una entrada de archivo de versión. Sin ninguna de las dos entradas, comprueba el directorio de trabajo y sus padres utilizando el [orden de declaraciones del proyecto](/guide/env#selección-de-node-js). La integración pasa la selección a través de `VP_SETUP_NODE_VERSION`; el instalador en sí no lee las declaraciones del proyecto.
+
+Sin una selección, con la administración de Node.js deshabilitada o cuando la versión seleccionada es incompatible, la instalación utiliza LTS. Los instaladores más antiguos conservan su comportamiento existente. La detección automática del proyecto no crea una sobrescritura de sesión, por lo que los comandos posteriores conservan la selección normal de versión basada en directorios.
+
+La integración gestiona estas variables del instalador automáticamente. Configura `node-version` o `node-version-file` en GitHub Actions y GitLab CI/CD, o `nodeVersion` o `nodeVersionFile` en Azure Pipelines. Consulta la [documentación de `setup-vp`](https://github.com/voidzero-dev/setup-vp#inputs) para ver la referencia completa de entradas.
+
+## Node.js Durante la Instalación
+
+El instalador de Vite+ utiliza la última versión LTS de Node.js de forma predeterminada. En versiones que admiten [`VP_SETUP_NODE_VERSION`](/guide/global-cli#vp-setup-node-version), `setup-vp` también puede utilizar la versión del proyecto para la instalación. Esto evita una segunda descarga de Node.js cuando esa versión es compatible tanto con la CLI global como con su versión fijada de `pnpm`.
+
+`setup-vp` selecciona la versión antes de iniciar el instalador. Una versión explícita de Node.js tiene prioridad sobre una entrada de archivo de versión. Sin ninguna de las dos entradas, comprueba el directorio de trabajo y sus padres utilizando el [orden de declaraciones del proyecto](/guide/env#selección-de-node-js). La integración pasa la selección a través de `VP_SETUP_NODE_VERSION`; el instalador en sí no lee las declaraciones del proyecto.
+
+Sin una selección, con la administración de Node.js deshabilitada o cuando la versión seleccionada es incompatible, la instalación utiliza LTS. Los instaladores más antiguos conservan su comportamiento existente. La detección automática del proyecto no crea una sobrescritura de sesión, por lo que los comandos posteriores conservan la selección normal de versión basada en directorios.
+
+La integración gestiona estas variables del instalador automáticamente. Configura `node-version` o `node-version-file` en GitHub Actions y GitLab CI/CD, o `nodeVersion` o `nodeVersionFile` en Azure Pipelines. Consulta la [documentación de `setup-vp`](https://github.com/voidzero-dev/setup-vp#inputs) para ver la referencia completa de entradas.
 
 ## GitHub Actions
 

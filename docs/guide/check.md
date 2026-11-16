@@ -16,6 +16,7 @@ Recomendamos activar tanto `typeAware` como `typeCheck` para que `vp check` se c
 vp check
 vp check --fix             # Formatear y ejecutar autocorrectores.
 vp check --quiet           # Ocultar advertencias de lint; aún reportar y fallar en caso de errores.
+vp check --deny-warnings   # Tratar las advertencias de lint como errores.
 vp check --no-fmt          # Omitir el formato; ejecutar lint (y verificación de tipos si está habilitado).
 vp check --no-lint         # Omitir reglas de lint; mantener la verificación de tipos cuando esté habilitada.
 vp check --no-fmt --no-lint # Solo comprobación de tipos (requiere que tanto `typeAware` como `typeCheck` estén habilitados).
