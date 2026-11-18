@@ -92,6 +92,7 @@ const guideSidebar = [
   {
     text: 'Mantenimiento',
     items: [
+      { text: 'Homebrew', link: '/guide/homebrew' },
       { text: 'Actualizar Vite+', link: '/guide/upgrade' },
       { text: 'Eliminar Vite+', link: '/guide/implode' },
     ],

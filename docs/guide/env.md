@@ -14,7 +14,7 @@ La versión de Node.js del proyecto se resuelve a partir de estas fuentes, en or
 4. `engines.node` en el `package.json`
 5. El valor predeterminado global (`vp env default node`), luego la última versión LTS
 
-Estas reglas seleccionan Node.js para los comandos del proyecto. El instalador utiliza la última versión LTS de forma predeterminada. Solo [`VP_SETUP_NODE_VERSION`](/guide/global-cli#vp-setup-node-version) modifica el entorno de ejecución de la instalación de sus dependencias; [`setup-vp`](/guide/ci#node-js-durante-la-instalacion) suministra esta sobrescritura desde las entradas de CI o las declaraciones del proyecto.
+El alias `lts` selecciona el lanzamiento LTS más reciente. El alias `latest` selecciona el lanzamiento estable más reciente, sea LTS o no, y omite versiones preliminares como `27.0.0-alpha.0.0.0`. Para usar una versión preliminar, especifica su versión exacta.
 
 `devEngines.runtime` tiene mayor prioridad que `engines.node` porque declara el requisito del entorno de desarrollo, mientras que `engines.node` es un rango de soporte orientado al consumidor. `vp env doctor` advierte cuando las fuentes declaradas entran en conflicto.
 

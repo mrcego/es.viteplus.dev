@@ -71,6 +71,27 @@ overrides:
 
 :::
 
+::: warning Dependencias directas existentes con npm
+Si tu proyecto npm ya tiene `vite` en `dependencies` o `devDependencies`, cambia esa entrada al mismo alias que `overrides.vite`. npm requiere que una dependencia directa y su sobrescritura utilicen la [misma especificación de dependencia](https://docs.npmjs.com/cli/v11/configuring-npm/package-json/#overrides). De lo contrario, `npm install` falla con `EOVERRIDE`.
+
+Por ejemplo, actualiza una dependencia de desarrollo `vite` existente de la siguiente manera. Mantén las demás dependencias de tu manifiesto:
+
+```json [package.json]
+{
+  "devDependencies": {
+    "vite": "npm:@voidzero-dev/vite-plus-core@<vite-plus-version>",
+    "vite-plus": "<vite-plus-version>"
+  },
+  "overrides": {
+    "vite": "npm:@voidzero-dev/vite-plus-core@<vite-plus-version>",
+    "vitest": "<vitest-version>"
+  }
+}
+```
+
+Si también declaras `vitest` de forma directa, establece su entrada de dependencia a la versión exacta de `overrides.vitest`. Ejecuta `npm install` después de estos cambios para actualizar el lockfile y las dependencias instaladas.
+:::
+
 ::: details ¿Por qué son necesarios estos ajustes?
 
 Las dependencias y los plugins pueden importar `vite` o `vitest` directamente, incluso cuando tu propio código importa desde `vite-plus`. Estas sobrescrituras alinean sus dependencias con el conjunto de herramientas que utiliza Vite+:

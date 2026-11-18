@@ -109,6 +109,38 @@ console.log('¡Hola desde un script TypeScript ejecutable!');
 }
 ```
 
+### Usar Node.js directamente
+
+Para ejecutar TypeScript con `node`, usa `--import vite-plus/register`. Esto registra el cargador de TypeScript de Vite+ antes de que se ejecute tu script:
+
+```bash
+node --import=vite-plus/register ./scripts/seed.ts
+node --import vite-plus/register --test ./test/example.test.ts
+NODE_OPTIONS='--import=vite-plus/register' node ./scripts/seed.ts
+```
+
+Instala primero `vite-plus` en el proyecto. Node.js resuelve `vite-plus/register` desde el proyecto. El cargador proporciona las mismas transformaciones de TypeScript, resolución de tsconfig y mapas de fuentes (source maps) que `vpx`, y requiere las mismas versiones de Node.js que Vite+.
+
+Si una herramienta inicia Node.js por sí misma, añade `--import vite-plus/register` a sus argumentos de Node.js o a `NODE_OPTIONS`. Reemplaza un argumento existente `--import tsx` con `--import vite-plus/register`. Por ejemplo, una configuración de AVA puede usar:
+
+```json
+{
+  "ava": {
+    "nodeArguments": ["--import=vite-plus/register"]
+  }
+}
+```
+
+Conserva los patrones de archivos TypeScript existentes de la herramienta y otras configuraciones. Un lanzador de JavaScript también puede ejecutar `await import('vite-plus/register')` antes de importar dinámicamente un archivo TypeScript. Una importación estática de TypeScript en ese lanzador se resuelve antes del registro, por lo que debes usar `--import` para importaciones estáticas.
+
+`fork()` y los workers heredan la opción `--import` a través de los argumentos de Node.js. `NODE_OPTIONS` también pasa la opción a los procesos generados de Node.js. Reemplazar los argumentos o el entorno de un proceso hijo sigue las reglas de herencia normales de Node.js.
+
+Para seleccionar un tsconfig, establece `VP_SCRIPT_TSCONFIG=tsconfig.scripts.json`. La variable existente `TSX_TSCONFIG_PATH` también funciona, teniendo prioridad `VP_SCRIPT_TSCONFIG`. De lo contrario, se aplica la [búsqueda habitual de tsconfig](#tsconfig). Cada worker selecciona su configuración desde su propio entorno, por lo que los workers pueden usar diferentes configuraciones sin cambiar su proceso principal.
+
+Node.js controla sus flags, descubrimiento de pruebas y modo watch nativo. Eval y stdin pueden importar archivos TypeScript, pero su texto de entrada no se transforma. Los módulos cargados con `--require` se ejecutan antes que los módulos cargados con `--import`. Para cargar un archivo de configuración TypeScript, coloca `--import ./setup.ts` después de `--import vite-plus/register`. Las importaciones repetidas de `vite-plus/register` son inofensivas, incluso cuando una herramienta ya se ejecuta bajo `vpx`.
+
+Las [diferencias del compilador respecto a tsx](#venir-desde-tsx) también se aplican cuando usas `vite-plus/register`.
+
 ### Modo Observador (Watch Mode)
 
 ```bash
@@ -163,8 +195,16 @@ El JSX que depende de un plugin del compilador no está admitido. `vpx` compila 
 - **Versión de Node.js**: `vpx` requiere Node.js `^22.18.0 || ^24.11.0 || >=26.0.0`, mientras que tsx también se ejecuta en versiones más antiguas.
 - **Modo observador (Watch mode)**: `tsx watch` se convierte en `vpx --watch`, que admite las opciones de tsx watch (consulta [Modo Observador](#modo-observador-watch-mode)). También vuelve a ejecutar el script ante cambios en tsconfig y cuando se crea un archivo buscado por una importación fallida, casos que tsx watch pasa por alto.
 - **Eval, REPL y `--check`**: `vpx --eval`, el REPL y `vpx --check` no transforman TypeScript.
-- **`node --import tsx`**: `vpx` no tiene equivalente para herramientas que deban iniciar `node` por sí mismas.
-- **Otros cargadores**: elimina `--import tsx` de `NODE_OPTIONS`. Dos cargadores registrados simultáneamente compiten por los mismos archivos.
+- **`node --import tsx`**: reemplázalo con [`node --import vite-plus/register`](#usar-nodejs-directamente), incluso en ajustes de herramientas y `NODE_OPTIONS`.
+- **Otros cargadores**: reemplaza `--import tsx` con `--import vite-plus/register`. Registrar ambos cargadores de TypeScript hace que compitan por los mismos archivos.
+
+### Venir desde oxnode
+
+`vp migrate` puede reemplazar `oxnode <archivo>` por `vpx <archivo>` y `oxnode watch <archivo>` por `vpx --watch <archivo>`. Ambos usan el transformador y observador de oxc-node. Los comandos de Node.js y las asignaciones literales de `NODE_OPTIONS` que cargan `@oxc-node/core/register` usan `vite-plus/register` en su lugar. La migración elimina las dependencias de desarrollo independientes solo cuando ningún comando o importación restante las necesita. Consulta [oxnode a `vpx`](/guide/migrate-rules#oxnode-a-vpx).
+
+### Venir desde ts-node
+
+`vp migrate` puede reemplazar los comandos compatibles de ts-node solo de transpilación por `vpx`. Las precargas compatibles de Node.js y las asignaciones literales de `NODE_OPTIONS` usan `vite-plus/register`. La migración mantiene los comandos que verifican tipos porque ningún reemplazo realiza esa comprobación. Las configuraciones de compilador personalizadas y el uso restante de cargadores o APIs también pueden mantener `ts-node` instalado. Consulta [ts-node a `vpx`](/guide/migrate-rules#ts-node-a-vpx).
 
 ## `vp exec`
 

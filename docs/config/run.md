@@ -72,9 +72,13 @@ Define las tareas que se pueden ejecutar con `vp run <tarea>`.
 
 ### `command`
 
-- **Tipo:** `string`
+- **Tipo:** `string | string[]`
 
-Define el comando de terminal que se ejecutará para la tarea.
+Define el comando a ejecutar para la tarea.
+
+::: info
+Vite Task analiza comandos simples y cadenas con `&&` por sí mismo en lugar de pasarlos a una shell, por lo que se comportan igual en todas las plataformas. Otra sintaxis de shell, como tuberías (pipes) o redirecciones, puede comportarse de manera diferente según la plataforma.
+:::
 
 ```ts [vite.config.ts]
 tasks: {
@@ -86,7 +90,7 @@ tasks: {
 
 Cada tarea definida en `vite.config.ts` debe incluir su propio `command`. No puedes definir una tarea con el mismo nombre tanto en `vite.config.ts` como en `package.json`.
 
-Los comandos unidos con `&&` se dividen automáticamente en subtareas almacenadas en caché de forma independiente. Consulta [Comandos Compuestos](/guide/run#comandos-compuestos).
+Las entradas de arreglo y las cadenas con `&&` sin otra sintaxis de shell se dividen automáticamente en subtareas almacenadas en caché de forma independiente. Consulta [Comandos Compuestos](/guide/run#comandos-compuestos).
 
 ### `dependsOn`
 

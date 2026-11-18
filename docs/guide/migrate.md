@@ -8,7 +8,7 @@ import { migrationPrompt, upgradePrompt } from '../.vitepress/theme/data/migrati
 
 ## Vista General
 
-Este comando es el punto de partida para consolidar configuraciones separadas de Vite, Vitest, Oxlint, Oxfmt, ESLint, Prettier, tsdown, tsup y tsx en Vite+.
+Este comando es el punto de partida para consolidar configuraciones separadas de Vite, Vitest, Oxlint, Oxfmt, ESLint, Prettier, tsdown, tsup, tsx y oxnode en Vite+.
 
 Úsalo cuando desees tomar un proyecto existente y moverlo a los valores predeterminados de Vite+ en lugar de configurar cada herramienta a mano.
 
@@ -92,21 +92,21 @@ Actualiza la [CLI global](./upgrade.md#vp-global) a tu versión 1.0 objetivo, lu
 
 ### Sin la CLI Global
 
-Usa un entorno de ejecución de Node.js existente que cumpla con `^22.18.0 || ^24.11.0 || >=26.0.0`. Ejecuta el migrador objetivo a través de tu gestor de paquetes sin agregarlo al proyecto primero. Para la versión `1.4.0`:
+Usa un entorno de ejecución de Node.js existente que cumpla con `^22.18.0 || ^24.11.0 || >=26.0.0`. Ejecuta el migrador objetivo a través de tu gestor de paquetes sin agregarlo al proyecto primero. Para la versión `1.5.0`:
 
 ::: code-group
 
 ```bash [pnpm]
-pnpm dlx --package=vite-plus@1.4.0 vp migrate --no-interactive
+pnpm dlx --package=vite-plus@1.5.0 vp migrate --no-interactive
 ```
 
 ```bash [npm]
-npx --package=vite-plus@1.4.0 vp migrate --no-interactive
+npx --package=vite-plus@1.5.0 vp migrate --no-interactive
 ```
 
 :::
 
-Reemplaza `1.4.0` con tu versión de lanzamiento objetivo. Para una versión preliminar, usa la versión del PR y pasa `--registry=https://registry-bridge.viteplus.dev` a `pnpm` o `npx` antes del comando `vp`. Mantén la versión en `--package` explícita para que ejecutes el migrador objetivo en lugar de la CLI local antigua.
+Reemplaza `1.5.0` con tu versión de lanzamiento objetivo. Para una versión preliminar, usa la versión del PR y pasa `--registry=https://registry-bridge.viteplus.dev` a `pnpm` o `npx` antes del comando `vp`. Mantén la versión en `--package` explícita para que ejecutes el migrador objetivo en lugar de la CLI local antigua.
 
 Después de la migración, finaliza la instalación de dependencias y valida con la CLI local actualizada:
 
@@ -148,7 +148,7 @@ Mira y copia este prompt en tu asistente de código con IA para actualizar un pr
 
 ### Vitest
 
-Vitest se migra automáticamente a través de `vp migrate`. `vite-plus` reexporta el `vitest@5.0.5` de upstream bajo `vite-plus/test*`, por lo que para pruebas en modo Node, una sola instalación de `vite-plus` es suficiente: ya no necesitas instalar `vitest` directamente.
+Vitest se migra automáticamente a través de `vp migrate`. `vite-plus` reexporta el `vitest@5.1.0` de upstream bajo `vite-plus/test*`, por lo que para pruebas en modo Node, una sola instalación de `vite-plus` es suficiente: ya no necesitas instalar `vitest` directamente.
 
 Para el modo navegador, puedes usar el entorno de ejecución del navegador base (`@vitest/browser`) y el proveedor de vista previa (`@vitest/browser-preview`) incluidos en `vite-plus`. Para usar Playwright o WebDriverIO, también necesitas el proveedor opcional (opt-in) (`@vitest/browser-playwright` o `@vitest/browser-webdriverio`) y su framework dependiente (`playwright` o `webdriverio`).
 
@@ -231,11 +231,11 @@ export default defineConfig({
 });
 ```
 
-Cuando ninguna política de hooks existente controla el flujo de trabajo, `vp migrate` puede mover las reglas admitidas de lint-staged y eliminar la configuración y dependencia antiguas. Si se conserva una herramienta de hooks existente, mantén lint-staged en su lugar hasta que conviertas esa política manualmente. Consulta la [guía de Hooks de commit](/guide/commit-hooks) y la [referencia de configuración Staged](/config/staged) para más detalles.
+Cuando ninguna política de hooks existente controla el flujo de trabajo, `vp migrate` puede mover las reglas admitidas de lint-staged y eliminar la configuración y dependencia antiguas. Si se conserva una herramienta de hooks existente, mantén lint-staged en su lugar hasta que conviertas esa política manualmente. Consulta la [Hooks de Commit](/guide/commit-hooks) y la [Configuración de Staged](/config/staged) para más detalles.
 
 ### Herramientas de hooks de Git
 
-El comando `vp migrate` no convierte automáticamente configuraciones de Husky. Cuando se detecta Husky, Vite+ deja sus hooks, scripts de ciclo de vida, configuración y dependencias sin cambios y muestra una advertencia. Puedes migrar el proyecto manualmente utilizando la [guía de Hooks de commit](/guide/commit-hooks).
+El comando `vp migrate` no convierte automáticamente configuraciones de Husky. Cuando se detecta Husky, Vite+ deja sus hooks, scripts de ciclo de vida, configuración y dependencias sin cambios y muestra una advertencia. Puedes migrar el proyecto manualmente utilizando la [Hooks de Commit](/guide/commit-hooks).
 
 Los hooks de Vite+ pertenecientes al proyecto también se conservan. El flujo de trabajo predeterminado de staged se introduce solo cuando no se encuentra ninguna política de hooks existente.
 
@@ -243,7 +243,7 @@ Si tu proyecto utiliza actualmente `lefthook`, `simple-git-hooks` o `yorkie`, `v
 
 Si deseas migrar una de esas herramientas a Vite+ manualmente, puedes seguir estos pasos. Primero, mueve tus comandos de archivos preparados (staged files) al bloque `staged` dentro de `vite.config.ts`. Luego, actualiza tu script de ciclo de vida para que ejecute `vp config`. También necesitarás crear un hook de Vite+ en `.vite-hooks/pre-commit` que ejecute `vp staged`. Ejecuta `vp hooks enable` (o `vp config`) para instalar el despachador y configurar `core.hooksPath`. Finalmente, una vez que hayas confirmado que el hook de Vite+ funciona como se espera, puedes eliminar la configuración y la dependencia de la herramienta antigua.
 
-Usa `vp hooks status` para verificar que el despachador esté activo y `vp hooks disable` si necesitas desactivarlo nuevamente en este clon. Puedes encontrar más detalles sobre la configuración completa de los hooks de Vite+ en la [guía de Hooks de commit](/guide/commit-hooks).
+Usa `vp hooks status` para verificar que el despachador esté activo y `vp hooks disable` si necesitas desactivarlo nuevamente en este clon. Puedes encontrar más detalles sobre la configuración completa de los hooks de Vite+ en la [Hooks de Commit](/guide/commit-hooks).
 
 ## Ejemplos
 

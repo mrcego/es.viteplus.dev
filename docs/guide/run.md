@@ -6,6 +6,10 @@
 `vpr` está disponible como un atajo independiente para `vp run`. Todos los ejemplos a continuación funcionan tanto con `vp run` como con `vpr`.
 :::
 
+::: info
+Vite Task analiza comandos simples y cadenas con `&&` por sí mismo en lugar de pasarlos a una shell, por lo que se comportan igual en todas las plataformas. Otra sintaxis de shell, como tuberías (pipes) o redirecciones, puede comportarse de manera diferente según la plataforma.
+:::
+
 ## Vista General
 
 Usa `vp run` con scripts de `package.json` existentes:
@@ -225,7 +229,7 @@ vp run -w build
 
 ## Comandos Compuestos
 
-Los comandos unidos con `&&` se dividen en subtareas independientes. Cada subtarea se almacena en caché por separado cuando el [caché está habilitado](/guide/cache#¿cuándo-se-habilita-el-caché?). Esto funciona tanto para tareas de `vite.config.ts` como para scripts de `package.json`:
+Los comandos unidos con `&&` se dividen en subtareas independientes, a menos que también utilicen otra sintaxis de shell. Cada subtarea se almacena en caché por separado cuando el [caché está habilitado](/guide/cache#cuando-se-habilita-el-cache). Esto funciona tanto para tareas de `vite.config.ts` como para scripts de `package.json`:
 
 ```json [package.json]
 {
@@ -258,6 +262,24 @@ $ vp build ○ cache miss: 'index.html' modified, executing
 ---
 vp run: 1/2 cache hit (50%), 2/2 successful, 120ms saved.
 ```
+
+### Prefijos de Variables de Entorno
+
+Los prefijos de variables de entorno como `FOO=bar comando` funcionan en todas las plataformas, sin necesidad de herramientas adicionales como `cross-env`:
+
+```json [package.json]
+{
+  "scripts": {
+    "build": "NODE_ENV=production node build.js"
+  }
+}
+```
+
+Un prefijo se aplica únicamente al comando que precede directamente. En `FOO=1 a && b`, `FOO` se define para `a` pero no para `b`.
+
+::: warning
+Es posible que los prefijos no funcionen en todas las plataformas cuando el comando también utiliza otra sintaxis de shell.
+:::
 
 ### `vp run` Anidado
 
