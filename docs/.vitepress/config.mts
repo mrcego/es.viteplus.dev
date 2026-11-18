@@ -37,7 +37,10 @@ const taskRunnerGuideItems = [
   },
   {
     text: 'Ejecutar Binarios',
-    link: '/guide/vpx',
+    items: [
+      { text: 'Vista General', link: '/guide/vpx' },
+      { text: 'vp dlx', link: '/guide/package-management/dlx' },
+    ],
   },
 ];
 
@@ -58,7 +61,6 @@ const guideSidebar = [
         ],
       },
       { text: 'Actualizar Proyecto Vite+', link: '/guide/upgrade-project' },
-      { text: 'Gestión de paquetes', link: '/guide/package-management' },
       { text: 'Entorno', link: '/guide/env' },
       { text: '¿Por qué Vite+?', link: '/guide/why' },
     ],
@@ -87,6 +89,96 @@ const guideSidebar = [
     items: [
       { text: 'Compilar (Build)', link: '/guide/build' },
       { text: 'Empaquetar (Pack)', link: '/guide/pack' },
+    ],
+  },
+  {
+    text: 'Gestión de Paquetes',
+    items: [
+      { text: 'Vista General', link: '/guide/package-management/' },
+      {
+        text: 'Selección del Gestor de Paquetes',
+        link: '/guide/package-management/package-manager-selection',
+      },
+      { text: 'Paquetes Globales', link: '/guide/package-management/global-packages' },
+      {
+        text: 'Comandos Principales',
+        items: [
+          { text: 'install', link: '/guide/package-management/install' },
+          { text: 'add', link: '/guide/package-management/add' },
+          { text: 'remove', link: '/guide/package-management/remove' },
+          { text: 'update', link: '/guide/package-management/update' },
+          { text: 'dedupe', link: '/guide/package-management/dedupe' },
+          { text: 'outdated', link: '/guide/package-management/outdated' },
+          { text: 'list', link: '/guide/package-management/list' },
+          { text: 'why', link: '/guide/package-management/why' },
+          { text: 'info', link: '/guide/package-management/info' },
+          { text: 'link', link: '/guide/package-management/link' },
+          { text: 'unlink', link: '/guide/package-management/unlink' },
+          { text: 'rebuild', link: '/guide/package-management/rebuild' },
+          { text: 'dlx', link: '/guide/package-management/dlx' },
+        ],
+      },
+      {
+        text: 'Comandos Reenviados',
+        collapsed: true,
+        items: [
+          {
+            text: 'Instalación y Limpieza',
+            items: [
+              { text: 'pm ci', link: '/guide/package-management/ci' },
+              { text: 'pm prune', link: '/guide/package-management/prune' },
+            ],
+          },
+          {
+            text: 'Inspección y Diagnóstico',
+            items: [
+              { text: 'pm licenses', link: '/guide/package-management/licenses' },
+              { text: 'pm search', link: '/guide/package-management/search' },
+              { text: 'pm audit', link: '/guide/package-management/audit' },
+              { text: 'pm fund', link: '/guide/package-management/fund' },
+              { text: 'pm ping', link: '/guide/package-management/ping' },
+            ],
+          },
+          {
+            text: 'Desarrollo Local',
+            items: [
+              { text: 'pm approve-builds', link: '/guide/package-management/approve-builds' },
+              { text: 'pm patch', link: '/guide/package-management/patch' },
+              { text: 'pm patch-commit', link: '/guide/package-management/patch-commit' },
+            ],
+          },
+          {
+            text: 'Publicación',
+            items: [
+              { text: 'pm pack', link: '/guide/package-management/pack' },
+              { text: 'pm version', link: '/guide/package-management/version' },
+              { text: 'pm publish', link: '/guide/package-management/publish' },
+              { text: 'pm stage', link: '/guide/package-management/stage' },
+              { text: 'pm dist-tag', link: '/guide/package-management/dist-tag' },
+              { text: 'pm deprecate', link: '/guide/package-management/deprecate' },
+            ],
+          },
+          {
+            text: 'Registro y Cuentas',
+            items: [
+              { text: 'pm login', link: '/guide/package-management/login' },
+              { text: 'pm logout', link: '/guide/package-management/logout' },
+              { text: 'pm whoami', link: '/guide/package-management/whoami' },
+              { text: 'pm token', link: '/guide/package-management/token' },
+              { text: 'pm owner', link: '/guide/package-management/owner' },
+              { text: 'pm team', link: '/guide/package-management/team' },
+            ],
+          },
+          {
+            text: 'Configuración y Mantenimiento',
+            items: [
+              { text: 'pm config', link: '/guide/package-management/config' },
+              { text: 'pm pkg', link: '/guide/package-management/pkg' },
+              { text: 'pm cache', link: '/guide/package-management/cache' },
+            ],
+          },
+        ],
+      },
     ],
   },
   {

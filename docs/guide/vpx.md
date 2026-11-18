@@ -223,7 +223,7 @@ vp exec tsc --noEmit
 
 ## `vp dlx`
 
-Usa `vp dlx` para la ejecución única de un paquete sin agregarlo a las dependencias de tu proyecto.
+Usa `vp dlx` para la ejecución puntual de un paquete sin agregarlo a las dependencias de tu proyecto. Consulta la [referencia del comando dlx](/guide/package-management/dlx) para ver las opciones y la compatibilidad con gestores de paquetes.
 
 ```bash
 vp dlx <paquete> [argumentos...]

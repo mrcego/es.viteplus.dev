@@ -463,6 +463,8 @@ Fuera de un proyecto con `vite-plus`, la CLI global utiliza su propio conjunto d
 
 ## Próximos Pasos
 
-- [Gestionar entornos de ejecución y gestores de paquetes](/guide/env)
-- [Crear un nuevo proyecto](/guide/create)
-- [Migrar un proyecto existente](/guide/migrate)
+- [Entorno](/guide/env) cubre la selección de Node.js y gestores de paquetes, fijación, shims e instalaciones gestionadas.
+- [Gestión de Paquetes](/guide/package-management/) cubre los flujos de trabajo de pnpm, npm, Yarn y Bun.
+- [Ejecución](/guide/run) cubre scripts de paquetes y tareas cacheadas del espacio de trabajo.
+- [Actualizar Vite+](/guide/upgrade) explica las actualizaciones de la CLI global. Consulta [Actualizar Proyecto Vite+](/guide/upgrade-project) para actualizaciones locales del proyecto.
+- [Eliminar Vite+](/guide/implode) elimina el binario global y sus datos gestionados.

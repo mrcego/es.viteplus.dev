@@ -96,7 +96,7 @@ Vite+ puede manejar todo el ciclo de desarrollo frontend local, desde iniciar un
 - [`vp migrate`](/guide/migrate) mueve proyectos existentes a Vite+.
 - [`vp config`](/guide/commit-hooks) configura los hooks de commit y la integración con agentes.
 - [`vp staged`](/guide/commit-hooks) ejecuta verificaciones en archivos preparados (staged).
-- [`vp install`](/guide/package-management) instala dependencias con el gestor de paquetes correcto.
+- [`vp install`](/guide/package-management/install) instala dependencias con el gestor de paquetes correcto.
 - [`vp env`](/guide/env) gestiona entornos de Node.js y de gestores de paquetes.
 
 ### Desarrollar
@@ -110,7 +110,7 @@ Vite+ puede manejar todo el ciclo de desarrollo frontend local, desde iniciar un
 - [`vp run`](/guide/run) ejecuta tareas a través de los workspaces con caché.
 - [`vp exec`](/guide/vpx) ejecuta binarios locales del proyecto.
 - [`vp node`](/guide/env) ejecuta scripts de Node.js con el entorno de Vite+ resuelto.
-- [`vp dlx`](/guide/vpx) descarga y ejecuta binarios de paquetes sin añadirlos como dependencias.
+- [`vp dlx`](/guide/package-management/dlx) descarga y ejecuta binarios de paquetes sin añadirlos como dependencias.
 - [`vp cache clean`](/guide/cache) limpia las entradas de caché de tareas.
 - [`vpx`](/guide/vpx) descarga y ejecuta binarios globalmente.
 
@@ -122,9 +122,8 @@ Vite+ puede manejar todo el ciclo de desarrollo frontend local, desde iniciar un
 
 ### Gestionar Dependencias
 
-- [`vp add`](/guide/package-management), [`vp remove`](/guide/package-management), [`vp update`](/guide/package-management), [`vp dedupe`](/guide/package-management), [`vp outdated`](/guide/package-management), [`vp list`](/guide/package-management), [`vp why`](/guide/package-management) y [`vp info`](/guide/package-management) envuelven los flujos de trabajo del gestor de paquetes.
-- [`vp link`](/guide/package-management), [`vp unlink`](/guide/package-management) y [`vp rebuild`](/guide/package-management) cubren enlaces de paquetes locales y reconstrucciones de módulos nativos.
-- [`vp pm <comando>`](/guide/package-management) llama directamente a otros comandos del gestor de paquetes.
+- [`vp add`](/guide/package-management/add), [`vp remove`](/guide/package-management/remove), [`vp update`](/guide/package-management/update), [`vp dedupe`](/guide/package-management/dedupe), [`vp outdated`](/guide/package-management/outdated), [`vp list`](/guide/package-management/list), [`vp why`](/guide/package-management/why) y [`vp info`](/guide/package-management/info) cubren el resto del flujo de trabajo de gestión de paquetes.
+- [`vp link`](/guide/package-management/link), [`vp unlink`](/guide/package-management/unlink), [`vp rebuild`](/guide/package-management/rebuild) y [`vp pm <comando>`](/guide/package-management/) proporcionan operaciones de bajo nivel del gestor de paquetes.
 
 ### Mantener
 
