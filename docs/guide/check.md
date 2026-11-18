@@ -22,6 +22,10 @@ vp check --no-lint         # Omitir reglas de lint; mantener la verificación de
 vp check --no-fmt --no-lint # Solo comprobación de tipos (requiere que tanto `typeAware` como `typeCheck` estén habilitados).
 ```
 
+Si el formateo falla, `vp check` se detiene antes de que se ejecuten las comprobaciones de lint y tipos. Para corregir el formato y aplicar las correcciones de lint disponibles, ejecuta `vp check --fix`. Este comando modifica archivos. Para omitir el formato y ejecutar las comprobaciones habilitadas restantes, ejecuta `vp check --no-fmt`.
+
+Coloca los flags de `vp check` antes de las rutas de archivos. Por ejemplo, usa `vp check --fix src/index.ts`. Los argumentos después de la primera ruta se pasan a las herramientas de formato y lint en lugar de a `vp check`.
+
 ## Configuración
 
 `vp check` utiliza la misma configuración que ya defines para el linting y formateo:

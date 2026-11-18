@@ -27,4 +27,4 @@ Recomendamos habilitar tanto `options.typeAware` como `options.typeCheck` para q
 
 Para reglas de lint específicas de un archivo o paquete, usa [`lint.overrides`](/guide/monorepo#configuracion-de-raiz-con-overrides) desde el `vite.config.ts` raíz.
 
-Oxlint deshabilita las configuraciones anidadas en modo Vite+, por lo que las configuraciones de lint anidadas no anulan los ajustes para archivos individuales. Consulta la [solución de problemas](/guide/troubleshooting#nested-lint-or-format-config-is-not-applied) para más detalles.
+Oxlint deshabilita las configuraciones anidadas en modo Vite+, por lo que las configuraciones de lint anidadas no anulan los ajustes para archivos individuales. Consulta la [Solución de Problemas](/guide/troubleshooting#nested-lint-or-format-config-is-not-applied) para más detalles.

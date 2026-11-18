@@ -6,7 +6,6 @@
     "dev": "vitepress dev",
     "build": "vitepress build",
     "build:cloudflare": "vitepress build",
-    "build:netlify": "vitepress build",
     "preview": "vitepress preview",
     "update-trusted-stack-stats": "node .vitepress/theme/data/fetch-trusted-stack-stats.ts"
   },

@@ -2,6 +2,8 @@
 
 `vp check` ejecuta comprobaciones de formato, lint y tipos de forma conjunta. El bloque `check` en `vite.config.ts` establece los valores predeterminados para este comando compuesto, reflejando las opciones de CLI `--no-fmt` y `--no-lint`.
 
+Consulta el [Uso de Check](/guide/check#uso) para conocer el orden de ejecución y cómo omitir el formateo después de un fallo.
+
 Esto es útil cuando un proyecto desea conservar la mayor parte del toolchain pero omitir un paso de forma predeterminada. Por ejemplo, un equipo que realiza linting pero no formatea puede deshabilitar `check.fmt` para que un simple `vp check` (el comando que los agentes y colaboradores ejecutan con más frecuencia) solo realice linting, sin que nadie tenga que recordar usar `--no-fmt`.
 
 ## Ejemplo

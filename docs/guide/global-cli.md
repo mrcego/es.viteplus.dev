@@ -75,9 +75,9 @@ irm https://vite.plus/ps1 | iex
 
 El `vp-setup.exe` aún no tiene firma de código. Es posible que tu navegador muestre una advertencia al descargarlo.
 
-El instalador utiliza la última versión LTS de Node.js para instalar sus dependencias de JavaScript. Las integraciones de CI pueden seleccionar otra versión compatible mediante [`VP_SETUP_NODE_VERSION`](#vp-setup-node-version).
+Para macOS y Linux, consulta la [guía del tap de Homebrew](/guide/homebrew) para obtener instrucciones de instalación.
 
-El instalador utiliza la última versión LTS de Node.js para instalar sus dependencias de JavaScript. Las integraciones de CI pueden seleccionar otra versión compatible mediante [`VP_SETUP_NODE_VERSION`](#vp-setup-node-version).
+El instalador utiliza la versión de Node.js fijada en [`.node-version`](https://github.com/voidzero-dev/vite-plus/blob/main/.node-version) del repositorio de Vite+ para instalar sus dependencias de JavaScript. Cada lanzamiento de Vite+ integra esta versión en tiempo de compilación. El desarrollo y CI usan el mismo archivo, el cual el flujo de trabajo de actualización de dependencias mantiene al día. Las integraciones de CI pueden seleccionar otra versión compatible mediante [`VP_SETUP_NODE_VERSION`](#vp-setup-node-version).
 
 Los scripts de instalación y `vp-setup.exe` leen [variables de entorno](/guide/global-cli#variables-de-instalacion) como `VP_VERSION` y `VP_HOME`.
 
@@ -116,14 +116,14 @@ Estas variables controlan los scripts de instalación y el instalador independie
 
 - **Propósito**: Selecciona la versión de Node.js utilizada para instalar las dependencias de JavaScript de la CLI global. Las integraciones de CI como [`setup-vp`](/guide/ci#node-js-durante-la-instalacion) configuran esta variable para reutilizar el entorno de ejecución del proyecto.
 - **Valores**: Una versión exacta, un rango de versiones o un alias como `22.23.1`, `22`, `^22.18.0`, `lts` o `latest`. El instalador resuelve el valor una vez en una versión exacta.
-- **Predeterminado**: No establecido o vacío (usa la última versión LTS de Node.js). Los archivos del proyecto, `VP_NODE_VERSION`, las sobrescrituras de sesión y el valor predeterminado del usuario no modifican este valor por defecto.
-- **Compatibilidad**: La versión resuelta debe cumplir con los requisitos de Node.js tanto de la CLI global como de su versión fijada de `pnpm`. De lo contrario, el instalador utiliza LTS. Un valor no válido o que no se pueda resolver genera un error.
-- **Ámbito**: Solo instalación inicial de dependencias. Esta variable no establece una fijación de proyecto, una sobrescritura de sesión ni un valor predeterminado global. `vp upgrade` y los instaladores heredados continúan utilizando LTS.
+- **Predeterminado**: No establecido o vacío (usa el valor predeterminado integrado de Node.js). Los archivos del proyecto, `VP_NODE_VERSION`, las sobrescrituras de sesión y el valor predeterminado del usuario no modifican este valor por defecto.
+- **Compatibilidad**: La versión resuelta debe cumplir con los requisitos de Node.js tanto de la CLI global como de su versión fijada de `pnpm`. De lo contrario, el instalador utiliza el valor predeterminado integrado. Un valor no válido o que no se pueda resolver genera un error.
+- **Ámbito**: Solo instalación inicial de dependencias. Esta variable no establece una fijación de proyecto, una sobrescritura de sesión ni un valor predeterminado global. [`vp upgrade`](/guide/upgrade#cli-global-vp) no utiliza esta variable.
 
 #### `VP_SETUP_NODE_VERSION_FILE`
 
 - **Propósito**: Archivo de salida opcional para integraciones que necesitan la versión exacta resuelta a partir de `VP_SETUP_NODE_VERSION`.
-- **Contenido**: La versión resuelta, como `22.23.1`, escrita tras una instalación exitosa de dependencias. Si la compatibilidad requiere LTS para la instalación, el archivo aún contiene la resolución de la versión solicitada.
+- **Contenido**: La versión resuelta, como `22.23.1`, escrita tras una instalación exitosa de dependencias. Si la compatibilidad requiere el valor predeterminado integrado para la instalación, el archivo aún contiene la resolución de la versión solicitada.
 - **Predeterminado**: No establecido (no escribe ningún archivo). El instalador tampoco escribe ningún archivo cuando `VP_SETUP_NODE_VERSION` no está establecido o está vacío, o cuando se omite la instalación de dependencias.
 
 `setup-vp` gestiona este archivo automáticamente. Usa sus entradas de Node.js para configurar los trabajos de CI.
@@ -157,14 +157,14 @@ Mantén esta sobrescritura de forma temporal. Las instalaciones y actualizacione
 
 - **Propósito**: Selecciona la versión de Node.js utilizada para instalar las dependencias de JavaScript de la CLI global. Las integraciones de CI como [`setup-vp`](/guide/ci#node-js-durante-la-instalacion) configuran esta variable para reutilizar el entorno de ejecución del proyecto.
 - **Valores**: Una versión exacta, un rango de versiones o un alias como `22.23.1`, `22`, `^22.18.0`, `lts` o `latest`. El instalador resuelve el valor una vez en una versión exacta.
-- **Predeterminado**: No establecido o vacío (usa la última versión LTS de Node.js). Los archivos del proyecto, `VP_NODE_VERSION`, las sobrescrituras de sesión y el valor predeterminado del usuario no modifican este valor por defecto.
-- **Compatibilidad**: La versión resuelta debe cumplir con los requisitos de Node.js tanto de la CLI global como de su versión fijada de `pnpm`. De lo contrario, el instalador utiliza LTS. Un valor no válido o que no se pueda resolver genera un error.
-- **Ámbito**: Solo instalación inicial de dependencias. Esta variable no establece una fijación de proyecto, una sobrescritura de sesión ni un valor predeterminado global. `vp upgrade` y los instaladores heredados continúan utilizando LTS.
+- **Predeterminado**: No establecido o vacío (usa el valor predeterminado integrado de Node.js). Los archivos del proyecto, `VP_NODE_VERSION`, las sobrescrituras de sesión y el valor predeterminado del usuario no modifican este valor por defecto.
+- **Compatibilidad**: La versión resuelta debe cumplir con los requisitos de Node.js tanto de la CLI global como de su versión fijada de `pnpm`. De lo contrario, el instalador utiliza el valor predeterminado integrado. Un valor no válido o que no se pueda resolver genera un error.
+- **Ámbito**: Solo instalación inicial de dependencias. Esta variable no establece una fijación de proyecto, una sobrescritura de sesión ni un valor predeterminado global. [`vp upgrade`](/guide/upgrade#cli-global-vp) no utiliza esta variable.
 
 #### `VP_SETUP_NODE_VERSION_FILE`
 
 - **Propósito**: Archivo de salida opcional para integraciones que necesitan la versión exacta resuelta a partir de `VP_SETUP_NODE_VERSION`.
-- **Contenido**: La versión resuelta, como `22.23.1`, escrita tras una instalación exitosa de dependencias. Si la compatibilidad requiere LTS para la instalación, el archivo aún contiene la resolución de la versión solicitada.
+- **Contenido**: La versión resuelta, como `22.23.1`, escrita tras una instalación exitosa de dependencias. Si la compatibilidad requiere el valor predeterminado integrado para la instalación, el archivo aún contiene la resolución de la versión solicitada.
 - **Predeterminado**: No establecido (no escribe ningún archivo). El instalador tampoco escribe ningún archivo cuando `VP_SETUP_NODE_VERSION` no está establecido o está vacío, o cuando se omite la instalación de dependencias.
 
 `setup-vp` gestiona este archivo automáticamente. Usa sus entradas de Node.js para configurar los trabajos de CI.
@@ -416,7 +416,7 @@ Cuando se admiten tanto flags de CLI como variables de entorno, los flags de lí
 
 ### Homebrew
 
-En una instalación de Homebrew, el primer comando `vp` configura tu shell, los shims y las preferencias de gestión del entorno. Reutiliza el binario de Homebrew y el JavaScript empaquetado. La configuración almacena su estado de finalización en tus directorios de usuario y no necesita acceso de escritura al prefijo de Homebrew.
+El [tap oficial de Homebrew](/guide/homebrew) instala la CLI nativa. El primer comando `vp` instala las dependencias de JavaScript correspondientes en tu directorio de datos y configura tu terminal, los shims y las preferencias de gestión del entorno. La configuración almacena su estado en tus directorios sin escribir en el prefijo de Homebrew.
 
 Los comandos posteriores reutilizan esa configuración mientras el binario instalado permanezca sin cambios. Los shims generados siguen el punto de entrada público de `vp` de Homebrew cuando Homebrew reemplaza una versión. La configuración conserva tus preferencias de gestión guardadas durante este reemplazo.
 
@@ -426,11 +426,13 @@ Para preferir tu Node.js y gestores de paquetes existentes durante la primera ej
 VP_NODE_MANAGER=no VP_PM_MANAGER=no vp help
 ```
 
-Después de la configuración inicial, usa `vp env off` para cambiar esta preferencia. Los comandos que necesiten entornos de ejecución faltantes o dependencias del proyecto aún podrán descargarlos.
+Después de la configuración inicial, usa `vp env off` para cambiar esta preferencia. El tap aún prepara sus versiones fijadas de Node.js y pnpm para instalar las dependencias de la CLI. Los comandos que necesiten runtimes faltantes o dependencias del proyecto también podrán descargarlos.
 
 Usa Homebrew para [actualizar](/guide/upgrade#homebrew) o [eliminar](/guide/implode#homebrew) su paquete.
 
-`vp env doctor` identifica la instalación de Homebrew y su ruta binaria. Comprueba el comando `vp` y el directorio de shims de usuario en el `PATH` por separado. Si solo falta el directorio de shims, sigue sus instrucciones de configuración de shell para habilitar los shims.
+`vp env doctor` identifica el origen de Homebrew, el nombre de la fórmula y su ruta binaria. Comprueba el comando `vp` y el directorio de shims de usuario en el `PATH` por separado. Si solo falta el directorio de shims, sigue sus instrucciones de configuración de terminal para habilitar los shims.
+
+Consulta la [guía oficial del tap](/guide/homebrew) para la configuración del registro e instrucciones de migración.
 
 ## Usar sin un Paquete Local
 

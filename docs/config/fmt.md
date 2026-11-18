@@ -21,4 +21,4 @@ export default defineConfig({
 
 Para ajustes de formato específicos de un archivo o paquete, usa [`fmt.overrides`](/guide/monorepo#overrides-de-formato) desde el `vite.config.ts` raíz.
 
-Oxfmt deshabilita las configuraciones anidadas en modo Vite+, por lo que las configuraciones de formato anidadas no anulan los ajustes para archivos individuales. Consulta la [solución de problemas](/guide/troubleshooting#nested-lint-or-format-config-is-not-applied) para más detalles.
+Oxfmt deshabilita las configuraciones anidadas en modo Vite+, por lo que las configuraciones de formato anidadas no anulan los ajustes para archivos individuales. Consulta la [Solución de Problemas](/guide/troubleshooting#nested-lint-or-format-config-is-not-applied) para más detalles.
